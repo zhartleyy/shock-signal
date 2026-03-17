@@ -208,6 +208,10 @@
   .stock-table .ticker-cell { font-weight: 700; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 13px; }
   .stock-table .ticker-cell.win { color: var(--green); }
   .stock-table .ticker-cell.lose { color: var(--red); }
+  .stock-table .ticker-cell a { color: inherit; text-decoration: none; border-bottom: 1px dashed currentColor; padding-bottom: 1px; transition: opacity 0.2s; }
+  .stock-table .ticker-cell a:hover { opacity: 0.7; }
+  .double-card .ticker a { color: inherit; text-decoration: none; border-bottom: 2px dashed currentColor; padding-bottom: 1px; transition: opacity 0.2s; }
+  .double-card .ticker a:hover { opacity: 0.7; }
   .stock-table .perf { font-weight: 600; }
   .stock-table .perf.up { color: var(--green); }
   .stock-table .perf.down { color: var(--red); }
@@ -469,6 +473,23 @@ Tariffs +3% on building materials → starts slowest since 2019</div>
   </div>
   <p style="margin-top:16px;font-size:11px;opacity:0.5;">Updated daily at 7:00 AM ET</p>
 </footer>
+
+<script>
+// Auto-link all ticker cells to technical analysis page
+document.querySelectorAll('.stock-table .ticker-cell').forEach(function(td) {
+  var ticker = td.textContent.trim();
+  if (ticker) {
+    td.innerHTML = '<a href="analysis.html?ticker=' + encodeURIComponent(ticker) + '" title="View technical analysis for ' + ticker + '">' + ticker + '</a>';
+  }
+});
+// Also link double-beneficiary ticker names
+document.querySelectorAll('.double-card .ticker').forEach(function(el) {
+  var ticker = el.textContent.trim();
+  if (ticker) {
+    el.innerHTML = '<a href="analysis.html?ticker=' + encodeURIComponent(ticker) + '" title="View technical analysis for ' + ticker + '">' + ticker + '</a>';
+  }
+});
+</script>
 
 </body>
 </html>

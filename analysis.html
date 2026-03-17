@@ -102,6 +102,46 @@
   .indicator-line.signal { background: #ef4444; }
   .indicator-line.rsi { background: #a855f7; }
 
+  /* ── FEATURED STOCK (dynamic) ── */
+  .featured-section {
+    max-width: 1400px; margin: 0 auto; padding: 0 24px 40px;
+    display: none;
+  }
+  .featured-section.visible { display: block; }
+  .featured-card {
+    background: var(--surface);
+    border: 2px solid var(--cyan);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(6,182,212,0.15);
+  }
+  .featured-header {
+    padding: 20px 24px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .featured-ticker {
+    font-size: 32px; font-weight: 800;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    color: var(--cyan);
+  }
+  .featured-label {
+    font-size: 12px; color: var(--text-dim);
+    margin-top: 2px;
+  }
+  .featured-back {
+    font-size: 13px; color: var(--cyan); text-decoration: none;
+    border: 1px solid var(--cyan); border-radius: 6px;
+    padding: 6px 14px; transition: all 0.2s;
+  }
+  .featured-back:hover { background: var(--cyan); color: var(--bg); }
+  .featured-chart-container {
+    width: 100%;
+    height: 600px;
+  }
+
   /* ── CHARTS SECTION ── */
   .section { max-width: 1400px; margin: 0 auto; padding: 0 24px 40px; }
   .section-label {
@@ -217,12 +257,24 @@
   </div>
 </div>
 
+<!-- FEATURED STOCK (shown when ?ticker= parameter is present) -->
+<div class="featured-section" id="featured-section">
+  <div class="section-label">Selected Stock</div>
+  <div class="featured-card">
+    <div class="featured-header">
+      <div><div class="featured-ticker" id="featured-ticker"></div><div class="featured-label">6-month daily chart with SMA 50/200, RSI 14, MACD</div></div>
+      <a href="analysis.html" class="featured-back">View all charts</a>
+    </div>
+    <div class="featured-chart-container"><div id="tv_featured" style="width:100%;height:100%;"></div></div>
+  </div>
+</div>
+
 <!-- DOUBLE BENEFICIARIES -->
 <div class="section-label">Double Beneficiary Stocks — Conviction 8+</div>
 <div class="charts-grid">
 
   <!-- XOM -->
-  <div class="chart-card">
+  <div class="chart-card" id="chart-XOM">
     <div class="chart-header">
       <div class="chart-info"><div class="chart-ticker">XOM</div><div class="chart-company">ExxonMobil</div></div>
       <div class="chart-meta"><div class="chart-signal" style="background:var(--red-bg);color:var(--red);">#1 Oil Shock + #4 Domestic</div><div class="chart-conviction high">Conviction: 9/10</div></div>
@@ -232,7 +284,7 @@
   </div>
 
   <!-- CCJ -->
-  <div class="chart-card">
+  <div class="chart-card" id="chart-CCJ">
     <div class="chart-header">
       <div class="chart-info"><div class="chart-ticker">CCJ</div><div class="chart-company">Cameco (Uranium)</div></div>
       <div class="chart-meta"><div class="chart-signal" style="background:var(--blue-bg);color:var(--blue);">#3 AI Power + #7 Nuclear</div><div class="chart-conviction high">Conviction: 9/10</div></div>
@@ -242,7 +294,7 @@
   </div>
 
   <!-- GLD -->
-  <div class="chart-card">
+  <div class="chart-card" id="chart-GLD">
     <div class="chart-header">
       <div class="chart-info"><div class="chart-ticker">GLD</div><div class="chart-company">SPDR Gold Trust</div></div>
       <div class="chart-meta"><div class="chart-signal" style="background:var(--green-bg);color:var(--green);">#1 War + #5 Safe Haven + #8 Credit</div><div class="chart-conviction high">Conviction: 9/10</div></div>
@@ -252,7 +304,7 @@
   </div>
 
   <!-- NOC -->
-  <div class="chart-card">
+  <div class="chart-card" id="chart-NOC">
     <div class="chart-header">
       <div class="chart-info"><div class="chart-ticker">NOC</div><div class="chart-company">Northrop Grumman</div></div>
       <div class="chart-meta"><div class="chart-signal" style="background:var(--red-bg);color:var(--red);">#2 Defense + #4 Reshoring</div><div class="chart-conviction high">Conviction: 8/10</div></div>
@@ -262,7 +314,7 @@
   </div>
 
   <!-- NTR -->
-  <div class="chart-card">
+  <div class="chart-card" id="chart-NTR">
     <div class="chart-header">
       <div class="chart-info"><div class="chart-ticker">NTR</div><div class="chart-company">Nutrien (Fertilizer)</div></div>
       <div class="chart-meta"><div class="chart-signal" style="background:var(--orange-bg);color:var(--orange);">#1 Oil Shock + #6 Food Crisis</div><div class="chart-conviction high">Conviction: 8/10</div></div>
@@ -278,7 +330,7 @@
 <div class="charts-grid">
 
   <!-- TSM -->
-  <div class="chart-card">
+  <div class="chart-card" id="chart-TSM">
     <div class="chart-header">
       <div class="chart-info"><div class="chart-ticker">TSM</div><div class="chart-company">TSMC</div></div>
       <div class="chart-meta"><div class="chart-signal" style="background:var(--blue-bg);color:var(--blue);">#3 AI Infrastructure</div><div class="chart-conviction high">Conviction: 9/10</div></div>
@@ -288,7 +340,7 @@
   </div>
 
   <!-- NVDA -->
-  <div class="chart-card">
+  <div class="chart-card" id="chart-NVDA">
     <div class="chart-header">
       <div class="chart-info"><div class="chart-ticker">NVDA</div><div class="chart-company">NVIDIA</div></div>
       <div class="chart-meta"><div class="chart-signal" style="background:var(--blue-bg);color:var(--blue);">#3 AI Infrastructure</div><div class="chart-conviction high">Conviction: 8/10</div></div>
@@ -298,7 +350,7 @@
   </div>
 
   <!-- CEG -->
-  <div class="chart-card">
+  <div class="chart-card" id="chart-CEG">
     <div class="chart-header">
       <div class="chart-info"><div class="chart-ticker">CEG</div><div class="chart-company">Constellation Energy</div></div>
       <div class="chart-meta"><div class="chart-signal" style="background:var(--purple-bg);color:var(--purple);">#7 Nuclear Renaissance</div><div class="chart-conviction high">Conviction: 8/10</div></div>
@@ -324,21 +376,38 @@
 <!-- TradingView Widget Library -->
 <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
 <script type="text/javascript">
-const stocks = [
-  { id: 'tv_xom', symbol: 'NYSE:XOM' },
-  { id: 'tv_ccj', symbol: 'NYSE:CCJ' },
-  { id: 'tv_gld', symbol: 'AMEX:GLD' },
-  { id: 'tv_noc', symbol: 'NYSE:NOC' },
-  { id: 'tv_ntr', symbol: 'NYSE:NTR' },
-  { id: 'tv_tsm', symbol: 'NYSE:TSM' },
-  { id: 'tv_nvda', symbol: 'NASDAQ:NVDA' },
-  { id: 'tv_ceg', symbol: 'NASDAQ:CEG' }
-];
+// Exchange mapping for common tickers
+var exchangeMap = {
+  'XOM':'NYSE','CVX':'NYSE','DVN':'NYSE','NOG':'NYSE','HAL':'NYSE',
+  'UAL':'NASDAQ','DAL':'NYSE','AAL':'NASDAQ','CCL':'NYSE','RCL':'NYSE',
+  'NOC':'NYSE','RTX':'NYSE','LMT':'NYSE','LHX':'NYSE','KTOS':'NASDAQ',
+  'NVDA':'NASDAQ','TSM':'NYSE','ASML':'NASDAQ','AVGO':'NASDAQ','ANET':'NYSE',
+  'VRT':'NYSE','MU':'NASDAQ','CTSH':'NASDAQ','INFY':'NYSE',
+  'IWM':'AMEX','FLR':'NYSE','AIT':'NYSE','ATI':'NYSE',
+  'AAPL':'NASDAQ','WMT':'NYSE','NKE':'NYSE','TGT':'NYSE',
+  'GLD':'AMEX','NEM':'NYSE','GOLD':'NYSE','TLT':'NASDAQ',
+  'ARKK':'AMEX','MSTR':'NASDAQ',
+  'NTR':'NYSE','MOS':'NYSE','CF':'NYSE','ADM':'NYSE','BG':'NYSE','DE':'NYSE',
+  'KO':'NYSE','MDLZ':'NASDAQ','KHC':'NASDAQ','SBUX':'NASDAQ',
+  'CCJ':'NYSE','URA':'AMEX','LEU':'AMEX','SMR':'NYSE','CEG':'NASDAQ','OKLO':'NYSE',
+  'FSLR':'NASDAQ',
+  'GS':'NYSE','JPM':'NYSE','ARES':'NYSE',
+  'BX':'NYSE','BLK':'NYSE','OWL':'NYSE','MS':'NYSE',
+  'MP':'NYSE','LAC':'NYSE','UUUU':'AMEX',
+  'F':'NYSE','GM':'NYSE','GEV':'NYSE',
+  'INVH':'NYSE','EQR':'NYSE','HD':'NYSE','LOW':'NYSE','RKT':'NYSE',
+  'Z':'NASDAQ','RDFN':'NASDAQ','DHI':'NYSE','LEN':'NYSE'
+};
 
-stocks.forEach(function(stock) {
-  new TradingView.widget({
-    "autosize": true,
-    "symbol": stock.symbol,
+function getSymbol(ticker) {
+  var ex = exchangeMap[ticker.toUpperCase()] || 'NYSE';
+  return ex + ':' + ticker.toUpperCase();
+}
+
+function createWidget(containerId, symbol, autosize) {
+  return new TradingView.widget({
+    "autosize": autosize !== false,
+    "symbol": symbol,
     "interval": "D",
     "timezone": "America/New_York",
     "theme": "dark",
@@ -359,8 +428,48 @@ stocks.forEach(function(stock) {
       { id: "MACD@tv-basicstudies", inputs: { in_0: 12, in_1: 26, in_3: 9 } }
     ],
     "range": "6M",
-    "container_id": stock.id
+    "container_id": containerId
   });
+}
+
+// Check for ?ticker= parameter — show featured chart
+var params = new URLSearchParams(window.location.search);
+var featuredTicker = params.get('ticker');
+
+if (featuredTicker) {
+  featuredTicker = featuredTicker.toUpperCase().replace(/[^A-Z]/g, '');
+  var section = document.getElementById('featured-section');
+  var tickerEl = document.getElementById('featured-ticker');
+  section.classList.add('visible');
+  tickerEl.textContent = featuredTicker;
+  document.title = featuredTicker + ' Technical Analysis — Shock Signal';
+
+  createWidget('tv_featured', getSymbol(featuredTicker));
+
+  // If this ticker has a dedicated card, scroll to it after a delay
+  setTimeout(function() {
+    var card = document.getElementById('chart-' + featuredTicker);
+    if (card) {
+      card.style.borderColor = 'var(--cyan)';
+      card.style.boxShadow = '0 0 20px rgba(6,182,212,0.2)';
+    }
+  }, 500);
+}
+
+// Initialize the 8 featured stock charts
+var stocks = [
+  { id: 'tv_xom', symbol: 'NYSE:XOM' },
+  { id: 'tv_ccj', symbol: 'NYSE:CCJ' },
+  { id: 'tv_gld', symbol: 'AMEX:GLD' },
+  { id: 'tv_noc', symbol: 'NYSE:NOC' },
+  { id: 'tv_ntr', symbol: 'NYSE:NTR' },
+  { id: 'tv_tsm', symbol: 'NYSE:TSM' },
+  { id: 'tv_nvda', symbol: 'NASDAQ:NVDA' },
+  { id: 'tv_ceg', symbol: 'NASDAQ:CEG' }
+];
+
+stocks.forEach(function(stock) {
+  createWidget(stock.id, stock.symbol);
 });
 </script>
 
