@@ -142,6 +142,118 @@
     height: 600px;
   }
 
+  /* ── AI ANALYSIS PANEL ── */
+  .analysis-panel {
+    padding: 24px;
+    border-top: 1px solid var(--border);
+    display: none;
+  }
+  .analysis-panel.visible { display: block; }
+  .analysis-loading {
+    text-align: center; padding: 40px 0;
+    color: var(--text-dim); font-size: 14px;
+  }
+  .analysis-loading .spinner {
+    display: inline-block; width: 24px; height: 24px;
+    border: 3px solid var(--border); border-top-color: var(--cyan);
+    border-radius: 50%; animation: spin 0.8s linear infinite;
+    margin-bottom: 12px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .analysis-header {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 20px; flex-wrap: wrap;
+  }
+  .analysis-title {
+    font-size: 16px; font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+  .bias-badge {
+    font-size: 13px; font-weight: 800; padding: 5px 16px;
+    border-radius: 6px; letter-spacing: 0.5px;
+  }
+  .bias-badge.bullish { background: var(--green-bg); color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
+  .bias-badge.bearish { background: var(--red-bg); color: var(--red); border: 1px solid rgba(239,68,68,0.3); }
+  .bias-badge.neutral { background: var(--orange-bg); color: var(--orange); border: 1px solid rgba(245,158,11,0.3); }
+
+  .indicators-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .ind-card {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 8px; padding: 12px 14px;
+  }
+  .ind-card .ind-label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 1px;
+    color: var(--text-dim); margin-bottom: 4px; font-weight: 600;
+  }
+  .ind-card .ind-value {
+    font-size: 18px; font-weight: 800;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+  }
+  .ind-card .ind-desc {
+    font-size: 11px; color: var(--text-dim); margin-top: 4px;
+  }
+  .ind-bullish { color: var(--green); }
+  .ind-bearish { color: var(--red); }
+  .ind-neutral { color: var(--orange); }
+
+  .patterns-section { margin-bottom: 24px; }
+  .patterns-title {
+    font-size: 12px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1px; color: var(--text-dim); margin-bottom: 10px;
+  }
+  .pattern-badges { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pattern-badge {
+    font-size: 12px; font-weight: 600; padding: 5px 12px;
+    border-radius: 6px; display: inline-flex; align-items: center; gap: 6px;
+  }
+  .pattern-badge.bullish { background: var(--green-bg); color: var(--green); }
+  .pattern-badge.bearish { background: var(--red-bg); color: var(--red); }
+  .pattern-badge.neutral { background: var(--blue-bg); color: var(--blue); }
+  .pattern-badge .arrow { font-size: 14px; }
+
+  .analysis-writeup {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px;
+  }
+  .analysis-writeup .writeup-title {
+    font-size: 13px; font-weight: 700; margin-bottom: 12px;
+    color: var(--cyan);
+  }
+  .analysis-writeup p {
+    font-size: 14px; color: var(--text); line-height: 1.8;
+    margin-bottom: 12px;
+  }
+  .analysis-writeup p:last-child { margin-bottom: 0; }
+  .analysis-writeup .key-levels {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px; margin-top: 16px;
+  }
+  .level-card {
+    background: var(--surface2); border-radius: 6px; padding: 10px 14px;
+  }
+  .level-card .level-label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 1px;
+    color: var(--text-dim); font-weight: 600;
+  }
+  .level-card .level-val {
+    font-size: 16px; font-weight: 700;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    margin-top: 2px;
+  }
+  .level-card .level-val.support { color: var(--green); }
+  .level-card .level-val.resist { color: var(--red); }
+
+  .analysis-disclaimer {
+    margin-top: 16px; font-size: 11px; color: var(--text-dim);
+    font-style: italic; opacity: 0.7;
+  }
+
   /* ── CHARTS SECTION ── */
   .section { max-width: 1400px; margin: 0 auto; padding: 0 24px 40px; }
   .section-label {
@@ -266,6 +378,30 @@
       <a href="analysis.html" class="featured-back">View all charts</a>
     </div>
     <div class="featured-chart-container"><div id="tv_featured" style="width:100%;height:100%;"></div></div>
+
+    <!-- AI ANALYSIS PANEL -->
+    <div class="analysis-panel" id="analysis-panel">
+      <div class="analysis-loading" id="analysis-loading">
+        <div class="spinner"></div>
+        <div>Analyzing 6-month price action for <strong id="loading-ticker"></strong>…</div>
+        <div style="margin-top:6px;font-size:12px;">Computing indicators &amp; detecting patterns</div>
+      </div>
+      <div id="analysis-content" style="display:none;">
+        <div class="analysis-header">
+          <div class="analysis-title">AI Technical Analysis</div>
+          <div class="bias-badge" id="bias-badge"></div>
+          <div style="margin-left:auto;font-size:11px;color:var(--text-dim);" id="analysis-date"></div>
+        </div>
+        <div class="indicators-grid" id="indicators-grid"></div>
+        <div class="patterns-section">
+          <div class="patterns-title">Detected Patterns</div>
+          <div class="pattern-badges" id="pattern-badges"></div>
+        </div>
+        <div class="analysis-writeup" id="analysis-writeup"></div>
+        <div class="analysis-disclaimer">This analysis is algorithmically generated from historical price data. It is not investment advice. Past performance does not guarantee future results. Always conduct your own research.</div>
+      </div>
+      <div id="analysis-error" style="display:none;text-align:center;padding:30px;color:var(--red);font-size:14px;"></div>
+    </div>
   </div>
 </div>
 
@@ -432,6 +568,473 @@ function createWidget(containerId, symbol, autosize) {
   });
 }
 
+// ═══════════════════════════════════════════════════════════════
+// TECHNICAL ANALYSIS ENGINE — Independent pattern recognition
+// ═══════════════════════════════════════════════════════════════
+
+// ── Indicator Computations ──
+function computeSMA(closes, period) {
+  var sma = [];
+  for (var i = 0; i < closes.length; i++) {
+    if (i < period - 1) { sma.push(null); continue; }
+    var sum = 0;
+    for (var j = i - period + 1; j <= i; j++) sum += closes[j];
+    sma.push(sum / period);
+  }
+  return sma;
+}
+
+function computeEMA(closes, period) {
+  var ema = []; var k = 2 / (period + 1);
+  ema.push(closes[0]);
+  for (var i = 1; i < closes.length; i++) {
+    ema.push(closes[i] * k + ema[i-1] * (1-k));
+  }
+  return ema;
+}
+
+function computeRSI(closes, period) {
+  var rsi = []; var gains = []; var losses = [];
+  rsi.push(null);
+  for (var i = 1; i < closes.length; i++) {
+    var change = closes[i] - closes[i-1];
+    gains.push(change > 0 ? change : 0);
+    losses.push(change < 0 ? -change : 0);
+    if (i < period) { rsi.push(null); continue; }
+    if (i === period) {
+      var avgGain = gains.slice(0, period).reduce(function(a,b){return a+b;},0) / period;
+      var avgLoss = losses.slice(0, period).reduce(function(a,b){return a+b;},0) / period;
+    } else {
+      avgGain = (avgGain * (period-1) + gains[i-1]) / period;
+      avgLoss = (avgLoss * (period-1) + losses[i-1]) / period;
+    }
+    if (avgLoss === 0) rsi.push(100);
+    else { var rs = avgGain / avgLoss; rsi.push(100 - (100 / (1 + rs))); }
+  }
+  return rsi;
+}
+
+function computeMACD(closes) {
+  var ema12 = computeEMA(closes, 12);
+  var ema26 = computeEMA(closes, 26);
+  var macdLine = ema12.map(function(v,i){ return v - ema26[i]; });
+  var signal = computeEMA(macdLine, 9);
+  var histogram = macdLine.map(function(v,i){ return v - signal[i]; });
+  return { macd: macdLine, signal: signal, histogram: histogram };
+}
+
+function computeBollingerBands(closes, period, mult) {
+  var sma = computeSMA(closes, period);
+  var upper = []; var lower = [];
+  for (var i = 0; i < closes.length; i++) {
+    if (sma[i] === null) { upper.push(null); lower.push(null); continue; }
+    var sum = 0;
+    for (var j = i - period + 1; j <= i; j++) sum += Math.pow(closes[j] - sma[i], 2);
+    var std = Math.sqrt(sum / period);
+    upper.push(sma[i] + mult * std);
+    lower.push(sma[i] - mult * std);
+  }
+  return { middle: sma, upper: upper, lower: lower };
+}
+
+function computeATR(highs, lows, closes, period) {
+  var tr = [highs[0] - lows[0]];
+  for (var i = 1; i < highs.length; i++) {
+    tr.push(Math.max(highs[i] - lows[i], Math.abs(highs[i] - closes[i-1]), Math.abs(lows[i] - closes[i-1])));
+  }
+  var atr = []; var sum = 0;
+  for (var i = 0; i < tr.length; i++) {
+    if (i < period) { sum += tr[i]; atr.push(i === period-1 ? sum/period : null); continue; }
+    atr.push((atr[i-1] * (period-1) + tr[i]) / period);
+  }
+  return atr;
+}
+
+function findSupportResistance(highs, lows, closes) {
+  var len = closes.length;
+  var recent = Math.min(60, len);
+  var recentHighs = highs.slice(-recent);
+  var recentLows = lows.slice(-recent);
+  var recentCloses = closes.slice(-recent);
+
+  // Find swing highs and swing lows (look back/forward 3 bars)
+  var swingHighs = []; var swingLows = [];
+  for (var i = 3; i < recent - 3; i++) {
+    var isHigh = true; var isLow = true;
+    for (var j = 1; j <= 3; j++) {
+      if (recentHighs[i] <= recentHighs[i-j] || recentHighs[i] <= recentHighs[i+j]) isHigh = false;
+      if (recentLows[i] >= recentLows[i-j] || recentLows[i] >= recentLows[i+j]) isLow = false;
+    }
+    if (isHigh) swingHighs.push(recentHighs[i]);
+    if (isLow) swingLows.push(recentLows[i]);
+  }
+
+  // Cluster nearby levels
+  function cluster(levels, threshold) {
+    if (levels.length === 0) return [];
+    levels.sort(function(a,b){return a-b;});
+    var clusters = [[levels[0]]];
+    for (var i = 1; i < levels.length; i++) {
+      if (Math.abs(levels[i] - clusters[clusters.length-1][0]) / clusters[clusters.length-1][0] < threshold) {
+        clusters[clusters.length-1].push(levels[i]);
+      } else { clusters.push([levels[i]]); }
+    }
+    return clusters.map(function(c){ return c.reduce(function(a,b){return a+b;},0)/c.length; });
+  }
+
+  var currentPrice = closes[len-1];
+  var resistLevels = cluster(swingHighs, 0.02).filter(function(l){ return l > currentPrice * 1.005; });
+  var supportLevels = cluster(swingLows, 0.02).filter(function(l){ return l < currentPrice * 0.995; });
+
+  return {
+    support: supportLevels.length > 0 ? supportLevels[supportLevels.length-1] : Math.min.apply(null, recentLows),
+    resistance: resistLevels.length > 0 ? resistLevels[0] : Math.max.apply(null, recentHighs),
+    support2: supportLevels.length > 1 ? supportLevels[supportLevels.length-2] : null,
+    resistance2: resistLevels.length > 1 ? resistLevels[1] : null
+  };
+}
+
+// ── Pattern Detection Engine ──
+function detectPatterns(data) {
+  var c = data.closes; var len = c.length;
+  var sma50 = data.sma50; var sma200 = data.sma200;
+  var rsi = data.rsi; var macd = data.macd;
+  var bb = data.bollinger; var vol = data.volumes;
+  var patterns = []; var bullPoints = 0; var bearPoints = 0;
+
+  // Current values
+  var price = c[len-1]; var prevPrice = c[len-2];
+  var curRSI = rsi[len-1]; var prevRSI = rsi[len-2];
+  var curSMA50 = sma50[len-1]; var curSMA200 = sma200[len-1];
+  var prevSMA50 = sma50[len-2]; var prevSMA200 = sma200[len-2];
+  var curMACD = macd.macd[len-1]; var curSignal = macd.signal[len-1];
+  var prevMACD = macd.macd[len-2]; var prevSignal = macd.signal[len-2];
+
+  // 1. Golden Cross / Death Cross (check last 10 bars)
+  for (var i = Math.max(len-10, 1); i < len; i++) {
+    if (sma50[i] !== null && sma200[i] !== null && sma50[i-1] !== null && sma200[i-1] !== null) {
+      if (sma50[i] > sma200[i] && sma50[i-1] <= sma200[i-1]) {
+        patterns.push({ name: 'Golden Cross', type: 'bullish', weight: 3 }); bullPoints += 3;
+      }
+      if (sma50[i] < sma200[i] && sma50[i-1] >= sma200[i-1]) {
+        patterns.push({ name: 'Death Cross', type: 'bearish', weight: 3 }); bearPoints += 3;
+      }
+    }
+  }
+
+  // 2. Price vs Moving Averages
+  if (curSMA50 && curSMA200) {
+    if (price > curSMA50 && price > curSMA200) {
+      patterns.push({ name: 'Above Both MAs', type: 'bullish', weight: 2 }); bullPoints += 2;
+    } else if (price < curSMA50 && price < curSMA200) {
+      patterns.push({ name: 'Below Both MAs', type: 'bearish', weight: 2 }); bearPoints += 2;
+    } else if (price > curSMA50 && price < curSMA200) {
+      patterns.push({ name: 'Between MAs (Transition)', type: 'neutral', weight: 1 });
+    }
+    if (curSMA50 > curSMA200) { bullPoints += 1; } else { bearPoints += 1; }
+  }
+
+  // 3. RSI Conditions
+  if (curRSI !== null) {
+    if (curRSI > 70) {
+      patterns.push({ name: 'RSI Overbought (' + curRSI.toFixed(0) + ')', type: 'bearish', weight: 2 }); bearPoints += 2;
+    } else if (curRSI < 30) {
+      patterns.push({ name: 'RSI Oversold (' + curRSI.toFixed(0) + ')', type: 'bullish', weight: 2 }); bullPoints += 2;
+    } else if (curRSI > 50 && curRSI <= 70) {
+      bullPoints += 1;
+    } else if (curRSI < 50 && curRSI >= 30) {
+      bearPoints += 1;
+    }
+
+    // RSI divergence (last 20 bars)
+    var lookback = Math.min(20, len - 2);
+    var priceLow1 = Infinity, priceLow2 = Infinity, rsiLow1 = Infinity, rsiLow2 = Infinity;
+    var priceHigh1 = -Infinity, priceHigh2 = -Infinity, rsiHigh1 = -Infinity, rsiHigh2 = -Infinity;
+    var mid = Math.floor(lookback / 2);
+    for (var i = len - lookback; i < len - mid; i++) { if (c[i] < priceLow1) { priceLow1 = c[i]; rsiLow1 = rsi[i]; } if (c[i] > priceHigh1) { priceHigh1 = c[i]; rsiHigh1 = rsi[i]; } }
+    for (var i = len - mid; i < len; i++) { if (c[i] < priceLow2) { priceLow2 = c[i]; rsiLow2 = rsi[i]; } if (c[i] > priceHigh2) { priceHigh2 = c[i]; rsiHigh2 = rsi[i]; } }
+    if (priceLow2 < priceLow1 && rsiLow2 > rsiLow1) {
+      patterns.push({ name: 'Bullish RSI Divergence', type: 'bullish', weight: 2 }); bullPoints += 2;
+    }
+    if (priceHigh2 > priceHigh1 && rsiHigh2 < rsiHigh1) {
+      patterns.push({ name: 'Bearish RSI Divergence', type: 'bearish', weight: 2 }); bearPoints += 2;
+    }
+  }
+
+  // 4. MACD Crossovers (last 5 bars)
+  for (var i = Math.max(len-5, 1); i < len; i++) {
+    if (macd.macd[i] > macd.signal[i] && macd.macd[i-1] <= macd.signal[i-1]) {
+      patterns.push({ name: 'MACD Bullish Crossover', type: 'bullish', weight: 2 }); bullPoints += 2;
+    }
+    if (macd.macd[i] < macd.signal[i] && macd.macd[i-1] >= macd.signal[i-1]) {
+      patterns.push({ name: 'MACD Bearish Crossover', type: 'bearish', weight: 2 }); bearPoints += 2;
+    }
+  }
+  if (curMACD > 0) { bullPoints += 1; } else { bearPoints += 1; }
+
+  // 5. Bollinger Band Position
+  if (bb.upper[len-1] !== null) {
+    var bbWidth = (bb.upper[len-1] - bb.lower[len-1]) / bb.middle[len-1];
+    if (price >= bb.upper[len-1]) {
+      patterns.push({ name: 'At Upper Bollinger Band', type: 'bearish', weight: 1 }); bearPoints += 1;
+    } else if (price <= bb.lower[len-1]) {
+      patterns.push({ name: 'At Lower Bollinger Band', type: 'bullish', weight: 1 }); bullPoints += 1;
+    }
+    if (bbWidth < 0.05) {
+      patterns.push({ name: 'Bollinger Squeeze (Low Vol)', type: 'neutral', weight: 1 });
+    }
+  }
+
+  // 6. Volume Trend
+  if (vol.length > 20) {
+    var recentVol = vol.slice(-5).reduce(function(a,b){return a+b;},0) / 5;
+    var avgVol = vol.slice(-20).reduce(function(a,b){return a+b;},0) / 20;
+    if (recentVol > avgVol * 1.5 && price > prevPrice) {
+      patterns.push({ name: 'High Volume Rally', type: 'bullish', weight: 2 }); bullPoints += 2;
+    }
+    if (recentVol > avgVol * 1.5 && price < prevPrice) {
+      patterns.push({ name: 'High Volume Selloff', type: 'bearish', weight: 2 }); bearPoints += 2;
+    }
+  }
+
+  // 7. Trend Direction (20-day rate of change)
+  if (len > 20) {
+    var roc20 = ((price - c[len-21]) / c[len-21]) * 100;
+    if (roc20 > 10) { patterns.push({ name: 'Strong Uptrend (' + roc20.toFixed(1) + '%)', type: 'bullish', weight: 2 }); bullPoints += 2; }
+    else if (roc20 > 3) { patterns.push({ name: 'Moderate Uptrend (' + roc20.toFixed(1) + '%)', type: 'bullish', weight: 1 }); bullPoints += 1; }
+    else if (roc20 < -10) { patterns.push({ name: 'Strong Downtrend (' + roc20.toFixed(1) + '%)', type: 'bearish', weight: 2 }); bearPoints += 2; }
+    else if (roc20 < -3) { patterns.push({ name: 'Moderate Downtrend (' + roc20.toFixed(1) + '%)', type: 'bearish', weight: 1 }); bearPoints += 1; }
+    else { patterns.push({ name: 'Consolidation Range (' + roc20.toFixed(1) + '%)', type: 'neutral', weight: 1 }); }
+  }
+
+  // 8. Support/Resistance proximity
+  var sr = data.levels;
+  var distToSupport = ((price - sr.support) / price) * 100;
+  var distToResist = ((sr.resistance - price) / price) * 100;
+  if (distToSupport < 2) { patterns.push({ name: 'Near Support Level', type: 'bullish', weight: 1 }); bullPoints += 1; }
+  if (distToResist < 2) { patterns.push({ name: 'Near Resistance Level', type: 'bearish', weight: 1 }); bearPoints += 1; }
+
+  // Overall bias
+  var bias = 'neutral';
+  if (bullPoints > bearPoints + 2) bias = 'bullish';
+  else if (bearPoints > bullPoints + 2) bias = 'bearish';
+
+  return { patterns: patterns, bullPoints: bullPoints, bearPoints: bearPoints, bias: bias };
+}
+
+// ── Written Analysis Generator ──
+function generateAnalysis(ticker, data, patternResult) {
+  var c = data.closes; var len = c.length;
+  var price = c[len-1];
+  var sma50 = data.sma50[len-1];
+  var sma200 = data.sma200[len-1];
+  var rsi = data.rsi[len-1];
+  var macdVal = data.macd.macd[len-1];
+  var macdSig = data.macd.signal[len-1];
+  var sr = data.levels;
+  var atr = data.atr[len-1];
+  var bias = patternResult.bias;
+
+  // Calculate key stats
+  var high6m = Math.max.apply(null, data.highs);
+  var low6m = Math.min.apply(null, data.lows);
+  var changeFromHigh = ((price - high6m) / high6m * 100).toFixed(1);
+  var changeFromLow = ((price - low6m) / low6m * 100).toFixed(1);
+  var change6m = ((price - c[0]) / c[0] * 100).toFixed(1);
+
+  // Trend description
+  var trendDesc;
+  if (sma50 && sma200) {
+    if (price > sma50 && sma50 > sma200) trendDesc = 'in a confirmed uptrend with price above both moving averages and the 50-day leading the 200-day';
+    else if (price < sma50 && sma50 < sma200) trendDesc = 'in a confirmed downtrend with price below both moving averages and the 50-day trailing the 200-day';
+    else if (price > sma200 && price < sma50) trendDesc = 'showing signs of short-term weakness as price has fallen below the 50-day SMA but remains above the 200-day, suggesting the longer-term uptrend is still intact';
+    else if (price < sma200 && price > sma50) trendDesc = 'in a potential trend reversal phase — price is below the 200-day SMA but has reclaimed the 50-day, which could signal a nascent recovery if confirmed with volume';
+    else trendDesc = 'trading in a transitional zone between its key moving averages, indicating the trend is undecided';
+  } else {
+    trendDesc = 'still developing enough history for a complete moving average picture';
+  }
+
+  // RSI narrative
+  var rsiDesc;
+  if (rsi > 70) rsiDesc = 'RSI at ' + rsi.toFixed(1) + ' indicates overbought conditions. While this confirms strong recent momentum, it raises the probability of a near-term pullback or consolidation. Traders should be cautious about chasing the move at these levels.';
+  else if (rsi > 60) rsiDesc = 'RSI at ' + rsi.toFixed(1) + ' reflects healthy bullish momentum without being overextended. There is room for further upside before reaching overbought territory.';
+  else if (rsi > 40) rsiDesc = 'RSI at ' + rsi.toFixed(1) + ' is in neutral territory, suggesting balanced buying and selling pressure. The stock could break either direction from here — watch for a decisive move above 60 or below 40 for directional confirmation.';
+  else if (rsi > 30) rsiDesc = 'RSI at ' + rsi.toFixed(1) + ' is approaching oversold territory. Selling pressure is elevated but has not yet reached extreme levels. A bounce is possible if buying interest emerges near support.';
+  else rsiDesc = 'RSI at ' + rsi.toFixed(1) + ' signals deeply oversold conditions. Historically, such extreme readings often precede a relief bounce, though in strong downtrends the stock can remain oversold for extended periods.';
+
+  // MACD narrative
+  var macdDesc;
+  if (macdVal > macdSig && macdVal > 0) macdDesc = 'The MACD is bullish on both counts — the MACD line is above the signal line and both are in positive territory, indicating sustained upward momentum.';
+  else if (macdVal > macdSig && macdVal < 0) macdDesc = 'The MACD has crossed above its signal line while still in negative territory. This is an early bullish signal that momentum is shifting upward, but the overall trend has not fully confirmed the reversal yet.';
+  else if (macdVal < macdSig && macdVal > 0) macdDesc = 'The MACD has crossed below its signal line while still positive. This suggests the upward momentum is fading and a pullback may be developing, though the broader trend remains constructive.';
+  else macdDesc = 'The MACD is bearish — the MACD line is below the signal line and both are in negative territory. This indicates sustained downward momentum and sellers remain in control.';
+
+  // Direction thesis
+  var directionThesis;
+  if (bias === 'bullish') {
+    directionThesis = 'The weight of technical evidence for ' + ticker + ' skews bullish. With ' + patternResult.bullPoints + ' bullish signals vs ' + patternResult.bearPoints + ' bearish signals, the path of least resistance appears to be higher. ';
+    if (sr.resistance) directionThesis += 'The next key hurdle is resistance near $' + sr.resistance.toFixed(2) + '. A breakout above this level on strong volume would confirm continuation of the uptrend. ';
+    if (sr.support) directionThesis += 'On the downside, $' + sr.support.toFixed(2) + ' serves as the primary support level to monitor.';
+  } else if (bias === 'bearish') {
+    directionThesis = 'The technical picture for ' + ticker + ' leans bearish. With ' + patternResult.bearPoints + ' bearish signals vs ' + patternResult.bullPoints + ' bullish signals, sellers appear to have the upper hand. ';
+    if (sr.support) directionThesis += 'The critical level to watch is support near $' + sr.support.toFixed(2) + '. A breakdown below this zone could accelerate selling pressure. ';
+    if (sr.resistance) directionThesis += 'Any recovery attempt would need to reclaim $' + sr.resistance.toFixed(2) + ' to shift the technical outlook.';
+  } else {
+    directionThesis = ticker + ' presents a mixed technical picture with ' + patternResult.bullPoints + ' bullish and ' + patternResult.bearPoints + ' bearish signals. The stock is at an inflection point. ';
+    directionThesis += 'Watch for a decisive break above $' + sr.resistance.toFixed(2) + ' for a bullish signal, or below $' + sr.support.toFixed(2) + ' for a bearish one. Until then, expect range-bound price action.';
+  }
+
+  // Build paragraphs
+  var p1 = '<p><strong>' + ticker + '</strong> is currently trading at <strong>$' + price.toFixed(2) + '</strong>, ' + (change6m > 0 ? 'up' : 'down') + ' ' + Math.abs(change6m) + '% over the past 6 months. The stock is ' + changeFromHigh + '% from its 6-month high of $' + high6m.toFixed(2) + ' and +' + changeFromLow + '% from its low of $' + low6m.toFixed(2) + '. The stock is ' + trendDesc + '.</p>';
+  var p2 = '<p>' + rsiDesc + '</p>';
+  var p3 = '<p>' + macdDesc + '</p>';
+  var p4 = '<p>' + directionThesis + '</p>';
+
+  // Key levels box
+  var levelsHTML = '<div class="key-levels">';
+  levelsHTML += '<div class="level-card"><div class="level-label">Primary Support</div><div class="level-val support">$' + sr.support.toFixed(2) + '</div></div>';
+  levelsHTML += '<div class="level-card"><div class="level-label">Primary Resistance</div><div class="level-val resist">$' + sr.resistance.toFixed(2) + '</div></div>';
+  if (sr.support2) levelsHTML += '<div class="level-card"><div class="level-label">Secondary Support</div><div class="level-val support">$' + sr.support2.toFixed(2) + '</div></div>';
+  if (sr.resistance2) levelsHTML += '<div class="level-card"><div class="level-label">Secondary Resistance</div><div class="level-val resist">$' + sr.resistance2.toFixed(2) + '</div></div>';
+  levelsHTML += '</div>';
+
+  return '<div class="writeup-title">Directional Analysis — ' + ticker + '</div>' + p1 + p2 + p3 + p4 + levelsHTML;
+}
+
+// ── Data Fetching & Rendering ──
+var CORS_PROXIES = [
+  'https://api.allorigins.win/raw?url=',
+  'https://corsproxy.io/?url='
+];
+
+function fetchStockData(ticker) {
+  var url = 'https://query1.finance.yahoo.com/v8/finance/chart/' + encodeURIComponent(ticker) + '?range=6mo&interval=1d&includePrePost=false';
+
+  function tryProxy(index) {
+    if (index >= CORS_PROXIES.length) {
+      return Promise.reject(new Error('All CORS proxies failed. Unable to fetch data for ' + ticker + '.'));
+    }
+    var proxyUrl = CORS_PROXIES[index] + encodeURIComponent(url);
+    return fetch(proxyUrl)
+      .then(function(resp) {
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        return resp.json();
+      })
+      .then(function(json) {
+        var result = json.chart && json.chart.result && json.chart.result[0];
+        if (!result || !result.indicators || !result.indicators.quote || !result.indicators.quote[0]) {
+          throw new Error('Invalid data structure');
+        }
+        var quote = result.indicators.quote[0];
+        var timestamps = result.timestamp || [];
+        // Filter out null entries
+        var closes = [], highs = [], lows = [], opens = [], volumes = [], dates = [];
+        for (var i = 0; i < timestamps.length; i++) {
+          if (quote.close[i] != null && quote.high[i] != null && quote.low[i] != null) {
+            closes.push(quote.close[i]);
+            highs.push(quote.high[i]);
+            lows.push(quote.low[i]);
+            opens.push(quote.open[i]);
+            volumes.push(quote.volume[i] || 0);
+            dates.push(new Date(timestamps[i] * 1000));
+          }
+        }
+        if (closes.length < 30) throw new Error('Insufficient data');
+        return { closes: closes, highs: highs, lows: lows, opens: opens, volumes: volumes, dates: dates };
+      })
+      .catch(function() { return tryProxy(index + 1); });
+  }
+  return tryProxy(0);
+}
+
+function runAnalysis(ticker) {
+  var panel = document.getElementById('analysis-panel');
+  var loading = document.getElementById('analysis-loading');
+  var content = document.getElementById('analysis-content');
+  var errorDiv = document.getElementById('analysis-error');
+  var loadingTicker = document.getElementById('loading-ticker');
+
+  panel.classList.add('visible');
+  loading.style.display = 'block';
+  content.style.display = 'none';
+  errorDiv.style.display = 'none';
+  loadingTicker.textContent = ticker;
+
+  fetchStockData(ticker)
+    .then(function(raw) {
+      // Compute all indicators
+      var sma50 = computeSMA(raw.closes, 50);
+      var sma200 = computeSMA(raw.closes, 200);
+      var rsi = computeRSI(raw.closes, 14);
+      var macd = computeMACD(raw.closes);
+      var bollinger = computeBollingerBands(raw.closes, 20, 2);
+      var atr = computeATR(raw.highs, raw.lows, raw.closes, 14);
+      var levels = findSupportResistance(raw.highs, raw.lows, raw.closes);
+
+      var data = {
+        closes: raw.closes, highs: raw.highs, lows: raw.lows, opens: raw.opens,
+        volumes: raw.volumes, dates: raw.dates,
+        sma50: sma50, sma200: sma200, rsi: rsi, macd: macd,
+        bollinger: bollinger, atr: atr, levels: levels
+      };
+
+      // Detect patterns
+      var patternResult = detectPatterns(data);
+
+      // Render indicators grid
+      var len = raw.closes.length;
+      var price = raw.closes[len-1];
+      var indicatorsHTML = '';
+      indicatorsHTML += '<div class="ind-card"><div class="ind-label">Price</div><div class="ind-value">$' + price.toFixed(2) + '</div><div class="ind-desc">Current closing price</div></div>';
+      if (sma50[len-1]) {
+        var smaClass = price > sma50[len-1] ? 'ind-bullish' : 'ind-bearish';
+        indicatorsHTML += '<div class="ind-card"><div class="ind-label">SMA 50</div><div class="ind-value ' + smaClass + '">$' + sma50[len-1].toFixed(2) + '</div><div class="ind-desc">' + (price > sma50[len-1] ? 'Price above' : 'Price below') + ' 50-day avg</div></div>';
+      }
+      if (sma200[len-1]) {
+        var sma200Class = price > sma200[len-1] ? 'ind-bullish' : 'ind-bearish';
+        indicatorsHTML += '<div class="ind-card"><div class="ind-label">SMA 200</div><div class="ind-value ' + sma200Class + '">$' + sma200[len-1].toFixed(2) + '</div><div class="ind-desc">' + (price > sma200[len-1] ? 'Price above' : 'Price below') + ' 200-day avg</div></div>';
+      }
+      if (rsi[len-1]) {
+        var rsiClass = rsi[len-1] > 60 ? 'ind-bullish' : (rsi[len-1] < 40 ? 'ind-bearish' : 'ind-neutral');
+        indicatorsHTML += '<div class="ind-card"><div class="ind-label">RSI (14)</div><div class="ind-value ' + rsiClass + '">' + rsi[len-1].toFixed(1) + '</div><div class="ind-desc">' + (rsi[len-1] > 70 ? 'Overbought' : rsi[len-1] < 30 ? 'Oversold' : 'Neutral zone') + '</div></div>';
+      }
+      var macdClass = macd.macd[len-1] > macd.signal[len-1] ? 'ind-bullish' : 'ind-bearish';
+      indicatorsHTML += '<div class="ind-card"><div class="ind-label">MACD</div><div class="ind-value ' + macdClass + '">' + macd.macd[len-1].toFixed(3) + '</div><div class="ind-desc">' + (macd.macd[len-1] > macd.signal[len-1] ? 'Above signal line' : 'Below signal line') + '</div></div>';
+      if (atr[len-1]) {
+        indicatorsHTML += '<div class="ind-card"><div class="ind-label">ATR (14)</div><div class="ind-value">$' + atr[len-1].toFixed(2) + '</div><div class="ind-desc">Avg daily range (' + (atr[len-1]/price*100).toFixed(1) + '%)</div></div>';
+      }
+      document.getElementById('indicators-grid').innerHTML = indicatorsHTML;
+
+      // Render pattern badges
+      var badgesHTML = '';
+      patternResult.patterns.forEach(function(p) {
+        var arrow = p.type === 'bullish' ? '↑' : (p.type === 'bearish' ? '↓' : '→');
+        badgesHTML += '<span class="pattern-badge ' + p.type + '"><span class="arrow">' + arrow + '</span> ' + p.name + '</span>';
+      });
+      document.getElementById('pattern-badges').innerHTML = badgesHTML;
+
+      // Render bias badge
+      var biasEl = document.getElementById('bias-badge');
+      biasEl.className = 'bias-badge ' + patternResult.bias;
+      biasEl.textContent = patternResult.bias.toUpperCase();
+
+      // Render written analysis
+      document.getElementById('analysis-writeup').innerHTML = generateAnalysis(ticker, data, patternResult);
+
+      // Render date
+      document.getElementById('analysis-date').textContent = 'Analysis as of ' + raw.dates[len-1].toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+      // Show content, hide loader
+      loading.style.display = 'none';
+      content.style.display = 'block';
+    })
+    .catch(function(err) {
+      loading.style.display = 'none';
+      errorDiv.style.display = 'block';
+      errorDiv.innerHTML = '<strong>Unable to load analysis for ' + ticker + '</strong><br><span style="font-size:12px;color:var(--text-dim);">' + err.message + '<br>The chart above is still fully interactive via TradingView.</span>';
+    });
+}
+
 // Check for ?ticker= parameter — show featured chart
 var params = new URLSearchParams(window.location.search);
 var featuredTicker = params.get('ticker');
@@ -445,6 +1048,9 @@ if (featuredTicker) {
   document.title = featuredTicker + ' Technical Analysis — Shock Signal';
 
   createWidget('tv_featured', getSymbol(featuredTicker));
+
+  // Run the AI analysis engine
+  runAnalysis(featuredTicker);
 
   // If this ticker has a dedicated card, scroll to it after a delay
   setTimeout(function() {
