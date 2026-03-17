@@ -902,49 +902,69 @@ function generateAnalysis(ticker, data, patternResult) {
 }
 
 // ── Data Fetching & Rendering ──
-var CORS_PROXIES = [
-  'https://api.allorigins.win/raw?url=',
-  'https://corsproxy.io/?url='
-];
 
+// Strategy: Try multiple data source + proxy combinations
 function fetchStockData(ticker) {
-  var url = 'https://query1.finance.yahoo.com/v8/finance/chart/' + encodeURIComponent(ticker) + '?range=6mo&interval=1d&includePrePost=false';
+  // Yahoo Finance endpoints
+  var yahooV8 = 'https://query1.finance.yahoo.com/v8/finance/chart/' + encodeURIComponent(ticker) + '?range=6mo&interval=1d&includePrePost=false';
+  var yahooV7 = 'https://query2.finance.yahoo.com/v7/finance/chart/' + encodeURIComponent(ticker) + '?range=6mo&interval=1d&includePrePost=false';
 
-  function tryProxy(index) {
-    if (index >= CORS_PROXIES.length) {
-      return Promise.reject(new Error('All CORS proxies failed. Unable to fetch data for ' + ticker + '.'));
+  // CORS proxies to try (in order of reliability)
+  var attempts = [
+    { proxy: 'https://api.allorigins.win/raw?url=', url: yahooV8 },
+    { proxy: 'https://api.allorigins.win/raw?url=', url: yahooV7 },
+    { proxy: 'https://corsproxy.io/?', url: yahooV8 },
+    { proxy: 'https://api.codetabs.com/v1/proxy?quest=', url: yahooV8 },
+    { proxy: 'https://thingproxy.freeboard.io/fetch/', url: yahooV8 },
+    { proxy: 'https://api.allorigins.win/get?url=', url: yahooV8, wrapped: true }
+  ];
+
+  function parseYahooResponse(json) {
+    var result = json.chart && json.chart.result && json.chart.result[0];
+    if (!result || !result.indicators || !result.indicators.quote || !result.indicators.quote[0]) {
+      throw new Error('Invalid data structure');
     }
-    var proxyUrl = CORS_PROXIES[index] + encodeURIComponent(url);
-    return fetch(proxyUrl)
+    var quote = result.indicators.quote[0];
+    var timestamps = result.timestamp || [];
+    var closes = [], highs = [], lows = [], opens = [], volumes = [], dates = [];
+    for (var i = 0; i < timestamps.length; i++) {
+      if (quote.close[i] != null && quote.high[i] != null && quote.low[i] != null) {
+        closes.push(quote.close[i]);
+        highs.push(quote.high[i]);
+        lows.push(quote.low[i]);
+        opens.push(quote.open[i]);
+        volumes.push(quote.volume[i] || 0);
+        dates.push(new Date(timestamps[i] * 1000));
+      }
+    }
+    if (closes.length < 30) throw new Error('Insufficient data (' + closes.length + ' bars)');
+    return { closes: closes, highs: highs, lows: lows, opens: opens, volumes: volumes, dates: dates };
+  }
+
+  function tryAttempt(index) {
+    if (index >= attempts.length) {
+      return Promise.reject(new Error('Unable to fetch market data. Yahoo Finance may be temporarily unavailable.'));
+    }
+    var a = attempts[index];
+    var proxyUrl = a.proxy + encodeURIComponent(a.url);
+    return fetch(proxyUrl, { signal: AbortSignal.timeout ? AbortSignal.timeout(8000) : undefined })
       .then(function(resp) {
         if (!resp.ok) throw new Error('HTTP ' + resp.status);
         return resp.json();
       })
       .then(function(json) {
-        var result = json.chart && json.chart.result && json.chart.result[0];
-        if (!result || !result.indicators || !result.indicators.quote || !result.indicators.quote[0]) {
-          throw new Error('Invalid data structure');
+        // allorigins /get wraps in {contents: "..."}
+        if (a.wrapped && json.contents) {
+          json = JSON.parse(json.contents);
         }
-        var quote = result.indicators.quote[0];
-        var timestamps = result.timestamp || [];
-        // Filter out null entries
-        var closes = [], highs = [], lows = [], opens = [], volumes = [], dates = [];
-        for (var i = 0; i < timestamps.length; i++) {
-          if (quote.close[i] != null && quote.high[i] != null && quote.low[i] != null) {
-            closes.push(quote.close[i]);
-            highs.push(quote.high[i]);
-            lows.push(quote.low[i]);
-            opens.push(quote.open[i]);
-            volumes.push(quote.volume[i] || 0);
-            dates.push(new Date(timestamps[i] * 1000));
-          }
-        }
-        if (closes.length < 30) throw new Error('Insufficient data');
-        return { closes: closes, highs: highs, lows: lows, opens: opens, volumes: volumes, dates: dates };
+        return parseYahooResponse(json);
       })
-      .catch(function() { return tryProxy(index + 1); });
+      .catch(function(err) {
+        console.log('Proxy attempt ' + (index+1) + ' failed:', a.proxy.slice(0,40), err.message);
+        return tryAttempt(index + 1);
+      });
   }
-  return tryProxy(0);
+  return tryAttempt(0);
 }
 
 function runAnalysis(ticker) {
