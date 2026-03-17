@@ -903,68 +903,38 @@ function generateAnalysis(ticker, data, patternResult) {
 
 // ── Data Fetching & Rendering ──
 
-// Strategy: Try multiple data source + proxy combinations
+// Load pre-fetched stock data from static JSON (updated by GitHub Actions)
+var _stockDataCache = null;
+
+function loadStockDataFile() {
+  if (_stockDataCache) return Promise.resolve(_stockDataCache);
+  return fetch('data/stocks.json')
+    .then(function(resp) {
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      return resp.json();
+    })
+    .then(function(json) {
+      _stockDataCache = json;
+      return json;
+    });
+}
+
 function fetchStockData(ticker) {
-  // Yahoo Finance endpoints
-  var yahooV8 = 'https://query1.finance.yahoo.com/v8/finance/chart/' + encodeURIComponent(ticker) + '?range=6mo&interval=1d&includePrePost=false';
-  var yahooV7 = 'https://query2.finance.yahoo.com/v7/finance/chart/' + encodeURIComponent(ticker) + '?range=6mo&interval=1d&includePrePost=false';
-
-  // CORS proxies to try (in order of reliability)
-  var attempts = [
-    { proxy: 'https://api.allorigins.win/raw?url=', url: yahooV8 },
-    { proxy: 'https://api.allorigins.win/raw?url=', url: yahooV7 },
-    { proxy: 'https://corsproxy.io/?', url: yahooV8 },
-    { proxy: 'https://api.codetabs.com/v1/proxy?quest=', url: yahooV8 },
-    { proxy: 'https://thingproxy.freeboard.io/fetch/', url: yahooV8 },
-    { proxy: 'https://api.allorigins.win/get?url=', url: yahooV8, wrapped: true }
-  ];
-
-  function parseYahooResponse(json) {
-    var result = json.chart && json.chart.result && json.chart.result[0];
-    if (!result || !result.indicators || !result.indicators.quote || !result.indicators.quote[0]) {
-      throw new Error('Invalid data structure');
-    }
-    var quote = result.indicators.quote[0];
-    var timestamps = result.timestamp || [];
-    var closes = [], highs = [], lows = [], opens = [], volumes = [], dates = [];
-    for (var i = 0; i < timestamps.length; i++) {
-      if (quote.close[i] != null && quote.high[i] != null && quote.low[i] != null) {
-        closes.push(quote.close[i]);
-        highs.push(quote.high[i]);
-        lows.push(quote.low[i]);
-        opens.push(quote.open[i]);
-        volumes.push(quote.volume[i] || 0);
-        dates.push(new Date(timestamps[i] * 1000));
-      }
-    }
-    if (closes.length < 30) throw new Error('Insufficient data (' + closes.length + ' bars)');
-    return { closes: closes, highs: highs, lows: lows, opens: opens, volumes: volumes, dates: dates };
-  }
-
-  function tryAttempt(index) {
-    if (index >= attempts.length) {
-      return Promise.reject(new Error('Unable to fetch market data. Yahoo Finance may be temporarily unavailable.'));
-    }
-    var a = attempts[index];
-    var proxyUrl = a.proxy + encodeURIComponent(a.url);
-    return fetch(proxyUrl, { signal: AbortSignal.timeout ? AbortSignal.timeout(8000) : undefined })
-      .then(function(resp) {
-        if (!resp.ok) throw new Error('HTTP ' + resp.status);
-        return resp.json();
-      })
-      .then(function(json) {
-        // allorigins /get wraps in {contents: "..."}
-        if (a.wrapped && json.contents) {
-          json = JSON.parse(json.contents);
-        }
-        return parseYahooResponse(json);
-      })
-      .catch(function(err) {
-        console.log('Proxy attempt ' + (index+1) + ' failed:', a.proxy.slice(0,40), err.message);
-        return tryAttempt(index + 1);
-      });
-  }
-  return tryAttempt(0);
+  return loadStockDataFile()
+    .then(function(db) {
+      var t = db.tickers[ticker.toUpperCase()];
+      if (!t) throw new Error('No data available for ' + ticker + '. Data is updated twice daily on market days.');
+      if (t.closes.length < 30) throw new Error('Insufficient data for ' + ticker);
+      return {
+        closes: t.closes,
+        highs: t.highs,
+        lows: t.lows,
+        opens: t.opens,
+        volumes: t.volumes,
+        dates: t.dates.map(function(d){ return new Date(d); }),
+        updated: db.updated
+      };
+    });
 }
 
 function runAnalysis(ticker) {
