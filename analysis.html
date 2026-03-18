@@ -249,6 +249,65 @@
   .level-card .level-val.support { color: var(--green); }
   .level-card .level-val.resist { color: var(--red); }
 
+  .trade-plan {
+    margin-top: 20px; border: 1px solid var(--border); border-radius: 10px;
+    overflow: hidden;
+  }
+  .trade-plan-header {
+    background: var(--surface2); padding: 12px 16px;
+    font-size: 13px; font-weight: 700; letter-spacing: -0.2px;
+    display: flex; align-items: center; gap: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .trade-plan-header .tp-icon { font-size: 16px; }
+  .trade-plan-grid {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+  }
+  .tp-cell {
+    padding: 16px; text-align: center;
+    border-right: 1px solid var(--border);
+  }
+  .tp-cell:last-child { border-right: none; }
+  .tp-cell .tp-label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 1px;
+    color: var(--text-dim); font-weight: 600; margin-bottom: 6px;
+  }
+  .tp-cell .tp-price {
+    font-size: 22px; font-weight: 800;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+  }
+  .tp-cell .tp-pct {
+    font-size: 11px; margin-top: 4px; font-weight: 600;
+  }
+  .tp-cell.entry .tp-price { color: var(--cyan); }
+  .tp-cell.tp .tp-price { color: var(--green); }
+  .tp-cell.tp .tp-pct { color: var(--green); }
+  .tp-cell.sl .tp-price { color: var(--red); }
+  .tp-cell.sl .tp-pct { color: var(--red); }
+  .tp-rr {
+    padding: 10px 16px; background: var(--surface2);
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 12px; color: var(--text-dim);
+  }
+  .tp-rr .rr-val {
+    font-weight: 800; font-family: 'SF Mono', 'Fira Code', monospace;
+    color: var(--text); font-size: 14px;
+  }
+  .tp-rr .rr-good { color: var(--green); }
+  .tp-rr .rr-ok { color: var(--orange); }
+  .tp-rr .rr-bad { color: var(--red); }
+  .tp-note {
+    padding: 10px 16px; font-size: 11px; color: var(--text-dim);
+    border-top: 1px solid var(--border); line-height: 1.6;
+  }
+  @media (max-width: 700px) {
+    .trade-plan-grid { grid-template-columns: 1fr; }
+    .tp-cell { border-right: none; border-bottom: 1px solid var(--border); }
+    .tp-cell:last-child { border-bottom: none; }
+  }
+
   .analysis-disclaimer {
     margin-top: 16px; font-size: 11px; color: var(--text-dim);
     font-style: italic; opacity: 0.7;
@@ -398,7 +457,8 @@
           <div class="pattern-badges" id="pattern-badges"></div>
         </div>
         <div class="analysis-writeup" id="analysis-writeup"></div>
-        <div class="analysis-disclaimer">This analysis is algorithmically generated from historical price data. It is not investment advice. Past performance does not guarantee future results. Always conduct your own research.</div>
+        <div id="trade-plan-container"></div>
+        <div class="analysis-disclaimer">This analysis is algorithmically generated from historical price data. It is not investment advice — entry, take profit, and stop loss levels are suggestions based on technical indicators and should not be treated as recommendations. Past performance does not guarantee future results. Always conduct your own research and consult a financial advisor.</div>
       </div>
       <div id="analysis-error" style="display:none;text-align:center;padding:30px;color:var(--red);font-size:14px;"></div>
     </div>
@@ -901,6 +961,114 @@ function generateAnalysis(ticker, data, patternResult) {
   return '<div class="writeup-title">Directional Analysis — ' + ticker + '</div>' + p1 + p2 + p3 + p4 + levelsHTML;
 }
 
+// ── Trade Plan Generator ──
+function generateTradePlan(ticker, data, patternResult) {
+  var c = data.closes; var len = c.length;
+  var price = c[len-1];
+  var atr = data.atr[len-1] || (price * 0.02);
+  var sr = data.levels;
+  var bias = patternResult.bias;
+  var sma50 = data.sma50[len-1];
+  var sma200 = data.sma200[len-1];
+  var bb = data.bollinger;
+
+  var entry, takeProfit, stopLoss, note;
+
+  if (bias === 'bullish') {
+    // Bullish: entry on pullback to nearest support/MA, TP at resistance, SL below support
+    var pullbackTarget = null;
+    // Look for the best pullback entry: SMA 50 if price is above it, or nearest support
+    if (sma50 && price > sma50 && (price - sma50) / price < 0.05) {
+      pullbackTarget = sma50;
+    } else if (sr.support && (price - sr.support) / price < 0.04) {
+      pullbackTarget = sr.support;
+    }
+
+    if (pullbackTarget && pullbackTarget < price * 0.98) {
+      // There's room for a pullback entry
+      entry = Math.round(pullbackTarget * 100) / 100;
+      note = 'Suggested entry on a pullback to the ' + (pullbackTarget === sma50 ? '50-day SMA' : 'support level') + '. If price does not pull back, a breakout entry above $' + sr.resistance.toFixed(2) + ' with volume confirmation is an alternative.';
+    } else {
+      // Price is near support or moving averages, enter near current price
+      entry = Math.round((price - atr * 0.3) * 100) / 100;
+      note = 'Entry near current levels with a tight stop. The bullish bias supports a long position, but waiting for a small dip of ~$' + (atr * 0.3).toFixed(2) + ' (0.3x ATR) improves risk/reward.';
+    }
+
+    takeProfit = Math.round(sr.resistance * 100) / 100;
+    // If resistance is too close, use 2x ATR above entry
+    if ((takeProfit - entry) / entry < 0.02) {
+      takeProfit = Math.round((entry + atr * 2.5) * 100) / 100;
+    }
+    stopLoss = Math.round((entry - atr * 1.5) * 100) / 100;
+    // But don't set stop above a key support level
+    if (sr.support && sr.support < entry && sr.support > stopLoss) {
+      stopLoss = Math.round((sr.support - atr * 0.3) * 100) / 100;
+    }
+
+  } else if (bias === 'bearish') {
+    // Bearish: entry on bounce to resistance/MA, TP at support, SL above resistance
+    var bounceTarget = null;
+    if (sma50 && price < sma50 && (sma50 - price) / price < 0.05) {
+      bounceTarget = sma50;
+    } else if (sr.resistance && (sr.resistance - price) / price < 0.04) {
+      bounceTarget = sr.resistance;
+    }
+
+    if (bounceTarget && bounceTarget > price * 1.02) {
+      entry = Math.round(bounceTarget * 100) / 100;
+      note = 'Bearish bias — if taking a short position, suggested entry on a bounce to the ' + (bounceTarget === sma50 ? '50-day SMA' : 'resistance level') + '. For long-only investors, consider waiting for a reversal signal before entering. A breakdown below $' + sr.support.toFixed(2) + ' would confirm further downside.';
+    } else {
+      entry = Math.round((price + atr * 0.3) * 100) / 100;
+      note = 'Bearish bias — for short positions, entry near current levels with a bounce buffer. For long-only investors, this is a caution zone — consider reducing exposure or waiting for a bullish reversal pattern to form before entering.';
+    }
+
+    // For bearish: TP is lower (support), SL is higher (above resistance)
+    takeProfit = Math.round(sr.support * 100) / 100;
+    if ((entry - takeProfit) / entry < 0.02) {
+      takeProfit = Math.round((entry - atr * 2.5) * 100) / 100;
+    }
+    stopLoss = Math.round((entry + atr * 1.5) * 100) / 100;
+    if (sr.resistance && sr.resistance > entry && sr.resistance < stopLoss) {
+      stopLoss = Math.round((sr.resistance + atr * 0.3) * 100) / 100;
+    }
+
+  } else {
+    // Neutral: range trade setup
+    entry = Math.round(price * 100) / 100;
+    takeProfit = Math.round(sr.resistance * 100) / 100;
+    stopLoss = Math.round((sr.support - atr * 0.3) * 100) / 100;
+    if ((takeProfit - entry) / entry < 0.02) takeProfit = Math.round((entry + atr * 2) * 100) / 100;
+    note = 'Mixed signals — the stock is range-bound. Consider a long entry near support ($' + sr.support.toFixed(2) + ') targeting resistance, or wait for a breakout/breakdown for a clearer directional trade. The levels shown assume a long bias from current price.';
+  }
+
+  // Calculate percentages and risk/reward
+  var isBearishTrade = bias === 'bearish';
+  var reward = isBearishTrade ? entry - takeProfit : takeProfit - entry;
+  var risk = isBearishTrade ? stopLoss - entry : entry - stopLoss;
+  var rrRatio = risk > 0 ? (reward / risk) : 0;
+  var tpPct = ((reward / entry) * 100).toFixed(1);
+  var slPct = ((risk / entry) * 100).toFixed(1);
+
+  // Build HTML
+  var html = '<div class="trade-plan">';
+  html += '<div class="trade-plan-header"><span class="tp-icon">&#9776;</span> Trade Plan — ' + (isBearishTrade ? 'Short Bias' : 'Long Bias') + '</div>';
+  html += '<div class="trade-plan-grid">';
+  html += '<div class="tp-cell entry"><div class="tp-label">Entry</div><div class="tp-price">$' + entry.toFixed(2) + '</div><div class="tp-pct" style="color:var(--cyan);">Current: $' + price.toFixed(2) + '</div></div>';
+  html += '<div class="tp-cell tp"><div class="tp-label">Take Profit</div><div class="tp-price">$' + takeProfit.toFixed(2) + '</div><div class="tp-pct">+' + tpPct + '% from entry</div></div>';
+  html += '<div class="tp-cell sl"><div class="tp-label">Stop Loss</div><div class="tp-price">$' + stopLoss.toFixed(2) + '</div><div class="tp-pct">-' + slPct + '% from entry</div></div>';
+  html += '</div>';
+
+  // Risk/Reward ratio bar
+  var rrClass = rrRatio >= 2 ? 'rr-good' : (rrRatio >= 1 ? 'rr-ok' : 'rr-bad');
+  html += '<div class="tp-rr"><span>Risk / Reward Ratio</span><span class="rr-val ' + rrClass + '">' + rrRatio.toFixed(2) + 'R</span></div>';
+
+  // Context note
+  html += '<div class="tp-note">' + note + '</div>';
+  html += '</div>';
+
+  return html;
+}
+
 // ── Data Fetching & Rendering ──
 
 // Load pre-fetched stock data from static JSON (updated by GitHub Actions)
@@ -1010,6 +1178,9 @@ function runAnalysis(ticker) {
 
       // Render written analysis
       document.getElementById('analysis-writeup').innerHTML = generateAnalysis(ticker, data, patternResult);
+
+      // Render trade plan (entry, take profit, stop loss)
+      document.getElementById('trade-plan-container').innerHTML = generateTradePlan(ticker, data, patternResult);
 
       // Render date
       document.getElementById('analysis-date').textContent = 'Analysis as of ' + raw.dates[len-1].toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
