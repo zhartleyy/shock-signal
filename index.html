@@ -29,6 +29,8 @@
             --orange-dim: rgba(249, 115, 22, 0.12);
             --blue: #3b82f6;
             --blue-dim: rgba(59, 130, 246, 0.12);
+            --radius: 16px;
+            --radius-sm: 8px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -41,41 +43,39 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
         /* NAV */
         nav {
-            position: fixed;
+            position: sticky;
             top: 0;
-            left: 0;
-            right: 0;
             z-index: 100;
             background: rgba(9, 9, 11, 0.8);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
+            padding: 0 24px;
         }
         .nav-inner {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 24px;
-            height: 64px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            height: 64px;
         }
         .nav-brand {
             display: flex;
             align-items: center;
             gap: 10px;
             font-weight: 700;
-            font-size: 1.25rem;
-            color: var(--text);
-            text-decoration: none;
+            font-size: 1.2rem;
         }
         .nav-logo {
             width: 32px;
             height: 32px;
             background: linear-gradient(135deg, var(--accent), #d97706);
-            border-radius: 8px;
+            border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -84,62 +84,68 @@
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 24px;
+            gap: 8px;
         }
         .nav-links a {
             color: var(--text-secondary);
             text-decoration: none;
-            font-size: 0.875rem;
+            font-size: 0.85rem;
             font-weight: 500;
-            transition: color 0.2s;
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            transition: all 0.2s;
         }
-        .nav-links a:hover { color: var(--text); }
-        .nav-badge {
-            background: var(--accent-dim);
-            color: var(--accent);
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            font-family: 'JetBrains Mono', monospace;
-        }
+        .nav-links a:hover { color: var(--text); background: var(--surface-2); }
+        .nav-links .active { color: var(--accent); background: var(--accent-dim); }
 
         /* HERO */
         .hero {
-            padding: 120px 24px 60px;
-            text-align: center;
             position: relative;
+            text-align: center;
+            padding: 80px 24px 60px;
             overflow: hidden;
         }
         .hero::before {
             content: '';
             position: absolute;
-            top: 60px;
+            top: -200px;
             left: 50%;
             transform: translateX(-50%);
-            width: 600px;
-            height: 400px;
-            background: radial-gradient(ellipse, rgba(245, 158, 11, 0.1) 0%, transparent 70%);
+            width: 800px;
+            height: 600px;
+            background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%);
             pointer-events: none;
         }
         .hero-eyebrow {
-            font-family: 'JetBrains Mono', monospace;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
             font-size: 0.8rem;
-            font-weight: 500;
-            color: var(--accent);
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
+            color: var(--accent);
             margin-bottom: 16px;
+        }
+        .hero-eyebrow .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
         }
         .hero h1 {
             font-size: 3rem;
             font-weight: 800;
-            letter-spacing: -0.02em;
+            line-height: 1.1;
             margin-bottom: 12px;
-            background: linear-gradient(135deg, var(--text) 0%, var(--text-secondary) 100%);
+            background: linear-gradient(to right, var(--text), var(--text-secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
         .hero-date {
             font-size: 1.1rem;
@@ -149,7 +155,7 @@
         .hero-stats {
             display: flex;
             justify-content: center;
-            gap: 40px;
+            gap: 32px;
             flex-wrap: wrap;
         }
         .hero-stat {
@@ -157,12 +163,12 @@
         }
         .hero-stat-value {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 1.75rem;
+            font-size: 1.8rem;
             font-weight: 700;
             color: var(--accent);
         }
         .hero-stat-label {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -180,7 +186,7 @@
         .disclaimer {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 12px;
+            border-radius: var(--radius);
             padding: 16px 20px;
             margin-bottom: 48px;
             display: flex;
@@ -188,7 +194,6 @@
             gap: 12px;
             font-size: 0.85rem;
             color: var(--text-secondary);
-            line-height: 1.5;
         }
         .disclaimer-icon {
             font-size: 1.1rem;
@@ -201,174 +206,146 @@
             margin-bottom: 24px;
         }
         .section-eyebrow {
-            font-family: 'JetBrains Mono', monospace;
             font-size: 0.75rem;
-            font-weight: 500;
-            color: var(--accent);
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
+            color: var(--accent);
             margin-bottom: 8px;
         }
         .section-title {
-            font-size: 1.75rem;
+            font-size: 1.6rem;
             font-weight: 700;
-            letter-spacing: -0.01em;
         }
         .section-subtitle {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: var(--text-secondary);
-            margin-top: 6px;
+            margin-top: 4px;
         }
 
         /* LEGEND */
         .legend {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-bottom: 48px;
+            padding: 16px 20px;
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 24px;
-            margin-bottom: 48px;
-        }
-        .legend-title {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 16px;
-        }
-        .legend-items {
-            display: flex;
-            gap: 32px;
-            flex-wrap: wrap;
+            border-radius: var(--radius);
         }
         .legend-item {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
         }
         .legend-badge {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.75rem;
             font-weight: 600;
-            padding: 4px 10px;
-            border-radius: 8px;
-            min-width: 36px;
-            text-align: center;
+            padding: 2px 8px;
+            border-radius: var(--radius-sm);
         }
         .legend-badge.high { background: var(--green-dim); color: var(--green); }
         .legend-badge.moderate { background: var(--orange-dim); color: var(--orange); }
         .legend-badge.conditional { background: var(--blue-dim); color: var(--blue); }
-        .legend-label {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-        .legend-desc {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
 
         /* MACRO FORCES */
         .macro-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
             gap: 16px;
             margin-bottom: 48px;
         }
         .macro-card {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 16px;
+            border-radius: var(--radius);
             padding: 24px;
-            transition: border-color 0.2s, transform 0.2s;
+            transition: border-color 0.2s;
         }
-        .macro-card:hover {
-            border-color: var(--border-light);
-            transform: translateY(-2px);
-        }
-        .macro-icon {
+        .macro-card:hover { border-color: var(--border-light); }
+        .macro-card-icon {
             font-size: 1.5rem;
             margin-bottom: 12px;
         }
-        .macro-name {
-            font-size: 1.1rem;
+        .macro-card h3 {
+            font-size: 1.05rem;
             font-weight: 700;
             margin-bottom: 8px;
         }
-        .macro-desc {
-            font-size: 0.875rem;
+        .macro-card p {
+            font-size: 0.85rem;
             color: var(--text-secondary);
             line-height: 1.6;
-            margin-bottom: 12px;
         }
         .macro-signals {
             display: flex;
             flex-wrap: wrap;
             gap: 6px;
+            margin-top: 12px;
         }
         .macro-signal-tag {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.7rem;
             padding: 3px 8px;
-            border-radius: 6px;
             background: var(--surface-2);
-            color: var(--text-muted);
             border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text-muted);
         }
 
         /* DOUBLE BENEFICIARY */
-        .double-section {
+        .double-ben {
             margin-bottom: 48px;
         }
-        .double-grid {
+        .double-ben-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 16px;
         }
-        .double-card {
-            background: linear-gradient(135deg, var(--surface), var(--surface-2));
-            border: 1px solid var(--accent);
-            border-radius: 16px;
+        .double-ben-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
             padding: 20px;
             position: relative;
             overflow: hidden;
         }
-        .double-card::before {
+        .double-ben-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--accent), transparent);
+            height: 3px;
+            background: linear-gradient(to right, var(--accent), var(--green));
         }
-        .double-ticker {
+        .double-ben-ticker {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 700;
             color: var(--accent);
-            margin-bottom: 4px;
         }
-        .double-name {
+        .double-ben-name {
             font-size: 0.85rem;
             color: var(--text-secondary);
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
-        .double-reasons {
+        .double-ben-signals {
             display: flex;
-            flex-direction: column;
+            flex-wrap: wrap;
             gap: 6px;
         }
-        .double-reason {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            display: flex;
-            align-items: flex-start;
-            gap: 6px;
-        }
-        .double-reason::before {
-            content: '▸';
+        .double-ben-signal {
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            background: var(--accent-dim);
             color: var(--accent);
-            flex-shrink: 0;
+            border-radius: 4px;
+            font-weight: 500;
         }
 
         /* SIGNAL CARDS */
@@ -378,55 +355,44 @@
         .signal-card {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 16px;
+            border-radius: var(--radius);
             padding: 28px;
             margin-bottom: 20px;
             transition: border-color 0.2s;
         }
-        .signal-card:hover {
-            border-color: var(--border-light);
-        }
+        .signal-card:hover { border-color: var(--border-light); }
         .signal-header {
             display: flex;
             align-items: flex-start;
             justify-content: space-between;
             gap: 16px;
             margin-bottom: 16px;
-        }
-        .signal-number {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            margin-bottom: 6px;
+            flex-wrap: wrap;
         }
         .signal-title {
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             font-weight: 700;
-            line-height: 1.3;
+            flex: 1;
         }
-        .signal-macro-tag {
+        .signal-num {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: var(--surface-2);
             padding: 4px 10px;
-            border-radius: 6px;
-            background: var(--accent-dim);
-            color: var(--accent);
+            border-radius: 4px;
             white-space: nowrap;
-            flex-shrink: 0;
         }
         .signal-chain {
-            background: var(--surface-2);
-            border-radius: 12px;
-            padding: 16px 20px;
-            margin-bottom: 20px;
             font-size: 0.9rem;
             color: var(--text-secondary);
             line-height: 1.7;
+            margin-bottom: 20px;
+            padding: 16px;
+            background: var(--surface-2);
+            border-radius: var(--radius-sm);
             border-left: 3px solid var(--accent);
-        }
-        .signal-chain strong {
-            color: var(--text);
-            font-weight: 600;
         }
         .signal-tables {
             display: grid;
@@ -435,11 +401,11 @@
         }
         .signal-table-wrap {
             background: var(--surface-2);
-            border-radius: 12px;
+            border-radius: var(--radius-sm);
             overflow: hidden;
         }
         .signal-table-header {
-            padding: 12px 16px;
+            padding: 10px 16px;
             font-size: 0.8rem;
             font-weight: 600;
             text-transform: uppercase;
@@ -448,36 +414,29 @@
             align-items: center;
             gap: 6px;
         }
-        .signal-table-header.winners {
-            color: var(--green);
-            background: var(--green-dim);
-        }
-        .signal-table-header.losers {
-            color: var(--red);
-            background: var(--red-dim);
-        }
-        .signal-table {
+        .signal-table-header.winners { color: var(--green); background: var(--green-dim); }
+        .signal-table-header.losers { color: var(--red); background: var(--red-dim); }
+
+        table {
             width: 100%;
             border-collapse: collapse;
         }
-        .signal-table th {
+        th {
             text-align: left;
             padding: 8px 16px;
             font-size: 0.7rem;
             font-weight: 600;
-            color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 1px;
+            color: var(--text-muted);
             border-bottom: 1px solid var(--border);
         }
-        .signal-table td {
+        td {
             padding: 10px 16px;
             font-size: 0.85rem;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid rgba(39, 39, 42, 0.5);
         }
-        .signal-table tr:last-child td {
-            border-bottom: none;
-        }
+        tr:last-child td { border-bottom: none; }
         .ticker {
             font-family: 'JetBrains Mono', monospace;
             font-weight: 600;
@@ -485,28 +444,17 @@
         }
         .ticker.win { color: var(--green); }
         .ticker.lose { color: var(--red); }
-        .company-name {
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-        }
-        .thesis {
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-            max-width: 280px;
-        }
         .conviction-badge {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.7rem;
-            font-weight: 600;
-            padding: 3px 8px;
-            border-radius: 8px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: var(--radius-sm);
             display: inline-block;
-            min-width: 28px;
-            text-align: center;
         }
         .conviction-high { background: var(--green-dim); color: var(--green); }
-        .conviction-moderate { background: var(--orange-dim); color: var(--orange); }
-        .conviction-conditional { background: var(--blue-dim); color: var(--blue); }
+        .conviction-mod { background: var(--orange-dim); color: var(--orange); }
+        .conviction-low { background: var(--blue-dim); color: var(--blue); }
 
         /* HOW IT WORKS */
         .how-section {
@@ -520,30 +468,28 @@
         .how-card {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 16px;
+            border-radius: var(--radius);
             padding: 24px;
             text-align: center;
-            position: relative;
         }
         .how-step {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.7rem;
+            font-weight: 600;
             color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 2px;
             margin-bottom: 12px;
         }
         .how-icon {
-            font-size: 1.75rem;
+            font-size: 1.8rem;
             margin-bottom: 12px;
         }
-        .how-name {
-            font-size: 1rem;
+        .how-card h4 {
+            font-size: 0.95rem;
             font-weight: 700;
             margin-bottom: 8px;
         }
-        .how-desc {
-            font-size: 0.825rem;
+        .how-card p {
+            font-size: 0.8rem;
             color: var(--text-secondary);
             line-height: 1.5;
         }
@@ -551,7 +497,7 @@
         /* FOOTER */
         footer {
             border-top: 1px solid var(--border);
-            padding: 40px 24px;
+            padding: 32px 24px;
             text-align: center;
         }
         .footer-brand {
@@ -559,13 +505,15 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            margin-bottom: 12px;
-        }
-        .footer-brand span {
             font-weight: 700;
-            font-size: 1rem;
+            margin-bottom: 8px;
         }
-        .footer-text {
+        .footer-brand .nav-logo {
+            width: 24px;
+            height: 24px;
+            font-size: 0.8rem;
+        }
+        footer p {
             font-size: 0.8rem;
             color: var(--text-muted);
         }
@@ -573,22 +521,21 @@
         /* RESPONSIVE */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2rem; }
-            .hero-stats { gap: 24px; }
+            .hero { padding: 60px 24px 40px; }
+            .hero-stats { gap: 20px; }
+            .hero-stat-value { font-size: 1.4rem; }
             .signal-tables { grid-template-columns: 1fr; }
             .how-grid { grid-template-columns: repeat(2, 1fr); }
             .macro-grid { grid-template-columns: 1fr; }
-            .double-grid { grid-template-columns: 1fr 1fr; }
             .nav-links { display: none; }
-            .legend-items { gap: 16px; }
+            .legend { flex-direction: column; gap: 12px; }
         }
         @media (max-width: 480px) {
-            .hero { padding: 100px 16px 40px; }
             .hero h1 { font-size: 1.6rem; }
-            .hero-stat-value { font-size: 1.25rem; }
-            .container { padding: 0 16px; }
+            .hero-stats { flex-direction: column; gap: 12px; }
             .how-grid { grid-template-columns: 1fr; }
-            .double-grid { grid-template-columns: 1fr; }
             .signal-header { flex-direction: column; }
+            .double-ben-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -597,42 +544,43 @@
 <!-- NAV -->
 <nav>
     <div class="nav-inner">
-        <a href="#" class="nav-brand">
-            <div class="nav-logo">&#x269B;</div>
+        <div class="nav-brand">
+            <div class="nav-logo">⚛</div>
             Catalyst
-        </a>
+        </div>
         <div class="nav-links">
-            <a href="#signals">Signals</a>
+            <a href="#signals" class="active">Signals</a>
             <a href="#macro">Macro Forces</a>
-            <a href="#methodology">Methodology</a>
-            <span class="nav-badge">LIVE</span>
+            <a href="#double">Convergence</a>
+            <a href="#how">Methodology</a>
         </div>
     </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-    <div class="container">
-        <div class="hero-eyebrow">Daily Intelligence Brief</div>
-        <h1>Supply &amp; Demand Signal Scan</h1>
-        <div class="hero-date">Monday, April 13, 2026 &nbsp;&middot;&nbsp; Covering events through market close April 11</div>
-        <div class="hero-stats">
-            <div class="hero-stat">
-                <div class="hero-stat-value">10</div>
-                <div class="hero-stat-label">Signals Detected</div>
-            </div>
-            <div class="hero-stat">
-                <div class="hero-stat-value">5</div>
-                <div class="hero-stat-label">Macro Themes</div>
-            </div>
-            <div class="hero-stat">
-                <div class="hero-stat-value">42</div>
-                <div class="hero-stat-label">Stocks Mapped</div>
-            </div>
-            <div class="hero-stat">
-                <div class="hero-stat-value">7</div>
-                <div class="hero-stat-label">Double Beneficiaries</div>
-            </div>
+    <div class="hero-eyebrow">
+        <span class="dot"></span>
+        Daily Intelligence Brief
+    </div>
+    <h1>Supply / Demand Signal Scan</h1>
+    <p class="hero-date">Saturday, April 18, 2026</p>
+    <div class="hero-stats">
+        <div class="hero-stat">
+            <div class="hero-stat-value">9</div>
+            <div class="hero-stat-label">Signals Detected</div>
+        </div>
+        <div class="hero-stat">
+            <div class="hero-stat-value">34</div>
+            <div class="hero-stat-label">Stocks Mapped</div>
+        </div>
+        <div class="hero-stat">
+            <div class="hero-stat-value">4</div>
+            <div class="hero-stat-label">Macro Themes</div>
+        </div>
+        <div class="hero-stat">
+            <div class="hero-stat-value">5</div>
+            <div class="hero-stat-label">Double Beneficiaries</div>
         </div>
     </div>
 </section>
@@ -641,201 +589,161 @@
 
     <!-- DISCLAIMER -->
     <div class="disclaimer">
-        <span class="disclaimer-icon">&#x26A0;</span>
-        <div><strong>Not investment advice.</strong> Catalyst identifies supply/demand dislocations and traces causal chains to publicly traded equities. All analysis is informational. Conviction scores reflect analytical confidence in the causal link, not price direction certainty. Always do your own research and consult a qualified financial advisor before making investment decisions.</div>
+        <span class="disclaimer-icon">⚠</span>
+        <span><strong>Not investment advice.</strong> Catalyst identifies supply/demand dislocations for informational purposes only. All analysis is algorithmic and may contain errors. Do your own research before making any investment decisions. Past signals are not indicative of future performance.</span>
     </div>
 
     <!-- CONVICTION LEGEND -->
     <div class="legend">
-        <div class="legend-title">Conviction Score Legend</div>
-        <div class="legend-items">
-            <div class="legend-item">
-                <span class="legend-badge high">8&ndash;10</span>
-                <div>
-                    <div class="legend-label">High Conviction</div>
-                    <div class="legend-desc">Direct causal link, high revenue exposure, underpriced</div>
-                </div>
-            </div>
-            <div class="legend-item">
-                <span class="legend-badge moderate">5&ndash;7</span>
-                <div>
-                    <div class="legend-label">Moderate Conviction</div>
-                    <div class="legend-desc">Clear mechanism, partial exposure or partially priced in</div>
-                </div>
-            </div>
-            <div class="legend-item">
-                <span class="legend-badge conditional">1&ndash;4</span>
-                <div>
-                    <div class="legend-label">Conditional</div>
-                    <div class="legend-desc">Plausible link but indirect, dependent on escalation</div>
-                </div>
-            </div>
+        <div class="legend-item">
+            <span class="legend-badge high">8–10</span>
+            High conviction — direct, measurable revenue impact
+        </div>
+        <div class="legend-item">
+            <span class="legend-badge moderate">5–7</span>
+            Moderate — clear mechanism, uncertain magnitude
+        </div>
+        <div class="legend-item">
+            <span class="legend-badge conditional">1–4</span>
+            Conditional — dependent on further developments
         </div>
     </div>
 
     <!-- MACRO FORCES -->
-    <section id="macro" class="macro-section" style="margin-bottom: 48px;">
+    <section id="macro" class="macro-section">
         <div class="section-header">
-            <div class="section-eyebrow">Macro Themes</div>
-            <div class="section-title">Dominant Forces Shaping Markets</div>
-            <div class="section-subtitle">Five interconnected macro forces driving today's supply/demand dislocations</div>
+            <div class="section-eyebrow">Macro Forces</div>
+            <h2 class="section-title">Dominant Themes Shaping Markets</h2>
+            <p class="section-subtitle">Grouping today's signals into structural forces driving supply and demand</p>
         </div>
         <div class="macro-grid">
             <div class="macro-card">
-                <div class="macro-icon">&#x1F6E2;&#xFE0F;</div>
-                <div class="macro-name">Hormuz Crisis &amp; Energy Shock</div>
-                <div class="macro-desc">The Strait of Hormuz remains effectively closed after Iran re-restricted passage following Israel's Lebanon strikes. Brent crude forecast to peak at $115/b in Q2. IEA coordinating strategic reserve releases as production shut-ins hit 9.1M b/d. Diesel up 95% over three months, gasoline approaching $4.30/gal nationally.</div>
+                <div class="macro-card-icon">🛢️</div>
+                <h3>Hormuz Whiplash: Oil Price Shock Reversal</h3>
+                <p>Iran declared the Strait of Hormuz "completely open" on April 17, crashing oil prices 10%+ in a single session. But by Saturday, Iran reasserted "strict military control" — ships that entered turned back. The supply picture remains deeply uncertain, creating extreme volatility for energy, airlines, and shipping.</p>
                 <div class="macro-signals">
-                    <span class="macro-signal-tag">Signal 1</span>
-                    <span class="macro-signal-tag">Signal 2</span>
-                    <span class="macro-signal-tag">Signal 3</span>
+                    <span class="macro-signal-tag">Signal #1</span>
+                    <span class="macro-signal-tag">Signal #2</span>
+                    <span class="macro-signal-tag">Signal #3</span>
                 </div>
             </div>
             <div class="macro-card">
-                <div class="macro-icon">&#x1F9E0;</div>
-                <div class="macro-name">AI Infrastructure Supercycle</div>
-                <div class="macro-desc">Semiconductor revenue to exceed $1.3T in 2026 (+64% YoY). TSMC advanced packaging (CoWoS) is the next bottleneck, growing at 80% CAGR. Hyperscaler AI capex up 50%+. DRAM prices surging 125%, NAND 234%. The packaging step &mdash; not the chip itself &mdash; is now the binding constraint.</div>
+                <div class="macro-card-icon">🧠</div>
+                <h3>AI Chip Supercycle Deepens</h3>
+                <p>TSMC's 58% profit surge and raised guidance confirm AI-driven semiconductor demand is accelerating, not plateauing. But ASML's stock dropped despite beating earnings as new U.S. legislation threatens to cut China off from DUV lithography. The bottleneck is shifting from compute to advanced packaging.</p>
                 <div class="macro-signals">
-                    <span class="macro-signal-tag">Signal 4</span>
-                    <span class="macro-signal-tag">Signal 5</span>
+                    <span class="macro-signal-tag">Signal #4</span>
+                    <span class="macro-signal-tag">Signal #5</span>
                 </div>
             </div>
             <div class="macro-card">
-                <div class="macro-icon">&#x1F4CA;</div>
-                <div class="macro-name">Stagflation Risk &amp; Rate Uncertainty</div>
-                <div class="macro-desc">Fed minutes reveal growing willingness to consider rate hikes as energy-driven inflation persists. Funds rate held at 3.5&ndash;3.75%, but multiple policymakers see upside risk to inflation. Consumer staples index lost 10% in March. Next FOMC decision April 29 &mdash; markets pricing one cut at most in 2026.</div>
+                <div class="macro-card-icon">🛡️</div>
+                <h3>Trillion-Dollar Defense Era</h3>
+                <p>The FY2027 budget request of $1.5 trillion in total defense resources would be the highest since WWII. NATO allies increased spending 20% in 2025. The Iran conflict is accelerating demand for missiles, munitions, and networked battle systems across the Western alliance.</p>
                 <div class="macro-signals">
-                    <span class="macro-signal-tag">Signal 6</span>
-                    <span class="macro-signal-tag">Signal 7</span>
+                    <span class="macro-signal-tag">Signal #6</span>
+                    <span class="macro-signal-tag">Signal #7</span>
                 </div>
             </div>
             <div class="macro-card">
-                <div class="macro-icon">&#x2694;&#xFE0F;</div>
-                <div class="macro-name">Defense Spending Supercycle</div>
-                <div class="macro-desc">NATO allies raised spending target to 5% of GDP by 2035. European defense spending up 20% in 2025 and accelerating. Global defense spend hit $2.63T. IPO pipeline surging &mdash; Czechoslovak Group valued at &euro;25bn. Equipment deliveries expected to accelerate through 2027.</div>
+                <div class="macro-card-icon">⚖️</div>
+                <h3>Trade Policy Regime Change</h3>
+                <p>The Supreme Court struck down IEEPA-based tariffs, but the administration responded within hours with new 10% tariffs under Section 122 of the Trade Act, valid through July 24. Meanwhile, ECB is mulling rate hikes as inflation runs hot from energy costs. Policy uncertainty is the new constant.</p>
                 <div class="macro-signals">
-                    <span class="macro-signal-tag">Signal 8</span>
-                </div>
-            </div>
-            <div class="macro-card">
-                <div class="macro-icon">&#x26D3;&#xFE0F;</div>
-                <div class="macro-name">Critical Mineral Weaponization</div>
-                <div class="macro-desc">China's tungsten/antimony/silver export whitelist fully operational in April. Tungsten tripled since December, hit record $3,000+. Sulfur and helium surging on Middle East supply disruption. These niche commodities constrain semiconductor and defense manufacturing outside China.</div>
-                <div class="macro-signals">
-                    <span class="macro-signal-tag">Signal 9</span>
-                    <span class="macro-signal-tag">Signal 10</span>
+                    <span class="macro-signal-tag">Signal #8</span>
+                    <span class="macro-signal-tag">Signal #9</span>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- DOUBLE BENEFICIARIES -->
-    <section class="double-section">
+    <section id="double" class="double-ben">
         <div class="section-header">
-            <div class="section-eyebrow">Multi-Signal Exposure</div>
-            <div class="section-title">Double Beneficiaries</div>
-            <div class="section-subtitle">Stocks that benefit from two or more independent supply/demand signals</div>
+            <div class="section-eyebrow">Convergence Zone</div>
+            <h2 class="section-title">Double Beneficiaries</h2>
+            <p class="section-subtitle">Stocks benefiting from two or more independent supply/demand signals</p>
         </div>
-        <div class="double-grid">
-            <div class="double-card">
-                <div class="double-ticker">XOM</div>
-                <div class="double-name">Exxon Mobil Corp</div>
-                <div class="double-reasons">
-                    <div class="double-reason">Hormuz closure boosts non-OPEC oil producer revenues at $115/b Brent</div>
-                    <div class="double-reason">Energy-driven inflation makes oil majors a natural CPI hedge</div>
+        <div class="double-ben-grid">
+            <div class="double-ben-card">
+                <div class="double-ben-ticker">XOM</div>
+                <div class="double-ben-name">Exxon Mobil</div>
+                <div class="double-ben-signals">
+                    <span class="double-ben-signal">Oil volatility premium</span>
+                    <span class="double-ben-signal">Refining margins</span>
                 </div>
             </div>
-            <div class="double-card">
-                <div class="double-ticker">LMT</div>
-                <div class="double-name">Lockheed Martin Corp</div>
-                <div class="double-reasons">
-                    <div class="double-reason">Middle East conflict drives near-term procurement surge</div>
-                    <div class="double-reason">NATO 5% GDP target creates structural multi-year demand</div>
+            <div class="double-ben-card">
+                <div class="double-ben-ticker">RTX</div>
+                <div class="double-ben-name">RTX Corporation</div>
+                <div class="double-ben-signals">
+                    <span class="double-ben-signal">$1.5T defense budget</span>
+                    <span class="double-ben-signal">Missile production surge</span>
                 </div>
             </div>
-            <div class="double-card">
-                <div class="double-ticker">TSM</div>
-                <div class="double-name">Taiwan Semiconductor (TSMC)</div>
-                <div class="double-reasons">
-                    <div class="double-reason">AI capex supercycle drives record fab utilization</div>
-                    <div class="double-reason">CoWoS packaging bottleneck gives extraordinary pricing power</div>
+            <div class="double-ben-card">
+                <div class="double-ben-ticker">TSM</div>
+                <div class="double-ben-name">Taiwan Semiconductor</div>
+                <div class="double-ben-signals">
+                    <span class="double-ben-signal">AI chip supercycle</span>
+                    <span class="double-ben-signal">Packaging bottleneck moat</span>
                 </div>
             </div>
-            <div class="double-card">
-                <div class="double-ticker">INSW</div>
-                <div class="double-name">International Seaways</div>
-                <div class="double-reasons">
-                    <div class="double-reason">VLCC day rates at record $423K on Hormuz rerouting</div>
-                    <div class="double-reason">Cape of Good Hope detours increase ton-mile demand</div>
+            <div class="double-ben-card">
+                <div class="double-ben-ticker">LMT</div>
+                <div class="double-ben-name">Lockheed Martin</div>
+                <div class="double-ben-signals">
+                    <span class="double-ben-signal">Record NATO spending</span>
+                    <span class="double-ben-signal">FY27 budget surge</span>
                 </div>
             </div>
-            <div class="double-card">
-                <div class="double-ticker">NVDA</div>
-                <div class="double-name">NVIDIA Corporation</div>
-                <div class="double-reasons">
-                    <div class="double-reason">Hyperscaler AI capex up 50%+ drives record GPU demand</div>
-                    <div class="double-reason">Memory price surge validates AI infrastructure investment thesis</div>
-                </div>
-            </div>
-            <div class="double-card">
-                <div class="double-ticker">GLD</div>
-                <div class="double-name">SPDR Gold Shares (ETF)</div>
-                <div class="double-reasons">
-                    <div class="double-reason">Geopolitical uncertainty drives safe-haven flows</div>
-                    <div class="double-reason">Inflation persistence increases real-asset demand</div>
-                </div>
-            </div>
-            <div class="double-card">
-                <div class="double-ticker">MP</div>
-                <div class="double-name">MP Materials Corp</div>
-                <div class="double-reasons">
-                    <div class="double-reason">China export whitelist restricts rare earth supply to West</div>
-                    <div class="double-reason">Defense supercycle needs non-China mineral sources for weapons systems</div>
+            <div class="double-ben-card">
+                <div class="double-ben-ticker">HAL</div>
+                <div class="double-ben-name">Halliburton</div>
+                <div class="double-ben-signals">
+                    <span class="double-ben-signal">Oil supply uncertainty</span>
+                    <span class="double-ben-signal">Non-OPEC production push</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- INDIVIDUAL SIGNALS -->
+    <!-- SIGNAL CARDS -->
     <section id="signals" class="signals-section">
         <div class="section-header">
-            <div class="section-eyebrow">Signal Intelligence</div>
-            <div class="section-title">Supply/Demand Signal Cards</div>
-            <div class="section-subtitle">Each signal traces from event &rarr; mechanism &rarr; affected equities</div>
+            <div class="section-eyebrow">Signal Analysis</div>
+            <h2 class="section-title">Individual Signal Cards</h2>
+            <p class="section-subtitle">Each event traced from cause to affected stocks with conviction scoring</p>
         </div>
 
         <!-- SIGNAL 1 -->
         <div class="signal-card">
             <div class="signal-header">
-                <div>
-                    <div class="signal-number">SIGNAL 01</div>
-                    <div class="signal-title">Hormuz Re-Closed After Israel-Lebanon Strikes</div>
-                </div>
-                <span class="signal-macro-tag">Energy Shock</span>
+                <h3 class="signal-title">Hormuz "Open" Declaration Crashes Oil 10%+ — Then Iran Reverses</h3>
+                <span class="signal-num">SIGNAL #1</span>
             </div>
             <div class="signal-chain">
-                <strong>Mechanism:</strong> Iran re-closed the Strait of Hormuz within hours of the ceasefire agreement after Israel attacked Lebanon. Tanker traffic collapsed ~80%, with VLCC day rates breaching $423,000. Production shut-ins expected to reach 9.1M b/d in April. Non-Middle East producers and tanker operators see windfall demand, while fuel-dependent industries face severe margin compression.
+                <strong>Causal Chain:</strong> Iran declares Strait of Hormuz "completely open" during Israel-Lebanon ceasefire → Oil drops 10%+ intraday (Brent to $90, WTI to ~$82) → Ships enter strait then turn around as Iran reasserts "strict military control" Saturday → Supply picture remains unresolved → Energy volatility spikes, benefiting integrated majors and traders while punishing pure-play producers who hedged at lower levels.
             </div>
             <div class="signal-tables">
                 <div class="signal-table-wrap">
-                    <div class="signal-table-header winners">&#x25B2; Winners</div>
-                    <table class="signal-table">
-                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Conv.</th></tr></thead>
+                    <div class="signal-table-header winners">▲ Winners</div>
+                    <table>
+                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Score</th></tr></thead>
                         <tbody>
-                            <tr><td><span class="ticker win">XOM</span></td><td class="company-name">Exxon Mobil</td><td class="thesis">Non-OPEC integrated major; revenue directly tied to $115/b Brent</td><td><span class="conviction-badge conviction-high">9</span></td></tr>
-                            <tr><td><span class="ticker win">CVX</span></td><td class="company-name">Chevron</td><td class="thesis">Permian Basin exposure with strong downstream margins at elevated crack spreads</td><td><span class="conviction-badge conviction-high">9</span></td></tr>
-                            <tr><td><span class="ticker win">OXY</span></td><td class="company-name">Occidental Petroleum</td><td class="thesis">High-leverage US shale producer, outsized upside to $100+ oil</td><td><span class="conviction-badge conviction-high">8</span></td></tr>
+                            <tr><td class="ticker win">XOM</td><td>Exxon Mobil</td><td>Integrated model profits from volatility; massive refining margin at $90 Brent</td><td><span class="conviction-badge conviction-high">9</span></td></tr>
+                            <tr><td class="ticker win">CVX</td><td>Chevron</td><td>Permian production at record; benefits from elevated but not spiking prices</td><td><span class="conviction-badge conviction-high">8</span></td></tr>
+                            <tr><td class="ticker win">TRGP</td><td>Targa Resources</td><td>Midstream volumes increase as US producers ramp to fill global gap</td><td><span class="conviction-badge conviction-mod">6</span></td></tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="signal-table-wrap">
-                    <div class="signal-table-header losers">&#x25BC; Losers</div>
-                    <table class="signal-table">
-                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Conv.</th></tr></thead>
+                    <div class="signal-table-header losers">▼ Losers</div>
+                    <table>
+                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Score</th></tr></thead>
                         <tbody>
-                            <tr><td><span class="ticker lose">DAL</span></td><td class="company-name">Delta Air Lines</td><td class="thesis">Jet fuel ~25% of costs; $115/b Brent destroys margins</td><td><span class="conviction-badge conviction-high">8</span></td></tr>
-                            <tr><td><span class="ticker lose">AAL</span></td><td class="company-name">American Airlines</td><td class="thesis">Weakest balance sheet among US majors, highest fuel cost sensitivity</td><td><span class="conviction-badge conviction-high">9</span></td></tr>
-                            <tr><td><span class="ticker lose">FDX</span></td><td class="company-name">FedEx</td><td class="thesis">Diesel up 95% in 3 months; ground and air ops both impacted</td><td><span class="conviction-badge conviction-moderate">7</span></td></tr>
+                            <tr><td class="ticker lose">DAL</td><td>Delta Air Lines</td><td>Jet fuel 30% of costs; doubled since conflict began, European routes at risk</td><td><span class="conviction-badge conviction-high">8</span></td></tr>
+                            <tr><td class="ticker lose">UAL</td><td>United Airlines</td><td>Transatlantic exposure to European jet fuel shortage within 6 weeks</td><td><span class="conviction-badge conviction-mod">7</span></td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -845,34 +753,32 @@
         <!-- SIGNAL 2 -->
         <div class="signal-card">
             <div class="signal-header">
-                <div>
-                    <div class="signal-number">SIGNAL 02</div>
-                    <div class="signal-title">Tanker Freight Rates Hit All-Time Records</div>
-                </div>
-                <span class="signal-macro-tag">Energy Shock</span>
+                <h3 class="signal-title">Europe's Jet Fuel Countdown: IEA Warns 6 Weeks Until Shortages</h3>
+                <span class="signal-num">SIGNAL #2</span>
             </div>
             <div class="signal-chain">
-                <strong>Mechanism:</strong> With Hormuz traffic down ~80%, remaining crude must travel via the Cape of Good Hope, dramatically increasing ton-mile demand. VLCC day rates hit $423,000 &mdash; unprecedented in data going back to 2005. Container rates on Asia-Europe up 20% and transpacific up 40%. Shipping companies with spot exposure see windfall profits, while importers face surging logistics costs.
+                <strong>Causal Chain:</strong> Strait of Hormuz blockade cut 40% of Europe's jet fuel imports → IEA warns reserves dip below 20 days in multiple countries → KLM cutting 160 flights, SAS cancelling 1,000+ in April → Airlines with heavy European exposure face margin destruction → US refiners with export capacity see premium pricing → Alternative fuel suppliers gain demand pull.
             </div>
             <div class="signal-tables">
                 <div class="signal-table-wrap">
-                    <div class="signal-table-header winners">&#x25B2; Winners</div>
-                    <table class="signal-table">
-                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Conv.</th></tr></thead>
+                    <div class="signal-table-header winners">▲ Winners</div>
+                    <table>
+                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Score</th></tr></thead>
                         <tbody>
-                            <tr><td><span class="ticker win">INSW</span></td><td class="company-name">Intl Seaways</td><td class="thesis">83 tanker vessels, highly levered to spot rate moves at record $423K/day</td><td><span class="conviction-badge conviction-high">9</span></td></tr>
-                            <tr><td><span class="ticker win">STNG</span></td><td class="company-name">Scorpio Tankers</td><td class="thesis">Product tanker fleet benefits from refined product rerouting</td><td><span class="conviction-badge conviction-high">8</span></td></tr>
-                            <tr><td><span class="ticker win">FRO</span></td><td class="company-name">Frontline</td><td class="thesis">Largest independent VLCC owner, maximum leverage to spot rate surge</td><td><span class="conviction-badge conviction-high">9</span></td></tr>
+                            <tr><td class="ticker win">VLO</td><td>Valero Energy</td><td>Largest US refiner; European jet fuel shortage = export premium for US distillates</td><td><span class="conviction-badge conviction-high">8</span></td></tr>
+                            <tr><td class="ticker win">MPC</td><td>Marathon Petroleum</td><td>Gulf Coast refining capacity positioned to supply European shortfall</td><td><span class="conviction-badge conviction-mod">7</span></td></tr>
+                            <tr><td class="ticker win">PBF</td><td>PBF Energy</td><td>East Coast refiner with direct Atlantic shipping lanes to Europe</td><td><span class="conviction-badge conviction-mod">6</span></td></tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="signal-table-wrap">
-                    <div class="signal-table-header losers">&#x25BC; Losers</div>
-                    <table class="signal-table">
-                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Conv.</th></tr></thead>
+                    <div class="signal-table-header losers">▼ Losers</div>
+                    <table>
+                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Score</th></tr></thead>
                         <tbody>
-                            <tr><td><span class="ticker lose">COST</span></td><td class="company-name">Costco</td><td class="thesis">Import-heavy model faces margin pressure from surging container rates</td><td><span class="conviction-badge conviction-moderate">6</span></td></tr>
-                            <tr><td><span class="ticker lose">NKE</span></td><td class="company-name">Nike</td><td class="thesis">Asia-sourced supply chain; already guided for 4% quarterly sales drop</td><td><span class="conviction-badge conviction-moderate">7</span></td></tr>
+                            <tr><td class="ticker lose">RYAAY</td><td>Ryanair</td><td>100% European; no transatlantic to offset; fuel is largest cost line</td><td><span class="conviction-badge conviction-high">9</span></td></tr>
+                            <tr><td class="ticker lose">ICAGY</td><td>IAG (British Airways)</td><td>High long-haul mix burns more kerosene; European hub dependency</td><td><span class="conviction-badge conviction-high">8</span></td></tr>
+                            <tr><td class="ticker lose">AFLYY</td><td>Air France-KLM</td><td>Already cutting flights; France among countries below 20-day fuel reserves</td><td><span class="conviction-badge conviction-high">8</span></td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -882,34 +788,30 @@
         <!-- SIGNAL 3 -->
         <div class="signal-card">
             <div class="signal-header">
-                <div>
-                    <div class="signal-number">SIGNAL 03</div>
-                    <div class="signal-title">IEA Warns Oil Supply Crunch Will Worsen in April</div>
-                </div>
-                <span class="signal-macro-tag">Energy Shock</span>
+                <h3 class="signal-title">Oil Price Reversal Creates Asymmetric Risk for E&P Hedging Books</h3>
+                <span class="signal-num">SIGNAL #3</span>
             </div>
             <div class="signal-chain">
-                <strong>Mechanism:</strong> The IEA is weighing further strategic reserve releases as Brent is forecast to peak at $115/b in Q2. Gasoline to hit $4.30/gal in April, diesel above $5.80/gal. This is structurally accelerating the energy transition &mdash; Wood Mackenzie projects that prolonged disruption could cut global oil demand 20% and gas 10% by 2050 as nations pivot to energy independence.
+                <strong>Causal Chain:</strong> WTI swings from $95+ to $82 in single session → Producers who hedged at $70-80 pre-crisis see hedges expire worthless at higher prices, while those who locked in above $90 gain if reopening holds → Oilfield services demand stays elevated as US producers are incentivized to ramp regardless of short-term price → Non-OPEC supply response becomes critical variable.
             </div>
             <div class="signal-tables">
                 <div class="signal-table-wrap">
-                    <div class="signal-table-header winners">&#x25B2; Winners</div>
-                    <table class="signal-table">
-                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Conv.</th></tr></thead>
+                    <div class="signal-table-header winners">▲ Winners</div>
+                    <table>
+                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Score</th></tr></thead>
                         <tbody>
-                            <tr><td><span class="ticker win">FSLR</span></td><td class="company-name">First Solar</td><td class="thesis">Energy security pivot accelerates solar demand; sold out through 2026</td><td><span class="conviction-badge conviction-high">8</span></td></tr>
-                            <tr><td><span class="ticker win">NEE</span></td><td class="company-name">NextEra Energy</td><td class="thesis">36&ndash;46 GW renewables pipeline through 2027; energy independence play</td><td><span class="conviction-badge conviction-moderate">7</span></td></tr>
-                            <tr><td><span class="ticker win">CEG</span></td><td class="company-name">Constellation Energy</td><td class="thesis">$26.6B Calpine acquisition creates largest US clean energy fleet</td><td><span class="conviction-badge conviction-moderate">7</span></td></tr>
+                            <tr><td class="ticker win">HAL</td><td>Halliburton</td><td>Oilfield services demand stays elevated regardless of price direction</td><td><span class="conviction-badge conviction-mod">7</span></td></tr>
+                            <tr><td class="ticker win">SLB</td><td>SLB (Schlumberger)</td><td>International exposure benefits from non-OPEC production ramp</td><td><span class="conviction-badge conviction-mod">7</span></td></tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="signal-table-wrap">
-                    <div class="signal-table-header losers">&#x25BC; Losers</div>
-                    <table class="signal-table">
-                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Conv.</th></tr></thead>
+                    <div class="signal-table-header losers">▼ Losers</div>
+                    <table>
+                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Score</th></tr></thead>
                         <tbody>
-                            <tr><td><span class="ticker lose">UAL</span></td><td class="company-name">United Airlines</td><td class="thesis">International route network most exposed to sustained fuel cost surge</td><td><span class="conviction-badge conviction-high">8</span></td></tr>
-                            <tr><td><span class="ticker lose">CAG</span></td><td class="company-name">Conagra Brands</td><td class="thesis">Cut FY earnings guidance; diesel-driven supply chain inflation</td><td><span class="conviction-badge conviction-moderate">6</span></td></tr>
+                            <tr><td class="ticker lose">OXY</td><td>Occidental Petroleum</td><td>High leverage amplifies downside; Permian-heavy, less diversified than majors</td><td><span class="conviction-badge conviction-mod">6</span></td></tr>
+                            <tr><td class="ticker lose">DVN</td><td>Devon Energy</td><td>Pure-play US shale; volatile cash flows with $10+ price swings</td><td><span class="conviction-badge conviction-mod">5</span></td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -919,34 +821,31 @@
         <!-- SIGNAL 4 -->
         <div class="signal-card">
             <div class="signal-header">
-                <div>
-                    <div class="signal-number">SIGNAL 04</div>
-                    <div class="signal-title">TSMC Advanced Packaging Becomes AI's Binding Constraint</div>
-                </div>
-                <span class="signal-macro-tag">AI Supercycle</span>
+                <h3 class="signal-title">TSMC's 58% Profit Surge Confirms AI Chip Demand Is Accelerating</h3>
+                <span class="signal-num">SIGNAL #4</span>
             </div>
             <div class="signal-chain">
-                <strong>Mechanism:</strong> Nvidia has reserved the majority of TSMC's CoWoS (Chip on Wafer on Substrate) capacity, growing at 80% CAGR. The bottleneck has shifted from chip fabrication to advanced packaging. Semiconductor revenue to exceed $1.3T in 2026 (+64%). Companies in the packaging and testing supply chain &mdash; previously overlooked &mdash; gain outsized pricing power.
+                <strong>Causal Chain:</strong> TSMC Q1 profit up 58% YoY, revenue $35.6B (record) → HPC/AI now 61% of revenue (up from 40% two years ago) → 3nm capacity sold out through 2028 → Advanced packaging (CoWoS) growing 80% CAGR becomes new bottleneck → Companies with access to TSMC's leading-edge capacity have structural advantage → Raised full-year guidance to 30%+ revenue growth.
             </div>
             <div class="signal-tables">
                 <div class="signal-table-wrap">
-                    <div class="signal-table-header winners">&#x25B2; Winners</div>
-                    <table class="signal-table">
-                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Conv.</th></tr></thead>
+                    <div class="signal-table-header winners">▲ Winners</div>
+                    <table>
+                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Score</th></tr></thead>
                         <tbody>
-                            <tr><td><span class="ticker win">TSM</span></td><td class="company-name">TSMC</td><td class="thesis">Monopoly on advanced CoWoS packaging; 80% CAGR capacity growth</td><td><span class="conviction-badge conviction-high">9</span></td></tr>
-                            <tr><td><span class="ticker win">NVDA</span></td><td class="company-name">NVIDIA</td><td class="thesis">Reserved majority of CoWoS capacity; Vera Rubin ramp driving demand</td><td><span class="conviction-badge conviction-high">9</span></td></tr>
-                            <tr><td><span class="ticker win">ASX</span></td><td class="company-name">ASE Technology</td><td class="thesis">World's largest OSAT; packaging/testing demand at record levels</td><td><span class="conviction-badge conviction-high">8</span></td></tr>
+                            <tr><td class="ticker win">TSM</td><td>TSMC</td><td>Record results, raised guidance, sold-out capacity — direct beneficiary</td><td><span class="conviction-badge conviction-high">10</span></td></tr>
+                            <tr><td class="ticker win">NVDA</td><td>NVIDIA</td><td>Largest TSMC customer for AI chips; CoWoS bottleneck is being expanded for them</td><td><span class="conviction-badge conviction-high">9</span></td></tr>
+                            <tr><td class="ticker win">AVGO</td><td>Broadcom</td><td>Custom AI accelerator business expanding; major TSMC advanced node consumer</td><td><span class="conviction-badge conviction-high">8</span></td></tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="signal-table-wrap">
-                    <div class="signal-table-header losers">&#x25BC; Losers</div>
-                    <table class="signal-table">
-                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Conv.</th></tr></thead>
+                    <div class="signal-table-header losers">▼ Losers</div>
+                    <table>
+                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Score</th></tr></thead>
                         <tbody>
-                            <tr><td><span class="ticker lose">INTC</span></td><td class="company-name">Intel</td><td class="thesis">Falling further behind in packaging tech; losing AI accelerator share</td><td><span class="conviction-badge conviction-moderate">6</span></td></tr>
-                            <tr><td><span class="ticker lose">AMD</span></td><td class="company-name">AMD</td><td class="thesis">Competing for limited CoWoS slots; constrained AI GPU supply vs NVDA</td><td><span class="conviction-badge conviction-moderate">5</span></td></tr>
+                            <tr><td class="ticker lose">INTC</td><td>Intel</td><td>Foundry ambitions undermined as TSMC pulls further ahead; losing share</td><td><span class="conviction-badge conviction-mod">7</span></td></tr>
+                            <tr><td class="ticker lose">GFS</td><td>GlobalFoundries</td><td>Mature node player increasingly commoditized as industry shifts to advanced</td><td><span class="conviction-badge conviction-mod">5</span></td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -956,33 +855,30 @@
         <!-- SIGNAL 5 -->
         <div class="signal-card">
             <div class="signal-header">
-                <div>
-                    <div class="signal-number">SIGNAL 05</div>
-                    <div class="signal-title">Memory Price Surge: DRAM +125%, NAND +234%</div>
-                </div>
-                <span class="signal-macro-tag">AI Supercycle</span>
+                <h3 class="signal-title">ASML Beats but Sinks: MATCH Act Threatens China DUV Sales</h3>
+                <span class="signal-num">SIGNAL #5</span>
             </div>
             <div class="signal-chain">
-                <strong>Mechanism:</strong> Hyperscaler investment in AI infrastructure up 50%+ in 2026, driving unprecedented demand for high-bandwidth memory (HBM). Gartner forecasts DRAM prices up 125% and NAND up 234% in 2026. Memory makers with HBM capacity see windfall pricing, while downstream buyers of memory &mdash; PC OEMs, consumer electronics &mdash; face cost pressure.
+                <strong>Causal Chain:</strong> ASML Q1 beats expectations (€8.8B revenue, €2.8B profit) → Raises 2026 guidance to €36-40B → But MATCH Act bill proposes cutting off DUV machine sales to China → China fell from 36% to 19% of system sales in one quarter → Stock drops 5% despite beat → Creates overhang for all semiconductor equipment makers with China exposure → Benefits companies building chip capacity outside China.
             </div>
             <div class="signal-tables">
                 <div class="signal-table-wrap">
-                    <div class="signal-table-header winners">&#x25B2; Winners</div>
-                    <table class="signal-table">
-                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Conv.</th></tr></thead>
+                    <div class="signal-table-header winners">▲ Winners</div>
+                    <table>
+                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Score</th></tr></thead>
                         <tbody>
-                            <tr><td><span class="ticker win">MU</span></td><td class="company-name">Micron Technology</td><td class="thesis">Leading HBM supplier; DRAM price surge flows directly to revenue</td><td><span class="conviction-badge conviction-high">9</span></td></tr>
-                            <tr><td><span class="ticker win">SK Hynix</span></td><td class="company-name">SK Hynix (KRX)</td><td class="thesis">HBM market leader; primary supplier to NVIDIA for AI accelerators</td><td><span class="conviction-badge conviction-high">9</span></td></tr>
+                            <tr><td class="ticker win">AMAT</td><td>Applied Materials</td><td>Less China-dependent than ASML; benefits from US/Japan/EU fab buildout</td><td><span class="conviction-badge conviction-mod">6</span></td></tr>
+                            <tr><td class="ticker win">LRCX</td><td>Lam Research</td><td>Etch/dep equipment demand rising with non-China capacity expansion</td><td><span class="conviction-badge conviction-mod">6</span></td></tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="signal-table-wrap">
-                    <div class="signal-table-header losers">&#x25BC; Losers</div>
-                    <table class="signal-table">
-                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Conv.</th></tr></thead>
+                    <div class="signal-table-header losers">▼ Losers</div>
+                    <table>
+                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Score</th></tr></thead>
                         <tbody>
-                            <tr><td><span class="ticker lose">HPQ</span></td><td class="company-name">HP Inc</td><td class="thesis">PC OEM facing 125% DRAM cost increase; constrained ability to pass through</td><td><span class="conviction-badge conviction-moderate">6</span></td></tr>
-                            <tr><td><span class="ticker lose">DELL</span></td><td class="company-name">Dell Technologies</td><td class="thesis">Server and PC businesses both face component cost inflation</td><td><span class="conviction-badge conviction-moderate">5</span></td></tr>
+                            <tr><td class="ticker lose">ASML</td><td>ASML Holding</td><td>MATCH Act could eliminate significant DUV revenue stream from China</td><td><span class="conviction-badge conviction-mod">7</span></td></tr>
+                            <tr><td class="ticker lose">TOELY</td><td>Tokyo Electron</td><td>High China exposure; Japanese equipment makers face same restriction risk</td><td><span class="conviction-badge conviction-mod">6</span></td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -992,34 +888,30 @@
         <!-- SIGNAL 6 -->
         <div class="signal-card">
             <div class="signal-header">
-                <div>
-                    <div class="signal-number">SIGNAL 06</div>
-                    <div class="signal-title">Fed Minutes Reveal Willingness to Hike Rates</div>
-                </div>
-                <span class="signal-macro-tag">Stagflation Risk</span>
+                <h3 class="signal-title">$1.5 Trillion Defense Budget: Highest Military Spending Since WWII</h3>
+                <span class="signal-num">SIGNAL #6</span>
             </div>
             <div class="signal-chain">
-                <strong>Mechanism:</strong> More Fed policymakers now willing to consider rate hikes as energy-driven inflation threatens to worsen. Funds rate held at 3.5&ndash;3.75% for second consecutive meeting. Energy pass-through pushing CPI higher; markets now pricing at most one cut in 2026. Higher-for-longer rates benefit banks' net interest margins while pressuring rate-sensitive sectors like housing and growth stocks.
+                <strong>Causal Chain:</strong> FY2027 budget proposes $1.5T total defense resources (28% increase) → HASC chair calls trillion-dollar budgets "the new normal" → $2.5B specifically for increased missile/munitions production → Iran conflict validates urgency → Prime contractors with existing production lines benefit most → Defense tech firms building next-gen battle networks are structural winners.
             </div>
             <div class="signal-tables">
                 <div class="signal-table-wrap">
-                    <div class="signal-table-header winners">&#x25B2; Winners</div>
-                    <table class="signal-table">
-                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Conv.</th></tr></thead>
+                    <div class="signal-table-header winners">▲ Winners</div>
+                    <table>
+                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Score</th></tr></thead>
                         <tbody>
-                            <tr><td><span class="ticker win">JPM</span></td><td class="company-name">JPMorgan Chase</td><td class="thesis">Higher-for-longer expands NIM; volatility boosts trading revenue</td><td><span class="conviction-badge conviction-high">8</span></td></tr>
-                            <tr><td><span class="ticker win">GS</span></td><td class="company-name">Goldman Sachs</td><td class="thesis">Rate volatility drives fixed income trading and advisory fees</td><td><span class="conviction-badge conviction-moderate">7</span></td></tr>
-                            <tr><td><span class="ticker win">GLD</span></td><td class="company-name">SPDR Gold Shares</td><td class="thesis">Inflation hedge; real rates uncertainty drives safe-haven demand</td><td><span class="conviction-badge conviction-moderate">7</span></td></tr>
+                            <tr><td class="ticker win">RTX</td><td>RTX Corporation</td><td>16% of defense portfolio; direct beneficiary of $2.5B missile production surge</td><td><span class="conviction-badge conviction-high">9</span></td></tr>
+                            <tr><td class="ticker win">LMT</td><td>Lockheed Martin</td><td>F-35 program, hypersonics, missile defense — benefits across all major categories</td><td><span class="conviction-badge conviction-high">9</span></td></tr>
+                            <tr><td class="ticker win">GD</td><td>General Dynamics</td><td>Submarine, armored vehicle, and IT services divisions all see budget lift</td><td><span class="conviction-badge conviction-high">8</span></td></tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="signal-table-wrap">
-                    <div class="signal-table-header losers">&#x25BC; Losers</div>
-                    <table class="signal-table">
-                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Conv.</th></tr></thead>
+                    <div class="signal-table-header losers">▼ Losers</div>
+                    <table>
+                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Score</th></tr></thead>
                         <tbody>
-                            <tr><td><span class="ticker lose">XHB</span></td><td class="company-name">Homebuilders ETF</td><td class="thesis">Rate hike risk crushes housing affordability and mortgage demand</td><td><span class="conviction-badge conviction-high">8</span></td></tr>
-                            <tr><td><span class="ticker lose">ARKK</span></td><td class="company-name">ARK Innovation ETF</td><td class="thesis">Long-duration growth stocks repriced lower as discount rates rise</td><td><span class="conviction-badge conviction-moderate">7</span></td></tr>
+                            <tr><td class="ticker lose">—</td><td>—</td><td>No clear direct losers from increased defense spending</td><td><span class="conviction-badge conviction-low">—</span></td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -1029,34 +921,30 @@
         <!-- SIGNAL 7 -->
         <div class="signal-card">
             <div class="signal-header">
-                <div>
-                    <div class="signal-number">SIGNAL 07</div>
-                    <div class="signal-title">Consumer Staples in Freefall on Cost Inflation</div>
-                </div>
-                <span class="signal-macro-tag">Stagflation Risk</span>
+                <h3 class="signal-title">NATO Allies Surge: European Defense Spending Up 20% YoY</h3>
+                <span class="signal-num">SIGNAL #7</span>
             </div>
             <div class="signal-chain">
-                <strong>Mechanism:</strong> Russell 3000 consumer staples lost 10% in March &mdash; worse than industrials (-8%) and basic materials (-8%). Diesel up 95%, wheat up 19%, fish up 26%. Conagra cut earnings guidance. Nike guided for 4% sales drop. Companies without pricing power face margin destruction as input costs surge across food, fuel, and freight simultaneously.
+                <strong>Causal Chain:</strong> Global defense spending hit $2.63T in 2025 → NATO European allies +20% → Iran conflict validates alliance preparedness gaps → European defense primes see multi-year order book expansion → US defense tech exporters (battle networks, C4ISR) see growing allied demand → Mercury Systems, Leonardo DRS, Parsons positioned for networked warfare contracts.
             </div>
             <div class="signal-tables">
                 <div class="signal-table-wrap">
-                    <div class="signal-table-header winners">&#x25B2; Winners</div>
-                    <table class="signal-table">
-                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Conv.</th></tr></thead>
+                    <div class="signal-table-header winners">▲ Winners</div>
+                    <table>
+                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Score</th></tr></thead>
                         <tbody>
-                            <tr><td><span class="ticker win">WMT</span></td><td class="company-name">Walmart</td><td class="thesis">Scale and logistics advantage allows cost absorption; trade-down beneficiary</td><td><span class="conviction-badge conviction-moderate">6</span></td></tr>
-                            <tr><td><span class="ticker win">PG</span></td><td class="company-name">Procter &amp; Gamble</td><td class="thesis">Premium brand pricing power protects margins in inflationary environment</td><td><span class="conviction-badge conviction-moderate">5</span></td></tr>
+                            <tr><td class="ticker win">MRCY</td><td>Mercury Systems</td><td>Battle network integration tech; central to next-gen defense architecture</td><td><span class="conviction-badge conviction-mod">7</span></td></tr>
+                            <tr><td class="ticker win">DRS</td><td>Leonardo DRS</td><td>Missile tracking, electronic warfare systems in high demand with NATO expansion</td><td><span class="conviction-badge conviction-mod">7</span></td></tr>
+                            <tr><td class="ticker win">PSN</td><td>Parsons Corp</td><td>Cyberdefense and missile defense; benefits from both US and allied spending</td><td><span class="conviction-badge conviction-mod">6</span></td></tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="signal-table-wrap">
-                    <div class="signal-table-header losers">&#x25BC; Losers</div>
-                    <table class="signal-table">
-                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Conv.</th></tr></thead>
+                    <div class="signal-table-header losers">▼ Losers</div>
+                    <table>
+                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Score</th></tr></thead>
                         <tbody>
-                            <tr><td><span class="ticker lose">CAG</span></td><td class="company-name">Conagra Brands</td><td class="thesis">Cut FY guidance to $1.70; direct input cost inflation across portfolio</td><td><span class="conviction-badge conviction-high">8</span></td></tr>
-                            <tr><td><span class="ticker lose">NKE</span></td><td class="company-name">Nike</td><td class="thesis">Guided 4% sales drop; Asia supply chain + shipping cost double hit</td><td><span class="conviction-badge conviction-moderate">7</span></td></tr>
-                            <tr><td><span class="ticker lose">KR</span></td><td class="company-name">Kroger</td><td class="thesis">Grocery margins compressed by wheat +19%, diesel +95% for distribution</td><td><span class="conviction-badge conviction-moderate">6</span></td></tr>
+                            <tr><td class="ticker lose">—</td><td>—</td><td>No direct losers; defense spending creates broad sector tailwind</td><td><span class="conviction-badge conviction-low">—</span></td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -1066,33 +954,31 @@
         <!-- SIGNAL 8 -->
         <div class="signal-card">
             <div class="signal-header">
-                <div>
-                    <div class="signal-number">SIGNAL 08</div>
-                    <div class="signal-title">NATO Raises Target to 5% of GDP; European Defense Spending Surges</div>
-                </div>
-                <span class="signal-macro-tag">Defense Supercycle</span>
+                <h3 class="signal-title">Supreme Court Tariff Whack-a-Mole: IEEPA Struck Down, Section 122 Activated</h3>
+                <span class="signal-num">SIGNAL #8</span>
             </div>
             <div class="signal-chain">
-                <strong>Mechanism:</strong> At The Hague summit, NATO allies committed to 5% of GDP on defense by 2035. European spending rose 20% in 2025 alone. Global defense spending hit $2.63T. This is a structural shift &mdash; not a one-year cycle. Equipment deliveries accelerate in 2026-2027 as orders placed during 2022-2025 conflicts finally reach production. Defense primes with European exposure and backlog depth benefit most.
+                <strong>Causal Chain:</strong> Supreme Court rules 6-3 that IEEPA tariffs exceed presidential authority → Markets rally on clarity → Within hours, administration imposes 10% tariffs under Section 122 (Trade Act of 1974), valid through July 24 → Tariff rate drops from variable (10-145%) to flat 10% → Net positive for importers and retailers who faced higher rates, but uncertainty remains → Reshoring beneficiaries see pullback as tariff urgency eases.
             </div>
             <div class="signal-tables">
                 <div class="signal-table-wrap">
-                    <div class="signal-table-header winners">&#x25B2; Winners</div>
-                    <table class="signal-table">
-                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Conv.</th></tr></thead>
+                    <div class="signal-table-header winners">▲ Winners</div>
+                    <table>
+                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Score</th></tr></thead>
                         <tbody>
-                            <tr><td><span class="ticker win">LMT</span></td><td class="company-name">Lockheed Martin</td><td class="thesis">F-35, missile defense systems; largest US defense backlog</td><td><span class="conviction-badge conviction-high">9</span></td></tr>
-                            <tr><td><span class="ticker win">RTX</span></td><td class="company-name">RTX Corp</td><td class="thesis">Patriot missile demand surging; European air defense contracts</td><td><span class="conviction-badge conviction-high">8</span></td></tr>
-                            <tr><td><span class="ticker win">RHEINMETALL</span></td><td class="company-name">Rheinmetall (XETRA)</td><td class="thesis">European defense champion; ammunition and armored vehicle demand at all-time high</td><td><span class="conviction-badge conviction-high">8</span></td></tr>
+                            <tr><td class="ticker win">WMT</td><td>Walmart</td><td>Lower tariff rate = preserved margins; scale to absorb remaining 10%</td><td><span class="conviction-badge conviction-mod">7</span></td></tr>
+                            <tr><td class="ticker win">AAPL</td><td>Apple</td><td>China-assembled products face 10% vs. prior 54%; massive margin relief</td><td><span class="conviction-badge conviction-high">8</span></td></tr>
+                            <tr><td class="ticker win">NKE</td><td>Nike</td><td>Vietnam/Indonesia sourcing sees tariff drop from variable to flat 10%</td><td><span class="conviction-badge conviction-mod">7</span></td></tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="signal-table-wrap">
-                    <div class="signal-table-header losers">&#x25BC; Losers</div>
-                    <table class="signal-table">
-                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Conv.</th></tr></thead>
+                    <div class="signal-table-header losers">▼ Losers</div>
+                    <table>
+                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Score</th></tr></thead>
                         <tbody>
-                            <tr><td><span class="ticker lose">Fiscal budgets</span></td><td class="company-name">EU social spending</td><td class="thesis">Defense crowding out civilian infrastructure and social program budgets</td><td><span class="conviction-badge conviction-conditional">4</span></td></tr>
+                            <tr><td class="ticker lose">STLD</td><td>Steel Dynamics</td><td>Lower tariffs reduce protection for domestic steel producers</td><td><span class="conviction-badge conviction-mod">6</span></td></tr>
+                            <tr><td class="ticker lose">NUE</td><td>Nucor</td><td>Domestic steel premium narrows as import competition increases</td><td><span class="conviction-badge conviction-mod">6</span></td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -1102,70 +988,31 @@
         <!-- SIGNAL 9 -->
         <div class="signal-card">
             <div class="signal-header">
-                <div>
-                    <div class="signal-number">SIGNAL 09</div>
-                    <div class="signal-title">China's Critical Mineral Export Whitelist Goes Live</div>
-                </div>
-                <span class="signal-macro-tag">Mineral Weaponization</span>
+                <h3 class="signal-title">ECB Rate Hike Path Emerges: Energy-Driven Inflation Forces Hawkish Pivot</h3>
+                <span class="signal-num">SIGNAL #9</span>
             </div>
             <div class="signal-chain">
-                <strong>Mechanism:</strong> China's 2026&ndash;2027 whitelist for tungsten, antimony, and silver restricts exports to just 15&ndash;44 approved companies, fully operationalizing in April&ndash;May. Non-approved buyers scrambling for secondary market access. Tungsten hit record $3,000+ (tripled since December). China controls 83% of global tungsten, 95% of magnesium, and 69%+ of rare earths. Western miners with non-China deposits gain strategic value.
+                <strong>Causal Chain:</strong> Energy shock pushes eurozone inflation higher → Markets pricing ECB rate hike to 2.5%+ by year-end (50bps+ increase) → ECB warns of "layer cake of shocks" → Fed holds at 3.5-3.75%, rate cut expectations collapse → Higher-for-longer rates benefit banks' net interest income → Growth stocks face valuation compression → US dollar strengthens on rate differential.
             </div>
             <div class="signal-tables">
                 <div class="signal-table-wrap">
-                    <div class="signal-table-header winners">&#x25B2; Winners</div>
-                    <table class="signal-table">
-                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Conv.</th></tr></thead>
+                    <div class="signal-table-header winners">▲ Winners</div>
+                    <table>
+                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Score</th></tr></thead>
                         <tbody>
-                            <tr><td><span class="ticker win">MP</span></td><td class="company-name">MP Materials</td><td class="thesis">Only scaled US rare earth mine; strategic asset as China restricts supply</td><td><span class="conviction-badge conviction-high">8</span></td></tr>
-                            <tr><td><span class="ticker win">LYNAS</span></td><td class="company-name">Lynas Rare Earths (ASX)</td><td class="thesis">Only non-China integrated rare earth processor at scale</td><td><span class="conviction-badge conviction-high">8</span></td></tr>
-                            <tr><td><span class="ticker win">ALB</span></td><td class="company-name">Albemarle</td><td class="thesis">Critical minerals diversification play; lithium + specialty chemicals</td><td><span class="conviction-badge conviction-moderate">6</span></td></tr>
+                            <tr><td class="ticker win">JPM</td><td>JPMorgan Chase</td><td>Net interest income expands with higher-for-longer rates; fortress balance sheet</td><td><span class="conviction-badge conviction-mod">7</span></td></tr>
+                            <tr><td class="ticker win">GS</td><td>Goldman Sachs</td><td>Trading revenue benefits from rate volatility; FICC desk outperforms</td><td><span class="conviction-badge conviction-mod">6</span></td></tr>
+                            <tr><td class="ticker win">UUP</td><td>Invesco USD ETF</td><td>Dollar strengthens on US-EU rate differential</td><td><span class="conviction-badge conviction-mod">5</span></td></tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="signal-table-wrap">
-                    <div class="signal-table-header losers">&#x25BC; Losers</div>
-                    <table class="signal-table">
-                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Conv.</th></tr></thead>
+                    <div class="signal-table-header losers">▼ Losers</div>
+                    <table>
+                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Score</th></tr></thead>
                         <tbody>
-                            <tr><td><span class="ticker lose">GE</span></td><td class="company-name">GE Aerospace</td><td class="thesis">Turbine blades require tungsten carbide; supply now restricted</td><td><span class="conviction-badge conviction-moderate">5</span></td></tr>
-                            <tr><td><span class="ticker lose">Defense OEMs</span></td><td class="company-name">Various</td><td class="thesis">Armor-piercing munitions and hardened steel require tungsten inputs</td><td><span class="conviction-badge conviction-conditional">4</span></td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- SIGNAL 10 -->
-        <div class="signal-card">
-            <div class="signal-header">
-                <div>
-                    <div class="signal-number">SIGNAL 10</div>
-                    <div class="signal-title">Niche Commodities Surge: Sulfur &amp; Helium Threaten Chip Production</div>
-                </div>
-                <span class="signal-macro-tag">Mineral Weaponization</span>
-            </div>
-            <div class="signal-chain">
-                <strong>Mechanism:</strong> Sulfur and helium prices surging on Middle East supply disruption. These niche elements are critical to semiconductor manufacturing &mdash; sulfuric acid for wafer cleaning, helium for cooling and leak detection. The price surge indicates how Hormuz ripple effects could end up constraining chip production beyond the direct energy impact. Companies with secured supply chains or alternative sourcing are advantaged.
-            </div>
-            <div class="signal-tables">
-                <div class="signal-table-wrap">
-                    <div class="signal-table-header winners">&#x25B2; Winners</div>
-                    <table class="signal-table">
-                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Conv.</th></tr></thead>
-                        <tbody>
-                            <tr><td><span class="ticker win">APD</span></td><td class="company-name">Air Products</td><td class="thesis">Major helium producer; price surge flows to industrial gas margins</td><td><span class="conviction-badge conviction-moderate">7</span></td></tr>
-                            <tr><td><span class="ticker win">LIN</span></td><td class="company-name">Linde</td><td class="thesis">Largest industrial gas company; diversified helium supply from non-ME sources</td><td><span class="conviction-badge conviction-moderate">7</span></td></tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="signal-table-wrap">
-                    <div class="signal-table-header losers">&#x25BC; Losers</div>
-                    <table class="signal-table">
-                        <thead><tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>Conv.</th></tr></thead>
-                        <tbody>
-                            <tr><td><span class="ticker lose">INTC</span></td><td class="company-name">Intel</td><td class="thesis">US fabs exposed to helium/sulfur cost inflation for wafer processing</td><td><span class="conviction-badge conviction-conditional">4</span></td></tr>
-                            <tr><td><span class="ticker lose">GFS</span></td><td class="company-name">GlobalFoundries</td><td class="thesis">Specialty chip fabs face input cost pressure without AI-driven pricing power</td><td><span class="conviction-badge conviction-conditional">4</span></td></tr>
+                            <tr><td class="ticker lose">TLT</td><td>iShares 20+ Yr Treasury</td><td>Long-duration bonds lose value as rate cut expectations evaporate</td><td><span class="conviction-badge conviction-mod">7</span></td></tr>
+                            <tr><td class="ticker lose">XLU</td><td>Utilities SPDR</td><td>Rate-sensitive sectors underperform as yields rise</td><td><span class="conviction-badge conviction-mod">6</span></td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -1175,36 +1022,36 @@
     </section>
 
     <!-- HOW IT WORKS -->
-    <section id="methodology" class="how-section">
+    <section id="how" class="how-section">
         <div class="section-header">
             <div class="section-eyebrow">Methodology</div>
-            <div class="section-title">How Catalyst Works</div>
-            <div class="section-subtitle">Four-stage intelligence pipeline, refreshed daily</div>
+            <h2 class="section-title">How Catalyst Works</h2>
+            <p class="section-subtitle">From raw events to actionable intelligence in four steps</p>
         </div>
         <div class="how-grid">
             <div class="how-card">
-                <div class="how-step">Step 01</div>
-                <div class="how-icon">&#x1F4E1;</div>
-                <div class="how-name">Scan</div>
-                <div class="how-desc">Monitor global news for events that create sudden shifts in supply or demand for goods, services, or commodities.</div>
+                <div class="how-step">STEP 01</div>
+                <div class="how-icon">📡</div>
+                <h4>Scan</h4>
+                <p>Continuously monitor global news, policy changes, commodity flows, and geopolitical events for supply/demand disruptions.</p>
             </div>
             <div class="how-card">
-                <div class="how-step">Step 02</div>
-                <div class="how-icon">&#x1F517;</div>
-                <div class="how-name">Trace</div>
-                <div class="how-desc">Map causal chains from each event to specific publicly traded stocks. Identify what gets scarcer or more abundant and who benefits or suffers.</div>
+                <div class="how-step">STEP 02</div>
+                <div class="how-icon">🔗</div>
+                <h4>Trace</h4>
+                <p>Map each disruption through its causal chain — from the event to specific industries, companies, and revenue lines affected.</p>
             </div>
             <div class="how-card">
-                <div class="how-step">Step 03</div>
-                <div class="how-icon">&#x1F3AF;</div>
-                <div class="how-name">Score</div>
-                <div class="how-desc">Assign conviction scores (1&ndash;10) based on directness of causal link, revenue exposure, and how much is already priced in by the market.</div>
+                <div class="how-step">STEP 03</div>
+                <div class="how-icon">🎯</div>
+                <h4>Score</h4>
+                <p>Assign conviction scores based on directness of causal link, revenue exposure, and how much is already priced into the stock.</p>
             </div>
             <div class="how-card">
-                <div class="how-step">Step 04</div>
-                <div class="how-icon">&#x26A1;</div>
-                <div class="how-name">Deliver</div>
-                <div class="how-desc">Publish a self-contained intelligence brief every morning with actionable signal cards, macro themes, and double-beneficiary highlights.</div>
+                <div class="how-step">STEP 04</div>
+                <div class="how-icon">📊</div>
+                <h4>Deliver</h4>
+                <p>Package signals into a daily intelligence brief with winners, losers, and convergence zones for multi-signal opportunities.</p>
             </div>
         </div>
     </section>
@@ -1214,11 +1061,11 @@
 <!-- FOOTER -->
 <footer>
     <div class="footer-brand">
-        <div class="nav-logo" style="width:24px;height:24px;font-size:0.75rem;">&#x269B;</div>
-        <span>Catalyst</span>
+        <div class="nav-logo">⚛</div>
+        Catalyst
     </div>
-    <div class="footer-text">Supply/demand intelligence, refreshed daily. Not investment advice.</div>
-    <div class="footer-text" style="margin-top: 4px;">Monday, April 13, 2026</div>
+    <p>Supply/Demand Signal Intelligence · Updated April 18, 2026</p>
+    <p style="margin-top: 4px;">Built by Zac · Powered by AI Research</p>
 </footer>
 
 </body>
