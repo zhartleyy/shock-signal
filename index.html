@@ -38,8 +38,6 @@
   .mono{font-family:'JetBrains Mono',monospace}
   a{color:inherit;text-decoration:none}
   .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
-
-  /* ---------- NAV ---------- */
   nav{
     position:sticky;top:0;z-index:100;
     background:rgba(9,9,11,.72);
@@ -56,8 +54,6 @@
   .brand b{color:var(--accent)}
   .nav-meta{font-size:.8rem;color:var(--muted);font-weight:500}
   .nav-meta .dot{color:var(--accent);margin:0 8px}
-
-  /* ---------- HERO ---------- */
   header{position:relative;padding:90px 0 70px;text-align:center;overflow:hidden}
   header::before{
     content:"";position:absolute;top:-180px;left:50%;transform:translateX(-50%);
@@ -85,8 +81,6 @@
   }
   .stat .num{font-family:'JetBrains Mono',monospace;font-size:1.7rem;font-weight:700;color:var(--accent)}
   .stat .lbl{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:2px}
-
-  /* ---------- DISCLAIMER ---------- */
   .disclaimer{
     display:flex;gap:12px;align-items:flex-start;
     max-width:900px;margin:8px auto 0;
@@ -94,8 +88,6 @@
     border-radius:12px;padding:14px 18px;color:var(--text-2);font-size:.84rem;
   }
   .disclaimer .i{color:var(--accent);font-style:normal;font-weight:700}
-
-  /* ---------- SECTIONS ---------- */
   section{padding:54px 0}
   .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:28px;flex-wrap:wrap}
   .sec-head h2{font-size:1.7rem;font-weight:800;letter-spacing:-.02em}
@@ -104,8 +96,6 @@
     color:var(--accent);background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.28);
     padding:4px 12px;border-radius:999px;
   }
-
-  /* ---------- LEGEND ---------- */
   .legend{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
   .leg{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px}
   .leg .badge{
@@ -118,8 +108,6 @@
   .b-blue{background:rgba(59,130,246,.13);color:var(--blue);border:1px solid rgba(59,130,246,.4)}
   .leg h3{font-size:1rem;margin-bottom:6px}
   .leg p{font-size:.86rem;color:var(--text-2)}
-
-  /* ---------- MACRO THEMES ---------- */
   .macro{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}
   .force{
     background:linear-gradient(180deg,var(--surface),var(--surface-2));
@@ -135,8 +123,6 @@
     color:var(--accent);background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);
     padding:3px 10px;border-radius:999px;
   }
-
-  /* ---------- DOUBLE BENEFICIARIES ---------- */
   .dbl{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
   .ben{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px;transition:border-color .2s}
   .ben:hover{border-color:rgba(34,197,94,.4)}
@@ -147,8 +133,6 @@
   .ben p{font-size:.85rem;color:var(--text-2);margin-bottom:14px}
   .chips{display:flex;gap:8px;flex-wrap:wrap}
   .chip{font-size:.7rem;font-family:'JetBrains Mono',monospace;color:var(--text-2);background:var(--surface-2);border:1px solid var(--border-2);padding:3px 10px;border-radius:999px}
-
-  /* ---------- SIGNAL CARDS ---------- */
   .signals{display:flex;flex-direction:column;gap:22px}
   .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color .2s}
   .card:hover{border-color:var(--border-2)}
@@ -184,22 +168,16 @@
   .cv-h{background:rgba(34,197,94,.14);color:var(--green);border:1px solid rgba(34,197,94,.4)}
   .cv-m{background:rgba(249,115,22,.14);color:var(--orange);border:1px solid rgba(249,115,22,.4)}
   .cv-l{background:rgba(59,130,246,.14);color:var(--blue);border:1px solid rgba(59,130,246,.4)}
-
-  /* ---------- HOW IT WORKS ---------- */
   .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
   .step{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;position:relative}
   .step .n{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--accent);letter-spacing:.1em}
   .step .ic{font-size:1.6rem;margin:10px 0 12px;display:block}
   .step h3{font-size:1.05rem;margin-bottom:8px}
   .step p{font-size:.85rem;color:var(--text-2)}
-
-  /* ---------- FOOTER ---------- */
   footer{border-top:1px solid var(--border);padding:42px 0;text-align:center;margin-top:20px}
   footer .brand{justify-content:center;margin-bottom:10px}
   footer p{color:var(--muted);font-size:.84rem;margin-bottom:4px}
   footer .nia{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.18em;color:var(--red);margin-top:14px;opacity:.8}
-
-  /* ---------- RESPONSIVE ---------- */
   @media(max-width:768px){
     .legend{grid-template-columns:1fr}
     .tables{grid-template-columns:1fr}
@@ -223,7 +201,7 @@
 <nav>
   <div class="wrap nav-inner">
     <a href="#" class="brand"><span class="logo">⚛</span> Cata<b>lyst</b></a>
-    <div class="nav-meta">June 14, 2026 <span class="dot">·</span> Daily Brief</div>
+    <div class="nav-meta">July 17, 2026 <span class="dot">·</span> Daily Brief</div>
   </div>
 </nav>
 
@@ -233,10 +211,10 @@
     <h1>Supply &amp; Demand <span class="accent">Signal Report</span></h1>
     <p class="lede">Global events parsed into market-moving catalysts. Causal chains traced to specific stocks. Updated every morning.</p>
     <div class="stats">
-      <div class="stat"><div class="num mono">10</div><div class="lbl">Signals</div></div>
-      <div class="stat"><div class="num mono">5</div><div class="lbl">Macro Themes</div></div>
-      <div class="stat"><div class="num mono">5</div><div class="lbl">Double Plays</div></div>
-      <div class="stat"><div class="num mono">$86</div><div class="lbl">Brent / bbl</div></div>
+      <div class="stat"><div class="num mono">11</div><div class="lbl">Signals</div></div>
+      <div class="stat"><div class="num mono">6</div><div class="lbl">Macro Themes</div></div>
+      <div class="stat"><div class="num mono">4</div><div class="lbl">Double Plays</div></div>
+      <div class="stat"><div class="num mono">$88.10</div><div class="lbl">Brent crude / bbl (+4.6% close)</div></div>
     </div>
   </div>
 </header>
@@ -275,36 +253,42 @@
 <!-- MACRO THEMES -->
 <section id="macro">
   <div class="wrap">
-    <div class="sec-head"><h2>Macro Themes</h2><span class="sec-tag">5 Forces</span></div>
+    <div class="sec-head"><h2>Macro Themes</h2><span class="sec-tag">6 Forces</span></div>
     <div class="macro">
       <div class="force">
-        <span class="ic">🕊️</span>
-        <h3>Middle East De-escalation</h3>
-        <p>US–Iran peace deal said to be signing this weekend. Hormuz to reopen within 30 days. The war premium is unwinding — Brent down ~20% from its 2026 peak.</p>
-        <span class="count mono">4 signals</span>
-      </div>
-      <div class="force">
-        <span class="ic">⚡</span>
-        <h3>AI Power &amp; Compute</h3>
-        <p>Talen–Amazon expand a 1,920 MW nuclear deal; data-center load scaling to 35 GW by 2030. Nvidia restarts H200 China shipments under a 25% tariff.</p>
-        <span class="count mono">3 signals</span>
-      </div>
-      <div class="force">
-        <span class="ic">🏦</span>
-        <h3>Higher-for-Longer Rates</h3>
-        <p>CPI near 4.2% and a hot June 5 payrolls print push the Fed to a near-certain June hold at 3.50–3.75%. Easing bias removed; cuts repriced toward 2027.</p>
+        <span class="ic">🛢️</span>
+        <h3>Middle East Energy Shock</h3>
+        <p>Brent &lt;cite index="4-12"&gt;advanced about 4.6% to close at $88.10 per barrel&lt;/cite&gt; after &lt;cite index="3-7,3-8"&gt;tanker traffic through the Strait of Hormuz fell to two-month lows, with only seven vessels transiting the waterway&lt;/cite&gt; as the US-Iran war entered a sixth consecutive night of strikes and Iran struck a Kuwaiti desalination plant.</p>
         <span class="count mono">2 signals</span>
       </div>
       <div class="force">
-        <span class="ic">⚖️</span>
-        <h3>Trade Realignment</h3>
-        <p>EU–US deal lands a 15% branded-pharma tariff while exempting generics, plus $600B EU investment and $750B energy purchases. Reshoring accelerates.</p>
+        <span class="ic">⛽</span>
+        <h3>Refining Margin Boom</h3>
+        <p>&lt;cite index="61-4"&gt;The WTI 3-2-1 crack spread hit $59 per barrel, nearly tripling since January&lt;/cite&gt;, pushing refiners to all-time highs as &lt;cite index="63-5"&gt;Russia halted diesel exports and shifted to becoming a net importer&lt;/cite&gt;.</p>
+        <span class="count mono">2 signals</span>
+      </div>
+      <div class="force">
+        <span class="ic">💰</span>
+        <h3>Rate Path Uncertainty</h3>
+        <p>&lt;cite index="13-5,13-7"&gt;CME's FedWatch tool estimates a 46.5% chance the Fed hikes 25bps, with odds rising as oil prices jumped on the Iran conflict&lt;/cite&gt;, pressuring gold &lt;cite index="46-5"&gt;toward its lowest level since November 2025&lt;/cite&gt;.</p>
+        <span class="count mono">2 signals</span>
+      </div>
+      <div class="force">
+        <span class="ic">🌎</span>
+        <h3>Trade War 2.0</h3>
+        <p>&lt;cite index="23-1"&gt;The US is imposing 25% tariffs on imports from Brazil&lt;/cite&gt; effective July 22, while &lt;cite index="27-25"&gt;the NRF estimates port volumes surged 19% year-over-year in June&lt;/cite&gt; as importers frontload ahead of expiring Section 122 duties.</p>
+        <span class="count mono">2 signals</span>
+      </div>
+      <div class="force">
+        <span class="ic">🛡️</span>
+        <h3>Global Rearmament</h3>
+        <p>&lt;cite index="54-4"&gt;More than $21 billion in prospective foreign military sales involving Lockheed Martin and RTX were approved for Middle Eastern partners in Q1 2026 alone&lt;/cite&gt;, even as &lt;cite index="52-2,52-3"&gt;LMT dropped 22% and Northrop Grumman fell 29% since the conflict's first trading day&lt;/cite&gt;.</p>
         <span class="count mono">1 signal</span>
       </div>
       <div class="force">
-        <span class="ic">⛏️</span>
-        <h3>Critical Minerals</h3>
-        <p>Copper deficit through 2030 as grid, EVs and data centers add a "second US" of demand. Non-China rare-earth value chain scaling with $1.6B in US backing.</p>
+        <span class="ic">🤖</span>
+        <h3>AI Chip Supercycle</h3>
+        <p>&lt;cite index="28-1"&gt;Global semiconductor sales hit $120.6 billion in May 2026, up 9.2% month-over-month&lt;/cite&gt;, while &lt;cite index="29-1"&gt;China's integrated circuit exports jumped 96% year-over-year to $177.28 billion in H1&lt;/cite&gt;.</p>
         <span class="count mono">2 signals</span>
       </div>
     </div>
@@ -317,34 +301,28 @@
     <div class="sec-head"><h2>Double Beneficiaries</h2><span class="sec-tag">2+ Signals</span></div>
     <div class="dbl">
       <div class="ben">
-        <div class="ben-top"><span class="ben-tick mono">DAL</span><span class="ben-x mono">2× catalyst</span></div>
-        <h3>Delta Air Lines</h3>
-        <p>A collapsing crude price slashes jet fuel — the largest swing cost for carriers — just as a Hormuz reopening removes the demand-shock overhang on international travel. After being a top "loser" during the war, Delta flips to a clean peace-dividend winner.</p>
-        <div class="chips"><span class="chip">Oil Collapse</span><span class="chip">Travel Normalization</span></div>
+        <div class="ben-top"><span class="ben-tick mono">MPC</span><span class="ben-x mono">2× catalyst</span></div>
+        <h3>Marathon Petroleum</h3>
+        <p>MPC benefits from both the direct crude cost pass-through of Middle East supply fears and the historic crack-spread blowout, hitting all-time highs on both fronts.</p>
+        <div class="chips"><span class="chip">Middle East Energy Shock</span><span class="chip">Refining Margin Boom</span></div>
       </div>
       <div class="ben">
-        <div class="ben-top"><span class="ben-tick mono">TSM</span><span class="ben-x mono">2× catalyst</span></div>
-        <h3>Taiwan Semiconductor Mfg.</h3>
-        <p>Nvidia restarting H200 shipments to China reopens a high-volume order stream at TSMC's sole-source fabs, while the broader AI data-center buildout keeps advanced-node capacity sold out. TSMC sits at the chokepoint of both demand surges.</p>
-        <div class="chips"><span class="chip">H200 China Restart</span><span class="chip">AI Compute Buildout</span></div>
+        <div class="ben-top"><span class="ben-tick mono">VLO</span><span class="ben-x mono">2× catalyst</span></div>
+        <h3>Valero Energy</h3>
+        <p>As one of the most crack-spread-levered refiners with heavy Gulf Coast distillate exposure, Valero captures upside from both the $59 3-2-1 spread and Russia's diesel export halt tightening global distillate supply.</p>
+        <div class="chips"><span class="chip">Refining Margin Boom</span><span class="chip">Diesel Supply Shock</span></div>
       </div>
       <div class="ben">
-        <div class="ben-top"><span class="ben-tick mono">CEG</span><span class="ben-x mono">2× catalyst</span></div>
-        <h3>Constellation Energy</h3>
-        <p>The Talen–Amazon nuclear expansion validates premium pricing for 24/7 carbon-free baseload that hyperscalers are scrambling to lock up. Higher-for-longer rates also favor regulated, cash-generative utilities over speculative growth.</p>
-        <div class="chips"><span class="chip">AI Power Demand</span><span class="chip">Rate Regime</span></div>
+        <div class="ben-top"><span class="ben-tick mono">NVDA</span><span class="ben-x mono">2× catalyst</span></div>
+        <h3>Nvidia</h3>
+        <p>Nvidia sits at the center of both the broader AI chip demand supercycle and the resumption of H200 shipments into China, giving it dual exposure to the fastest-growing part of a ~$975B semiconductor market.</p>
+        <div class="chips"><span class="chip">AI Chip Supercycle</span><span class="chip">China Chip Export Boom</span></div>
       </div>
       <div class="ben">
-        <div class="ben-top"><span class="ben-tick mono">FCX</span><span class="ben-x mono">2× catalyst</span></div>
-        <h3>Freeport-McMoRan</h3>
-        <p>Copper faces a structural supply deficit into 2030 as electrification adds a "second US" of demand. AI data centers compound it — each gigawatt of compute needs thousands of tonnes of copper for power and cabling. Freeport is the largest US-listed pure-play.</p>
-        <div class="chips"><span class="chip">Electrification Deficit</span><span class="chip">Data-Center Buildout</span></div>
-      </div>
-      <div class="ben">
-        <div class="ben-top"><span class="ben-tick mono">TEVA</span><span class="ben-x mono">2× catalyst</span></div>
-        <h3>Teva Pharmaceutical</h3>
-        <p>The EU–US trade deal exempts generic drugs from the new 15% pharma tariff — effectively zero duty — handing share to large generic makers, while the broader reshoring push lifts demand for Teva's US manufacturing and CDMO footprint.</p>
-        <div class="chips"><span class="chip">Generic Exemption</span><span class="chip">Pharma Reshoring</span></div>
+        <div class="ben-top"><span class="ben-tick mono">JPM</span><span class="ben-x mono">2× catalyst</span></div>
+        <h3>JPMorgan Chase</h3>
+        <p>Higher-for-longer rate expectations tied to both hawkish Fed signaling and oil-driven inflation risk widen net interest margins for the largest US bank across two separate monetary catalysts.</p>
+        <div class="chips"><span class="chip">Rate Path Uncertainty</span><span class="chip">Gold Slide on Rate Bets</span></div>
       </div>
     </div>
   </div>
@@ -353,38 +331,36 @@
 <!-- INDIVIDUAL SIGNALS -->
 <section id="signals">
   <div class="wrap">
-    <div class="sec-head"><h2>Individual Signals</h2><span class="sec-tag">10 Signals</span></div>
+    <div class="sec-head"><h2>Individual Signals</h2><span class="sec-tag">11 Signals</span></div>
     <div class="signals">
 
       <!-- SIGNAL 1 -->
       <div class="card">
         <div class="card-head">
-          <div class="tags"><span class="tag tag-theme">Middle East De-escalation</span><span class="tag tag-sector">Energy / Geopolitical</span></div>
-          <h3>US–Iran Peace Deal Said To Sign This Weekend — Oil Sheds Its War Premium</h3>
+          <div class="tags"><span class="tag tag-theme">Middle East Energy Shock</span><span class="tag tag-sector">Energy / Geopolitical</span></div>
+          <h3>Brent Closes at $88.10 as US-Iran War Escalates</h3>
         </div>
         <div class="card-body">
           <div class="chain">
-            <span class="mech">↑ Supply Normalization</span>
-            <p>President Trump said the US–Iran peace deal could be signed this weekend, with the Strait of Hormuz reopening within 30 days, Iran freely selling oil again, and the naval blockade lifted. Brent fell below $86.50 — its lowest since early March and down roughly 20% from the 2026 high. The single largest oil-supply overhang in market history is being priced out, reversing the war trade that dominated spring.</p>
+            <span class="mech">↑ Supply Disruption</span>
+            <p>Oil jumped after &lt;cite index="4-11,4-14"&gt;Kuwait said Iran attacked a power and water desalination plant, damaging the facility and sparking a fire that affected a large number of its electricity generating units&lt;/cite&gt;. &lt;cite index="4-2"&gt;The fighting has disrupted energy flows through the Strait of Hormuz, which typically handles around 20% of the world's oil traffic&lt;/cite&gt;. &lt;cite index="4-4"&gt;Trump said US forces would target Iran's infrastructure next week unless the two sides reach a diplomatic breakthrough&lt;/cite&gt;, keeping the geopolitical risk premium elevated.</p>
           </div>
           <div class="tables">
             <div class="tbl-wrap win">
               <h4>▲ Winners</h4>
               <table>
-                <tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
-                <tr><td class="tick">DAL</td><td class="co">Delta Air Lines</td><td>Jet fuel was the war's biggest margin drag; falling crude flips the trade hard</td><td><span class="cv cv-h">9</span></td></tr>
-                <tr><td class="tick">LUV</td><td class="co">Southwest Airlines</td><td>Domestic-heavy, highly fuel-sensitive; direct earnings leverage to cheaper crude</td><td><span class="cv cv-h">8</span></td></tr>
-                <tr><td class="tick">UAL</td><td class="co">United Airlines</td><td>Fuel ~30–35% of opex; reopening also revives international long-haul demand</td><td><span class="cv cv-h">8</span></td></tr>
-              </table>
+<tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
+<tr><td class="tick">OXY</td><td class="co">Occidental Petroleum</td><td>Pure-play upstream leverage to a sustained crude risk premium</td><td><span class="cv cv-h">8</span></td></tr>
+<tr><td class="tick">MPC</td><td class="co">Marathon Petroleum</td><td>Tight product markets amplify refining margins even as crude spikes</td><td><span class="cv cv-m">7</span></td></tr>
+</table>
             </div>
             <div class="tbl-wrap lose">
               <h4>▼ Losers</h4>
               <table>
-                <tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
-                <tr><td class="tick">OXY</td><td class="co">Occidental Petroleum</td><td>US pure-play upstream loses the $99 war premium as crude reverts</td><td><span class="cv cv-h">8</span></td></tr>
-                <tr><td class="tick">DVN</td><td class="co">Devon Energy</td><td>High oil-price leverage cuts both ways; earnings de-rate as Brent falls</td><td><span class="cv cv-m">7</span></td></tr>
-                <tr><td class="tick">FANG</td><td class="co">Diamondback Energy</td><td>Permian operator that rallied on scarcity; multiple compresses on peace</td><td><span class="cv cv-m">7</span></td></tr>
-              </table>
+<tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
+<tr><td class="tick">DAL</td><td class="co">Delta Air Lines</td><td>Jet fuel costs surge directly compress airline margins</td><td><span class="cv cv-h">8</span></td></tr>
+<tr><td class="tick">LYB</td><td class="co">LyondellBasell</td><td>Higher naphtha/crude feedstock costs squeeze petrochemical margins</td><td><span class="cv cv-m">6</span></td></tr>
+</table>
             </div>
           </div>
         </div>
@@ -393,32 +369,30 @@
       <!-- SIGNAL 2 -->
       <div class="card">
         <div class="card-head">
-          <div class="tags"><span class="tag tag-theme">Middle East De-escalation</span><span class="tag tag-sector">Shipping / LNG</span></div>
-          <h3>Hormuz Reopening Deflates LNG &amp; Tanker Spot Rates as Qatar Returns</h3>
+          <div class="tags"><span class="tag tag-theme">Middle East Energy Shock</span><span class="tag tag-sector">Energy / Shipping</span></div>
+          <h3>Iran Threatens Red Sea Closure, LNG Buyers Scramble for Non-Hormuz Supply</h3>
         </div>
         <div class="card-body">
           <div class="chain">
-            <span class="mech">↑ Capacity Returns</span>
-            <p>The draft deal commits Iran to reopening the Strait of Hormuz within 30 days, which would restore Qatari LNG to the market and end the Cape of Good Hope rerouting that consumed 10–14 extra days per voyage. The vessel-scarcity premium that drove LNG charters to ~$300K/day and VLCCs toward $800K/day unwinds. US Gulf LNG keeps its long-term contracts, but the spot windfall fades fast.</p>
+            <span class="mech">↑ Freight Cost Inflation</span>
+            <p>&lt;cite index="6-17,6-18"&gt;Iran has instructed Yemen's Houthi movement to prepare for a possible closure of the Bab el-Mandeb Strait, the southern gateway to the Red Sea and one of the world's busiest maritime corridors&lt;/cite&gt;. &lt;cite index="7-1"&gt;China's giant state LNG importers are in talks to secure long-term LNG supplies from exporters that don't need the Strait of Hormuz&lt;/cite&gt;, while &lt;cite index="7-2"&gt;South Korea has been increasingly betting on the Red Sea route and the Saudi export terminal&lt;/cite&gt;. Any closure would force vessels onto much longer African routes, spiking freight costs.</p>
           </div>
           <div class="tables">
             <div class="tbl-wrap win">
               <h4>▲ Winners</h4>
               <table>
-                <tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
-                <tr><td class="tick">SHEL</td><td class="co">Shell PLC</td><td>Major Qatar LNG equity partner; halted volumes come back online</td><td><span class="cv cv-m">7</span></td></tr>
-                <tr><td class="tick">TTE</td><td class="co">TotalEnergies</td><td>Qatar exposure recovers; rerouting costs normalize across the fleet</td><td><span class="cv cv-m">6</span></td></tr>
-                <tr><td class="tick">CCL</td><td class="co">Carnival Corp.</td><td>Lower bunker fuel plus restored Gulf/Suez routing eases cost base</td><td><span class="cv cv-m">5</span></td></tr>
-              </table>
+<tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
+<tr><td class="tick">LNG</td><td class="co">Cheniere Energy</td><td>US LNG exporter positioned to capture Asian buyers diversifying away from Hormuz-dependent supply</td><td><span class="cv cv-m">7</span></td></tr>
+<tr><td class="tick">FRO</td><td class="co">Frontline</td><td>Tanker day-rates and war-risk premiums rise as routes lengthen and capacity tightens</td><td><span class="cv cv-m">6</span></td></tr>
+</table>
             </div>
             <div class="tbl-wrap lose">
               <h4>▼ Losers</h4>
               <table>
-                <tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
-                <tr><td class="tick">FRO</td><td class="co">Frontline PLC</td><td>VLCC spot rates collapse from $800K/day as routing shortens</td><td><span class="cv cv-h">8</span></td></tr>
-                <tr><td class="tick">STNG</td><td class="co">Scorpio Tankers</td><td>Product-tanker scarcity premium evaporates as vessel-days free up</td><td><span class="cv cv-m">7</span></td></tr>
-                <tr><td class="tick">VG</td><td class="co">Venture Global LNG</td><td>Spot premium that drove the 2026 run fades; contracts stay, upside cools</td><td><span class="cv cv-m">6</span></td></tr>
-              </table>
+<tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
+<tr><td class="tick">GPS</td><td class="co">Gap Inc.</td><td>Apparel importer exposed to longer transit times and higher freight costs via Red Sea rerouting</td><td><span class="cv cv-m">5</span></td></tr>
+<tr><td class="tick">IKEA-EXPOSED RETAIL</td><td class="co">Big-box importers</td><td>Reliant on low-cost Suez transit for furniture/home goods shipments</td><td><span class="cv cv-l">4</span></td></tr>
+</table>
             </div>
           </div>
         </div>
@@ -427,32 +401,31 @@
       <!-- SIGNAL 3 -->
       <div class="card">
         <div class="card-head">
-          <div class="tags"><span class="tag tag-theme">AI Power &amp; Compute</span><span class="tag tag-sector">Energy / Nuclear</span></div>
-          <h3>Talen Expands Amazon Nuclear Pact to 1,920 MW Through 2042 — Baseload Land-Grab Intensifies</h3>
+          <div class="tags"><span class="tag tag-theme">Refining Margin Boom</span><span class="tag tag-sector">Energy / Industrials</span></div>
+          <h3>3-2-1 Crack Spread Hits $59, Refiners Print Record Margins</h3>
         </div>
         <div class="card-body">
           <div class="chain">
-            <span class="mech">↑ Demand Surge</span>
-            <p>On June 11, Talen Energy expanded its Susquehanna nuclear agreement with AWS to deliver 1,920 MW of carbon-free power through 2042. US data-center demand is projected to climb from 19 GW (2023) to 35 GW by 2030, and AI's need for 24/7 baseload is making nuclear capacity the scarce asset hyperscalers are racing to secure. Behind-the-meter and restart deals are setting premium long-dated pricing.</p>
+            <span class="mech">↑ Margin Expansion</span>
+            <p>&lt;cite index="61-4"&gt;The WTI 3-2-1 crack spread hit $59 per barrel, nearly tripling since January as global refining shortages and war disruptions kept fuel prices elevated&lt;/cite&gt;. &lt;cite index="64-4,64-7"&gt;Crack spreads drove Valero, Marathon, Phillips 66 and Par Pacific to all-time highs, with Valero up 83% and Marathon up 86% in 2026&lt;/cite&gt;. &lt;cite index="10-7"&gt;EIA data showed gasoline inventories fell 1.5 million barrels in the week ending July 10, leaving stockpiles about 14 million barrels below their five-year seasonal average&lt;/cite&gt;.</p>
           </div>
           <div class="tables">
             <div class="tbl-wrap win">
               <h4>▲ Winners</h4>
               <table>
-                <tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
-                <tr><td class="tick">TLN</td><td class="co">Talen Energy</td><td>Direct counterparty; expanded AWS deal locks 17 yrs of premium offtake</td><td><span class="cv cv-h">9</span></td></tr>
-                <tr><td class="tick">CEG</td><td class="co">Constellation Energy</td><td>Largest US nuclear fleet; comps re-rate on every new hyperscaler deal</td><td><span class="cv cv-h">8</span></td></tr>
-                <tr><td class="tick">VST</td><td class="co">Vistra Corp.</td><td>Nuclear + gas fleet positioned for data-center PPAs in tight markets</td><td><span class="cv cv-m">7</span></td></tr>
-                <tr><td class="tick">GEV</td><td class="co">GE Vernova</td><td>Grid equipment and SMR pipeline benefit from baseload buildout</td><td><span class="cv cv-m">7</span></td></tr>
-              </table>
+<tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
+<tr><td class="tick">VLO</td><td class="co">Valero Energy</td><td>Low-cost Gulf Coast refiner directly monetizing record crack spreads</td><td><span class="cv cv-h">9</span></td></tr>
+<tr><td class="tick">MPC</td><td class="co">Marathon Petroleum</td><td>Largest independent US refiner with midstream cash flow amplifying margin capture</td><td><span class="cv cv-h">9</span></td></tr>
+<tr><td class="tick">DINO</td><td class="co">HF Sinclair</td><td>Smaller-cap refiner with outsized beta to crack spread moves</td><td><span class="cv cv-m">7</span></td></tr>
+</table>
             </div>
             <div class="tbl-wrap lose">
               <h4>▼ Losers</h4>
               <table>
-                <tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
-                <tr><td class="tick">META</td><td class="co">Meta Platforms</td><td>Hyperscalers face rising, longer-dated power-procurement costs</td><td><span class="cv cv-l">4</span></td></tr>
-                <tr><td class="tick">AEP</td><td class="co">American Electric Power</td><td>Load growth is real but regulated returns cap the AI-power upside</td><td><span class="cv cv-l">4</span></td></tr>
-              </table>
+<tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
+<tr><td class="tick">EOG</td><td class="co">EOG Resources</td><td>Pure upstream producer lacks refining margin offset and lags on lower realized crude prices</td><td><span class="cv cv-m">5</span></td></tr>
+<tr><td class="tick">SU</td><td class="co">Suncor Energy</td><td>Integrated model dilutes pure refining upside versus dedicated refiners</td><td><span class="cv cv-l">4</span></td></tr>
+</table>
             </div>
           </div>
         </div>
@@ -461,31 +434,30 @@
       <!-- SIGNAL 4 -->
       <div class="card">
         <div class="card-head">
-          <div class="tags"><span class="tag tag-theme">AI Power &amp; Compute</span><span class="tag tag-sector">Technology / Semiconductors</span></div>
-          <h3>Nvidia Restarts H200 Shipments to China Under a 25% Tariff — Demand Channel Reopens</h3>
+          <div class="tags"><span class="tag tag-theme">Refining Margin Boom</span><span class="tag tag-sector">Energy / Commodities</span></div>
+          <h3>Russia Halts Diesel Exports, Deepening Global Distillate Shortage</h3>
         </div>
         <div class="card-body">
           <div class="chain">
-            <span class="mech">↑ Demand Restored</span>
-            <p>Nvidia confirmed purchase orders for H200 processors from Chinese customers and is restarting manufacturing for that market, with AMD's MI308 also cleared — though Washington's June 1 guidance keeps the restriction net wide, applying to China-parented firms anywhere, and a 25% tariff sits on the chips. A large, previously frozen revenue stream reopens for the AI silicon complex, even if margins carry a tariff drag.</p>
+            <span class="mech">↓ Supply Deficit</span>
+            <p>&lt;cite index="63-5"&gt;Russia, a major global diesel exporter, announced it would halt exports and shift to becoming a net importer, driven by higher crude costs and Ukrainian strikes on its largest refineries&lt;/cite&gt;. &lt;cite index="68-12"&gt;Diesel exports dropped to about 234,000 bpd in early July, down from a 2025 average of 817,000 bpd&lt;/cite&gt;, and &lt;cite index="68-13"&gt;US diesel futures surged 11.6%&lt;/cite&gt; in response, tightening the global distillate balance further.</p>
           </div>
           <div class="tables">
             <div class="tbl-wrap win">
               <h4>▲ Winners</h4>
               <table>
-                <tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
-                <tr><td class="tick">NVDA</td><td class="co">Nvidia</td><td>China H200 channel reopens; incremental TAM on top of hyperscale demand</td><td><span class="cv cv-h">8</span></td></tr>
-                <tr><td class="tick">TSM</td><td class="co">TSMC</td><td>Sole-source fab; restart adds high-volume orders to a sold-out node</td><td><span class="cv cv-h">8</span></td></tr>
-                <tr><td class="tick">AMD</td><td class="co">Advanced Micro Devices</td><td>MI308 clearance restores a China accelerator path it had written off</td><td><span class="cv cv-m">7</span></td></tr>
-              </table>
+<tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
+<tr><td class="tick">VLO</td><td class="co">Valero Energy</td><td>Distillate-heavy product slate captures outsized upside from the diesel supply gap</td><td><span class="cv cv-h">8</span></td></tr>
+<tr><td class="tick">PSX</td><td class="co">Phillips 66</td><td>Chemicals and midstream exposure add torque to distillate margin strength</td><td><span class="cv cv-m">7</span></td></tr>
+</table>
             </div>
             <div class="tbl-wrap lose">
               <h4>▼ Losers</h4>
               <table>
-                <tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
-                <tr><td class="tick">INTC</td><td class="co">Intel</td><td>Cedes more AI-accelerator share as the leaders re-enter China</td><td><span class="cv cv-m">5</span></td></tr>
-                <tr><td class="tick">0981.HK</td><td class="co">SMIC</td><td>Domestic-substitution thesis weakens when top US silicon is buyable again</td><td><span class="cv cv-m">5</span></td></tr>
-              </table>
+<tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
+<tr><td class="tick">JBHT</td><td class="co">J.B. Hunt Transport</td><td>Higher diesel input costs compress trucking margins</td><td><span class="cv cv-m">6</span></td></tr>
+<tr><td class="tick">ODFL</td><td class="co">Old Dominion Freight Line</td><td>Fuel surcharges only partially offset rising diesel costs for less-than-truckload carriers</td><td><span class="cv cv-m">5</span></td></tr>
+</table>
             </div>
           </div>
         </div>
@@ -494,32 +466,30 @@
       <!-- SIGNAL 5 -->
       <div class="card">
         <div class="card-head">
-          <div class="tags"><span class="tag tag-theme">Higher-for-Longer Rates</span><span class="tag tag-sector">Macro / Interest Rates</span></div>
-          <h3>Fed June Hold Near-Certain as CPI Holds ~4.2% — Cuts Repriced Toward 2027</h3>
+          <div class="tags"><span class="tag tag-theme">Rate Path Uncertainty</span><span class="tag tag-sector">Financial / Monetary</span></div>
+          <h3>Fed Hike Odds Climb to 46.5% Ahead of July 29 FOMC</h3>
         </div>
         <div class="card-body">
           <div class="chain">
-            <span class="mech">Rate Constraint</span>
-            <p>Markets price a ~99% probability the FOMC holds at 3.50–3.75% on June 16–17 — a third straight hold — with CPI running near 4.2% YoY and a hot June 5 payrolls report killing near-term cut hopes. The Fed has dropped its easing bias and signals openness to hikes if data warrant. Rate-sensitive equities face repricing risk; cash and net-interest-margin beneficiaries keep the edge.</p>
+            <span class="mech">Mixed Signal</span>
+            <p>&lt;cite index="13-5"&gt;CME's FedWatch tool now estimates there's a 46.5% chance the central bank raises interest rates by 25 basis points&lt;/cite&gt; at the July 29 meeting. &lt;cite index="13-7"&gt;Odds rose as oil prices jumped on the latest developments in the conflict between the US and Iran&lt;/cite&gt;. Fed Chair Kevin Warsh has signaled a hawkish, data-dependent posture with inflation projections revised higher, keeping markets on edge for a policy surprise.</p>
           </div>
           <div class="tables">
             <div class="tbl-wrap win">
               <h4>▲ Winners</h4>
               <table>
-                <tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
-                <tr><td class="tick">JPM</td><td class="co">JPMorgan Chase</td><td>Higher-for-longer preserves NIM; fortress balance sheet compounds cash</td><td><span class="cv cv-m">7</span></td></tr>
-                <tr><td class="tick">BRK.B</td><td class="co">Berkshire Hathaway</td><td>Record T-bill pile earns ~5%; optionality if equities wobble</td><td><span class="cv cv-m">7</span></td></tr>
-                <tr><td class="tick">SCHW</td><td class="co">Charles Schwab</td><td>Net interest income re-expands as deposit drag eases at high rates</td><td><span class="cv cv-m">6</span></td></tr>
-              </table>
+<tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
+<tr><td class="tick">JPM</td><td class="co">JPMorgan Chase</td><td>Higher-for-longer rates widen net interest margin on its deposit franchise</td><td><span class="cv cv-m">6</span></td></tr>
+<tr><td class="tick">BAC</td><td class="co">Bank of America</td><td>Large deposit base benefits from elevated policy rates</td><td><span class="cv cv-m">5</span></td></tr>
+</table>
             </div>
             <div class="tbl-wrap lose">
               <h4>▼ Losers</h4>
               <table>
-                <tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
-                <tr><td class="tick">AMT</td><td class="co">American Tower</td><td>REITs reprice sharply when cut expectations get pushed out</td><td><span class="cv cv-m">7</span></td></tr>
-                <tr><td class="tick">ARKK</td><td class="co">ARK Innovation ETF</td><td>Long-duration growth suffers most from prolonged high rates</td><td><span class="cv cv-m">6</span></td></tr>
-                <tr><td class="tick">DHI</td><td class="co">D.R. Horton</td><td>Mortgage rates stay elevated; affordability and order pace pressured</td><td><span class="cv cv-m">6</span></td></tr>
-              </table>
+<tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
+<tr><td class="tick">AMT</td><td class="co">American Tower</td><td>Rate-sensitive REIT faces higher refinancing costs and cap-rate pressure</td><td><span class="cv cv-m">5</span></td></tr>
+<tr><td class="tick">DHI</td><td class="co">D.R. Horton</td><td>Homebuilder affordability worsens as mortgage rates stay elevated</td><td><span class="cv cv-m">5</span></td></tr>
+</table>
             </div>
           </div>
         </div>
@@ -528,31 +498,30 @@
       <!-- SIGNAL 6 -->
       <div class="card">
         <div class="card-head">
-          <div class="tags"><span class="tag tag-theme">Trade Realignment</span><span class="tag tag-sector">Pharma / Trade Policy</span></div>
-          <h3>EU–US Deal Lands 15% Branded-Pharma Tariff — Generics Exempted, Reshoring Rewarded</h3>
+          <div class="tags"><span class="tag tag-theme">Rate Path Uncertainty</span><span class="tag tag-sector">Commodities / Financial</span></div>
+          <h3>Gold Slips Toward 8-Month Low as Oil Rally Lifts Rate-Hike Bets</h3>
         </div>
         <div class="card-body">
           <div class="chain">
-            <span class="mech">Supply Constraint</span>
-            <p>The new EU–US trade pact applies a 15% tariff to branded pharmaceuticals while exempting generics (effectively zero duty), alongside $600B in EU investment and $750B of US energy purchases through 2028. The industry hit lands at $13–19B — "less bad than feared." The clear edge goes to generic makers and to companies already onshoring US capacity, such as AstraZeneca's $50B build-out.</p>
+            <span class="mech">↓ Safe-Haven Demand</span>
+            <p>&lt;cite index="46-5"&gt;Gold prices fell toward $4,000 an ounce, approaching their lowest level since November 2025, as escalating tensions in the Middle East drove oil prices higher and reinforced concerns that interest rates could remain elevated&lt;/cite&gt;. &lt;cite index="46-8"&gt;Traders currently see about a 51% chance of a September rate hike&lt;/cite&gt;, keeping non-yielding gold under pressure even as central bank buying continues in the background.</p>
           </div>
           <div class="tables">
             <div class="tbl-wrap win">
               <h4>▲ Winners</h4>
               <table>
-                <tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
-                <tr><td class="tick">TEVA</td><td class="co">Teva Pharmaceutical</td><td>Generic exemption + US footprint; share gains vs tariffed branded peers</td><td><span class="cv cv-m">7</span></td></tr>
-                <tr><td class="tick">AZN</td><td class="co">AstraZeneca</td><td>$50B US reshoring blunts tariff exposure ahead of rivals</td><td><span class="cv cv-m">6</span></td></tr>
-                <tr><td class="tick">CTLT</td><td class="co">Catalent / US CDMOs</td><td>Reshoring of drug manufacturing drives US contract-fill demand</td><td><span class="cv cv-m">6</span></td></tr>
-              </table>
+<tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
+<tr><td class="tick">JPM</td><td class="co">JPMorgan Chase</td><td>Elevated-rate regime and trading volatility support fee and net interest income</td><td><span class="cv cv-m">6</span></td></tr>
+<tr><td class="tick">GS</td><td class="co">Goldman Sachs</td><td>Commodity and rates volatility boosts trading desk revenue</td><td><span class="cv cv-m">6</span></td></tr>
+</table>
             </div>
             <div class="tbl-wrap lose">
               <h4>▼ Losers</h4>
               <table>
-                <tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
-                <tr><td class="tick">NVO</td><td class="co">Novo Nordisk</td><td>EU-made branded blockbusters face the new 15% US import duty</td><td><span class="cv cv-m">6</span></td></tr>
-                <tr><td class="tick">SNY</td><td class="co">Sanofi</td><td>Branded EU export mix into the US carries direct tariff drag</td><td><span class="cv cv-m">5</span></td></tr>
-              </table>
+<tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
+<tr><td class="tick">NEM</td><td class="co">Newmont Corporation</td><td>Largest gold miner directly exposed to falling bullion prices</td><td><span class="cv cv-m">7</span></td></tr>
+<tr><td class="tick">GOLD</td><td class="co">Barrick Mining</td><td>Revenue and margins compress as spot gold retreats from January highs</td><td><span class="cv cv-m">6</span></td></tr>
+</table>
             </div>
           </div>
         </div>
@@ -561,31 +530,30 @@
       <!-- SIGNAL 7 -->
       <div class="card">
         <div class="card-head">
-          <div class="tags"><span class="tag tag-theme">Higher-for-Longer Rates</span><span class="tag tag-sector">Precious Metals</span></div>
-          <h3>Gold Retreats ~23% From January Record as Peace Nears and the Dollar Firms</h3>
+          <div class="tags"><span class="tag tag-theme">Trade War 2.0</span><span class="tag tag-sector">Trade / Regulatory</span></div>
+          <h3>US Imposes 25% Section 301 Tariff on Brazil, Effective July 22</h3>
         </div>
         <div class="card-body">
           <div class="chain">
-            <span class="mech">↓ Safe-Haven Unwind</span>
-            <p>Gold has slid from its $5,596 January peak to roughly $4,300, about 23% off the high, as a stronger-than-expected June 5 payrolls report lifted the dollar and rate-hike odds, and as Middle East de-escalation drains the geopolitical bid. Higher real rates raise the opportunity cost of holding non-yielding metal. The safe-haven trade that powered 2025–early-2026 is partially reversing.</p>
+            <span class="mech">↑ Cost-Push Inflation</span>
+            <p>&lt;cite index="23-1"&gt;The US is imposing 25% tariffs on imports from Brazil after finding a range of unfair trade practices by the world's 10th-biggest economy&lt;/cite&gt;, covering &lt;cite index="22-3"&gt;thousands of Brazilian imports, including sugar, apparel, paper, and steel&lt;/cite&gt;. &lt;cite index="23-6"&gt;Exempted products include coffee, beef, oranges and orange juice, some oil and gas energy products and aerospace parts and components&lt;/cite&gt;, sparing key consumer staples from direct price shocks.</p>
           </div>
           <div class="tables">
             <div class="tbl-wrap win">
               <h4>▲ Winners</h4>
               <table>
-                <tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
-                <tr><td class="tick">UUP</td><td class="co">Invesco DB US Dollar</td><td>Firmer dollar on hawkish repricing is the mirror of gold's slide</td><td><span class="cv cv-m">6</span></td></tr>
-                <tr><td class="tick">DAL</td><td class="co">Delta Air Lines</td><td>Risk-on, lower-oil, peace-tilt backdrop favors cyclicals over hedges</td><td><span class="cv cv-m">5</span></td></tr>
-              </table>
+<tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
+<tr><td class="tick">NUE</td><td class="co">Nucor Corporation</td><td>Domestic steelmaker gains pricing power as Brazilian steel faces a 25% tariff wall</td><td><span class="cv cv-m">7</span></td></tr>
+<tr><td class="tick">IP</td><td class="co">International Paper</td><td>Reduced Brazilian paper/pulp competition supports domestic pricing</td><td><span class="cv cv-m">6</span></td></tr>
+</table>
             </div>
             <div class="tbl-wrap lose">
               <h4>▼ Losers</h4>
               <table>
-                <tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
-                <tr><td class="tick">NEM</td><td class="co">Newmont Corp.</td><td>Largest gold miner; earnings lever down hard as bullion reverts</td><td><span class="cv cv-m">7</span></td></tr>
-                <tr><td class="tick">GOLD</td><td class="co">Barrick Gold</td><td>High beta to spot gold; multiple compresses on falling prices</td><td><span class="cv cv-m">6</span></td></tr>
-                <tr><td class="tick">GLD</td><td class="co">SPDR Gold Shares</td><td>Direct bullion proxy bleeding as the haven trade unwinds</td><td><span class="cv cv-m">6</span></td></tr>
-              </table>
+<tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
+<tr><td class="tick">GGB</td><td class="co">Gerdau S.A.</td><td>Brazilian steel exporter loses US price competitiveness under the new tariff</td><td><span class="cv cv-m">7</span></td></tr>
+<tr><td class="tick">SUZ</td><td class="co">Suzano S.A.</td><td>Brazilian pulp/paper exporter absorbs tariff cost or cedes US market share</td><td><span class="cv cv-m">7</span></td></tr>
+</table>
             </div>
           </div>
         </div>
@@ -594,31 +562,30 @@
       <!-- SIGNAL 8 -->
       <div class="card">
         <div class="card-head">
-          <div class="tags"><span class="tag tag-theme">Critical Minerals</span><span class="tag tag-sector">Industrial Metals</span></div>
-          <h3>Copper's Structural Deficit Holds Into 2030 — Grid, EVs and Data Centers Add a "Second US"</h3>
+          <div class="tags"><span class="tag tag-theme">Trade War 2.0</span><span class="tag tag-sector">Trade / Retail</span></div>
+          <h3>Retailers Frontload Imports +19% YoY Ahead of Tariff Deadlines</h3>
         </div>
         <div class="card-body">
           <div class="chain">
-            <span class="mech">↓ Supply Deficit</span>
-            <p>After January's record $14,527/tonne spike, copper has cooled toward the ~$9,800 World Bank 2026 average, but the structural story is intact: Jefferies models an average annual deficit near 491kt through 2030 as grid build, EV charging and data-center construction drive more than 60% of demand growth. Limited new mine supply keeps the medium-term tilt toward tightness despite a small near-term surplus.</p>
+            <span class="mech">↑ Inventory Pull-Forward</span>
+            <p>&lt;cite index="27-1,27-22"&gt;The White House announced new 25% tariffs on Brazil, and retailers are bracing for a whole other set of tariffs on 60 countries for allegedly not doing enough to fight forced labor&lt;/cite&gt;. &lt;cite index="27-25"&gt;The National Retail Federation estimates port volumes surged 19% year over year in June&lt;/cite&gt; as businesses frontload imports, and &lt;cite index="27-26"&gt;higher freight rates and higher inventory holding costs&lt;/cite&gt; are following as a direct consequence.</p>
           </div>
           <div class="tables">
             <div class="tbl-wrap win">
               <h4>▲ Winners</h4>
               <table>
-                <tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
-                <tr><td class="tick">FCX</td><td class="co">Freeport-McMoRan</td><td>Largest US-listed copper pure-play; full leverage to the deficit</td><td><span class="cv cv-m">7</span></td></tr>
-                <tr><td class="tick">SCCO</td><td class="co">Southern Copper</td><td>Low-cost, long-life reserves; high-margin volume into tight market</td><td><span class="cv cv-m">7</span></td></tr>
-                <tr><td class="tick">TECK</td><td class="co">Teck Resources</td><td>Copper-growth pivot positions it for structural demand pull</td><td><span class="cv cv-m">6</span></td></tr>
-              </table>
+<tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
+<tr><td class="tick">ZIM</td><td class="co">ZIM Integrated Shipping</td><td>Frontloading surge and tighter capacity lift container freight rates</td><td><span class="cv cv-m">6</span></td></tr>
+<tr><td class="tick">CHRW</td><td class="co">C.H. Robinson</td><td>Freight brokerage volumes and pricing benefit from import pull-forward chaos</td><td><span class="cv cv-m">5</span></td></tr>
+</table>
             </div>
             <div class="tbl-wrap lose">
               <h4>▼ Losers</h4>
               <table>
-                <tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
-                <tr><td class="tick">WIRE</td><td class="co">Encore Wire / fabricators</td><td>Copper input inflation pressures cable and wire-maker margins</td><td><span class="cv cv-m">5</span></td></tr>
-                <tr><td class="tick">F</td><td class="co">Ford Motor</td><td>EV bills of materials are copper-heavy; metal cost squeezes margins</td><td><span class="cv cv-l">4</span></td></tr>
-              </table>
+<tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
+<tr><td class="tick">FIVE</td><td class="co">Five Below</td><td>Thin-margin discount retailer highly exposed to tariff-driven cost inflation on imported goods</td><td><span class="cv cv-m">6</span></td></tr>
+<tr><td class="tick">TGT</td><td class="co">Target Corporation</td><td>Broad import exposure and inventory carrying costs pressure margins</td><td><span class="cv cv-m">5</span></td></tr>
+</table>
             </div>
           </div>
         </div>
@@ -627,31 +594,30 @@
       <!-- SIGNAL 9 -->
       <div class="card">
         <div class="card-head">
-          <div class="tags"><span class="tag tag-theme">Critical Minerals</span><span class="tag tag-sector">Rare Earths / Defense</span></div>
-          <h3>US Anchors a Non-China Rare-Earth Chain — $1.6B Backing for USA Rare Earth</h3>
+          <div class="tags"><span class="tag tag-theme">Global Rearmament</span><span class="tag tag-sector">Defense / Aerospace</span></div>
+          <h3>Missile Restocking Deals Top $21B, But Defense Stocks Lag Despite Iran War</h3>
         </div>
         <div class="card-body">
           <div class="chain">
-            <span class="mech">↑ Onshoring Demand</span>
-            <p>USA Rare Earth finalized agreements with the Commerce Department unlocking up to $1.6B — $277M in federal funding plus up to $1.3B in CHIPS loans — and selected Cherokee County, SC for a new magnet operation (~490 jobs). With China still controlling rare-earth processing and export licensing, Washington is bankrolling a domestic mine-to-magnet chain critical to defense, robotics and EVs, creating durable demand for non-China suppliers.</p>
+            <span class="mech">Mixed Signal</span>
+            <p>&lt;cite index="54-4"&gt;More than $21 billion in prospective foreign military sales involving Lockheed Martin and RTX were approved for Middle Eastern partners in Q1 2026 alone&lt;/cite&gt;, and &lt;cite index="60-8"&gt;the US burned through $5.6 billion worth of ammunition in just the first two days of the conflict&lt;/cite&gt;, driving restocking demand. Yet &lt;cite index="53-13"&gt;Northrop Grumman fell 29.42% and L3Harris 22.60% since the conflict began, while General Dynamics gained 3.75%&lt;/cite&gt;, showing the sector-wide reaction has been far from uniform.</p>
           </div>
           <div class="tables">
             <div class="tbl-wrap win">
               <h4>▲ Winners</h4>
               <table>
-                <tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
-                <tr><td class="tick">MP</td><td class="co">MP Materials</td><td>Only scaled US rare-earth miner-processor; flagship onshoring beneficiary</td><td><span class="cv cv-h">8</span></td></tr>
-                <tr><td class="tick">USAR</td><td class="co">USA Rare Earth</td><td>$1.6B in US backing funds mine-to-magnet build; direct policy tailwind</td><td><span class="cv cv-m">7</span></td></tr>
-                <tr><td class="tick">LMT</td><td class="co">Lockheed Martin</td><td>Secured domestic magnet supply de-risks F-35 and missile programs</td><td><span class="cv cv-m">6</span></td></tr>
-              </table>
+<tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
+<tr><td class="tick">GD</td><td class="co">General Dynamics</td><td>Only major defense name to gain since conflict onset, diversified platform mix</td><td><span class="cv cv-m">6</span></td></tr>
+<tr><td class="tick">RTX</td><td class="co">RTX Corporation</td><td>Patriot/Tomahawk/AIM-9X missile demand directly tied to active conflict consumption</td><td><span class="cv cv-m">7</span></td></tr>
+</table>
             </div>
             <div class="tbl-wrap lose">
               <h4>▼ Losers</h4>
               <table>
-                <tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
-                <tr><td class="tick">TSLA</td><td class="co">Tesla</td><td>Near-term magnet costs rise while non-China supply is still scaling</td><td><span class="cv cv-l">4</span></td></tr>
-                <tr><td class="tick">ALB</td><td class="co">Albemarle</td><td>Lithium glut overshadows the rare-earth narrative; weak pricing persists</td><td><span class="cv cv-l">4</span></td></tr>
-              </table>
+<tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
+<tr><td class="tick">NOC</td><td class="co">Northrop Grumman</td><td>Steepest sector decline despite war, reflecting execution and program-cost concerns</td><td><span class="cv cv-m">6</span></td></tr>
+<tr><td class="tick">LHX</td><td class="co">L3Harris Technologies</td><td>Sharp drawdown despite backlog growth signals sentiment de-coupled from fundamentals</td><td><span class="cv cv-m">5</span></td></tr>
+</table>
             </div>
           </div>
         </div>
@@ -660,31 +626,62 @@
       <!-- SIGNAL 10 -->
       <div class="card">
         <div class="card-head">
-          <div class="tags"><span class="tag tag-theme">Middle East De-escalation</span><span class="tag tag-sector">Defense / Geopolitical</span></div>
-          <h3>Defense Repricing — Ceasefire Cools the Munitions Spike, but EU Rearmament Is Structural</h3>
+          <div class="tags"><span class="tag tag-theme">AI Chip Supercycle</span><span class="tag tag-sector">Technology / Semiconductors</span></div>
+          <h3>Global Chip Sales Hit $120.6B in May, AI Demand Doubles YoY</h3>
         </div>
         <div class="card-body">
           <div class="chain">
-            <span class="mech">Mixed Signal</span>
-            <p>A US–Iran ceasefire trims the urgent, war-driven munitions and air-defense restocking that lifted primes through the spring — a near-term de-rating risk for names that ran on conflict headlines. But the multi-year demand floor is intact: EU members have committed €800B to rearmament through 2030 and NATO lifted its core target to 3.5% of GDP, sustaining a 5–10 year structural order cycle independent of any single conflict.</p>
+            <span class="mech">↑ Demand Surge</span>
+            <p>&lt;cite index="28-1"&gt;Global semiconductor sales were $120.6 billion in May 2026, an increase of 9.2% compared to April and 104.1% more than May 2025&lt;/cite&gt;. &lt;cite index="33-11"&gt;The global semiconductor industry is expected to reach $975 billion in annual sales in 2026, a historic peak fueled by an intensifying AI infrastructure boom&lt;/cite&gt;, though &lt;cite index="64-17"&gt;IBM shares fell 25% after the company warned second-quarter profits will be lower than expected due to soft demand in its software and infrastructure businesses&lt;/cite&gt;, underscoring the divergence between AI winners and legacy IT.</p>
           </div>
           <div class="tables">
             <div class="tbl-wrap win">
               <h4>▲ Winners</h4>
               <table>
-                <tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
-                <tr><td class="tick">RHM.DE</td><td class="co">Rheinmetall</td><td>Core EU rearmament play; order book decoupled from Middle East cycle</td><td><span class="cv cv-m">7</span></td></tr>
-                <tr><td class="tick">GD</td><td class="co">General Dynamics</td><td>Munitions + land systems backlog underpinned by NATO 3.5% target</td><td><span class="cv cv-m">6</span></td></tr>
-                <tr><td class="tick">LMT</td><td class="co">Lockheed Martin</td><td>F-35 demand from new NATO members outlasts any single conflict</td><td><span class="cv cv-m">6</span></td></tr>
-              </table>
+<tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
+<tr><td class="tick">NVDA</td><td class="co">Nvidia</td><td>Direct beneficiary of AI infrastructure spend now driving over half of chip industry revenue</td><td><span class="cv cv-h">9</span></td></tr>
+<tr><td class="tick">MU</td><td class="co">Micron Technology</td><td>HBM and advanced memory demand scales with AI data center buildout</td><td><span class="cv cv-m">7</span></td></tr>
+</table>
             </div>
             <div class="tbl-wrap lose">
               <h4>▼ Losers</h4>
               <table>
-                <tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
-                <tr><td class="tick">RTX</td><td class="co">RTX Corporation</td><td>Air-defense/munitions spike from active conflict cools on ceasefire</td><td><span class="cv cv-m">5</span></td></tr>
-                <tr><td class="tick">KTOS</td><td class="co">Kratos Defense</td><td>High-beta names give back conflict-headline premium first</td><td><span class="cv cv-l">4</span></td></tr>
-              </table>
+<tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
+<tr><td class="tick">IBM</td><td class="co">IBM</td><td>Soft software/infrastructure demand contrasts sharply with AI-chip strength elsewhere</td><td><span class="cv cv-m">7</span></td></tr>
+<tr><td class="tick">INTC</td><td class="co">Intel Corporation</td><td>Legacy non-AI chip segments continue to see relatively slower growth</td><td><span class="cv cv-l">4</span></td></tr>
+</table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIGNAL 11 -->
+      <div class="card">
+        <div class="card-head">
+          <div class="tags"><span class="tag tag-theme">AI Chip Supercycle</span><span class="tag tag-sector">Technology / Trade</span></div>
+          <h3>China Chip Exports Jump 96% to $177B as Nvidia H200 Flows Resume</h3>
+        </div>
+        <div class="card-body">
+          <div class="chain">
+            <span class="mech">↑ Supply Normalization</span>
+            <p>&lt;cite index="29-1"&gt;China's customs data puts integrated circuit exports at $177.28 billion in H1 2026, up 96% from a year earlier, with volume reaching 179.44 billion units&lt;/cite&gt;. &lt;cite index="35-16,35-17"&gt;The US approved Nvidia to sell its H200 AI processor to Chinese customers in December 2025, with the formal BIS rule taking effect January 16, 2026&lt;/cite&gt;, though &lt;cite index="35-18"&gt;Chinese customers cannot receive more than 50% of the total H200 volume sold to American customers&lt;/cite&gt; and a 25% tariff applies to chips routed through the US.</p>
+          </div>
+          <div class="tables">
+            <div class="tbl-wrap win">
+              <h4>▲ Winners</h4>
+              <table>
+<tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
+<tr><td class="tick">NVDA</td><td class="co">Nvidia</td><td>Resumed H200 access to China reopens a major AI chip revenue channel under capped terms</td><td><span class="cv cv-h">8</span></td></tr>
+<tr><td class="tick">AMAT</td><td class="co">Applied Materials</td><td>Equipment demand scales with both US and Chinese advanced/mature chip capacity expansion</td><td><span class="cv cv-m">6</span></td></tr>
+</table>
+            </div>
+            <div class="tbl-wrap lose">
+              <h4>▼ Losers</h4>
+              <table>
+<tr><th>Ticker</th><th>Company</th><th>Thesis</th><th>CV</th></tr>
+<tr><td class="tick">TXN</td><td class="co">Texas Instruments</td><td>Mature-node pricing pressure from China's low-cost memory/PMIC export surge</td><td><span class="cv cv-l">4</span></td></tr>
+<tr><td class="tick">GFS</td><td class="co">GlobalFoundries</td><td>Legacy-node foundry margins squeezed by Chinese oversupply of packaged/mature chips</td><td><span class="cv cv-l">4</span></td></tr>
+</table>
             </div>
           </div>
         </div>
@@ -731,7 +728,7 @@
   <div class="wrap">
     <div class="brand"><span class="logo">⚛</span> Cata<b>lyst</b></div>
     <p>Supply &amp; demand intelligence for public markets</p>
-    <p>Daily Intelligence Brief · June 14, 2026</p>
+    <p>Daily Intelligence Brief · July 17, 2026</p>
     <p class="nia">NOT INVESTMENT ADVICE</p>
   </div>
 </footer>
