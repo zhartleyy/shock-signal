@@ -75,6 +75,8 @@ Rules:
   commodity price, yield, etc.).
 - Double beneficiaries must appear in at least 2 different signals' tables.
 - Use real, current facts from your searches. Include concrete figures.
+- Do NOT include citation tags, <cite> markup, or source references inside any
+  JSON string — plain prose only.
 - Output raw JSON only. No markdown fences, no commentary."""
 
 # ---------------------------------------------------------------------------
@@ -348,7 +350,10 @@ STATIC_HOW = """
 # ---------------------------------------------------------------------------
 
 def esc(s):
-    return html.escape(str(s), quote=False)
+    # Strip citation tags the model sometimes embeds in searched text,
+    # then escape for HTML.
+    s = re.sub(r"</?cite[^>]*>", "", str(s))
+    return html.escape(s, quote=False)
 
 
 def cv_class(cv):
