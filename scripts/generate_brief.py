@@ -571,6 +571,15 @@ def extract_json(text):
     return json.loads(text[start:end + 1])
 
 
+def call_model(client, messages):
+    return client.messages.create(
+        model=MODEL,
+        max_tokens=16000,
+        tools=[{"type": "web_search_20250305", "name": "web_search", "max_uses": 10}],
+        messages=messages,
+    )
+
+
 def main():
     if not os.environ.get("ANTHROPIC_API_KEY"):
         sys.exit("ANTHROPIC_API_KEY is not set")
@@ -581,15 +590,32 @@ def main():
     client = anthropic.Anthropic()
     print(f"Generating brief for {date_str} ...")
 
-    resp = client.messages.create(
-        model=MODEL,
-        max_tokens=16000,
-        tools=[{"type": "web_search_20250305", "name": "web_search", "max_uses": 10}],
-        messages=[{"role": "user", "content": PROMPT.format(date=date_str)}],
-    )
+    messages = [{"role": "user", "content": PROMPT.format(date=date_str)}]
+    data = None
+    for attempt in range(1, 4):
+        resp = call_model(client, messages)
+        # Web search can pause long turns (stop_reason "pause_turn");
+        # keep continuing the same turn until the model actually finishes.
+        hops = 0
+        while resp.stop_reason == "pause_turn" and hops < 8:
+            messages.append({"role": "assistant", "content": resp.content})
+            resp = call_model(client, messages)
+            hops += 1
 
-    text = "".join(b.text for b in resp.content if b.type == "text")
-    data = extract_json(text)
+        text = "".join(b.text for b in resp.content if b.type == "text")
+        try:
+            data = extract_json(text)
+            break
+        except (ValueError, json.JSONDecodeError) as e:
+            print(f"Attempt {attempt}: no valid JSON ({e}); asking model to re-emit.")
+            messages.append({"role": "assistant", "content": resp.content})
+            messages.append({"role": "user", "content":
+                "Now output ONLY the raw JSON object described earlier — no prose, "
+                "no markdown fences, starting with '{' and ending with '}'."})
+
+    if data is None:
+        sys.exit("Failed to get valid JSON from the model after 3 attempts.")
+
     validate(data)
 
     page = render(data, date_str)
