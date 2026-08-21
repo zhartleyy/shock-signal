@@ -21,7 +21,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install dependencies
-        run: pip install anthropic
+        run: pip install "anthropic>=0.40,<1.0"
 
       - name: Generate today's brief
         env:
