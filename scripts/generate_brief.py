@@ -630,5 +630,31 @@ def main():
           f"{len(data['themes'])} themes, {len(data['doubles'])} doubles.")
 
 
+def _friendly_exit(e):
+    """Turn common API failures into a one-line message instead of a traceback."""
+    msg = str(e)
+    low = msg.lower()
+    if "credit balance is too low" in low or "insufficient" in low:
+        sys.exit(
+            "ANTHROPIC BILLING: out of API credits. Add credits at "
+            "https://console.anthropic.com/settings/billing and re-run this workflow."
+        )
+    if "authentication" in low or "invalid x-api-key" in low or "401" in msg:
+        sys.exit(
+            "ANTHROPIC AUTH: the ANTHROPIC_API_KEY secret is missing, revoked, or wrong. "
+            "Update the repo secret and re-run this workflow."
+        )
+    if "rate limit" in low or "429" in msg:
+        sys.exit("ANTHROPIC RATE LIMIT: too many requests right now. Re-run this workflow later.")
+    if "not_found" in low and "model" in low:
+        sys.exit(f"ANTHROPIC MODEL: '{MODEL}' is not available to this account. {msg}")
+    sys.exit(f"ANTHROPIC API ERROR: {msg}")
+
+
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except anthropic.APIStatusError as e:
+        _friendly_exit(e)
+    except anthropic.APIConnectionError as e:
+        sys.exit(f"NETWORK: could not reach the Anthropic API ({e}).")
