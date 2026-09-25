@@ -41,7 +41,8 @@ specific publicly traded companies.
 Then output ONLY a JSON object (no prose before or after) with this exact shape:
 
 {{
-  "headline_stat": {{"value": "$86", "label": "Brent / bbl"}},
+  "headline_stats": [{{"value": "$4,310", "label": "Gold / oz"}},
+                     {{"value": "$86", "label": "Brent / bbl"}}],
   "themes": [
     {{"icon": "🕊️", "title": "Theme Name", "desc": "1-2 sentence summary with concrete figures."}}
   ],
@@ -71,8 +72,8 @@ Rules:
   within a table.
 - "mech" is a short mechanism label, optionally prefixed ↑ or ↓
   (e.g. "↑ Demand Surge", "↓ Supply Deficit", "Rate Constraint", "Mixed Signal").
-- "headline_stat" is one market number that anchors the day (an index level,
-  commodity price, yield, etc.).
+- "headline_stats" is a list of exactly two market numbers that anchor the day:
+  first spot gold ($/oz), then Brent crude ($/bbl). Format values with a $ sign.
 - Double beneficiaries must appear in at least 2 different signals' tables.
 - Use real, current facts from your searches. Include concrete figures.
 - Do NOT include citation tags, <cite> markup, or source references inside any
@@ -254,11 +255,11 @@ PAGE_HEAD = """<!DOCTYPE html>
   .cv-m{background:rgba(249,115,22,.14);color:var(--orange);border:1px solid rgba(249,115,22,.4)}
   .cv-l{background:rgba(59,130,246,.14);color:var(--blue);border:1px solid rgba(59,130,246,.4)}
   .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
-  .step{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;position:relative}
+  .step {background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;position:relative}
   .step .n{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--accent);letter-spacing:.1em}
   .step .ic{font-size:1.6rem;margin:10px 0 12px;display:block}
   .step h3{font-size:1.05rem;margin-bottom:8px}
-  .step p{font-size:.85rem;color:var(--text-2)}
+  .step {font-size:.85rem;color:var(--text-2)}
   footer{border-top:1px solid var(--border);padding:42px 0;text-align:center;margin-top:20px}
   footer .brand{justify-content:center;margin-bottom:10px}
   footer p{color:var(--muted);font-size:.84rem;margin-bottom:4px}
@@ -374,8 +375,15 @@ def render_table(rows):
 
 
 def render(data, date_str):
-    n_sig, n_thm, n_dbl = len(data["signals"]), len(data["themes"]), len(data["doubles"])
-    hs = data["headline_stat"]
+    n_sig, m_thm, n_dbl = len(data["signals"]), len(data["themes"]), len(data["doubles"])
+    hs = data.get("headline_stats") or [data["headline_stat"]]
+    if isinstance(hs, dict):
+        hs = [hs]
+    stats_html = "".join(
+        f'<div class="stat"><div class="num mono">{esc(h["value"])}</div>'
+        f'<div class="lbl">{esc(h["label"])}</div></div>'
+        for h in hs
+    )
 
     parts = [PAGE_HEAD]
 
@@ -396,7 +404,8 @@ def render(data, date_str):
       <div class="stat"><div class="num mono">{n_sig}</div><div class="lbl">Signals</div></div>
       <div class="stat"><div class="num mono">{n_thm}</div><div class="lbl">Macro Themes</div></div>
       <div class="stat"><div class="num mono">{n_dbl}</div><div class="lbl">Double Plays</div></div>
-      <div class="stat"><div class="num mono">{esc(hs["value"])}</div><div class="lbl">{esc(hs["label"])}</div></div>
+      {stats_html}
+
     </div>
   </div>
 </header>
@@ -527,12 +536,17 @@ def render(data, date_str):
 # ---------------------------------------------------------------------------
 
 def validate(data):
-    for key in ("headline_stat", "themes", "doubles", "signals"):
+    for key in ("themes", "doubles", "signals"):
         if key not in data:
             raise ValueError(f"missing key: {key}")
-    if not (isinstance(data["headline_stat"], dict)
-            and "value" in data["headline_stat"] and "label" in data["headline_stat"]):
-        raise ValueError("bad headline_stat")
+    stats = data.get("headline_stats") or data.get("headline_stat")
+    if stats is None:
+        raise ValueError("missing key: headline_stats")
+    if isinstance(stats, dict):
+        stats = [stats]
+    if not (isinstance(stats, list) and stats
+            and all(isinstance(h, dict) and "value" in h and "label" in h for h in stats)):
+        raise ValueError("bad headline_stats")
     if not (4 <= len(data["themes"]) <= 8):
         raise ValueError(f"expected 4-8 themes, got {len(data['themes'])}")
     if not (6 <= len(data["signals"]) <= 14):
@@ -626,12 +640,12 @@ def main():
     page = render(data, date_str)
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(page)
-    print(f"Wrote {OUTPUT_FILE}: {len(data['signals'])} signals, "
+    print(f"Wrote {OUTPUT_FILE}: {len(data[signals'])} signals, "
           f"{len(data['themes'])} themes, {len(data['doubles'])} doubles.")
 
 
 def _friendly_exit(e):
-    """Turn common API failures into a one-line message instead of a traceback."""
+    """"Turn common API failures into a one-line message instead of a traceback."""
     msg = str(e)
     low = msg.lower()
     if "credit balance is too low" in low or "insufficient" in low:
