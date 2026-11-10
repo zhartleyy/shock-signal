@@ -49,8 +49,9 @@ Then output ONLY a JSON object (no prose before or after) with this exact shape:
   "doubles": [
     {{"ticker": "DAL", "company": "Delta Air Lines",
       "desc": "2-3 sentences on why this stock benefits from 2+ separate signals.",
-      "chips": ["Catalyst One", "Catalyst Two"]}}
+      "chips": ["Catalyst One", "Catalyst Two"], "status": "kept"}}
   ],
+  "dropped": [{{"ticker": "XOM", "reason": "One short sentence on why it no longer qualifies."}}],
   "signals": [
     {{"theme": "Theme Name",
       "sector": "Energy / Geopolitical",
@@ -75,6 +76,11 @@ Rules:
 - "headline_stats" is a list of exactly two market numbers that anchor the day:
   first spot gold ($/oz), then Brent crude ($/bbl). Format values with a $ sign.
 - Double beneficiaries must appear in at least 2 different signals' tables.
+- Continuity: yesterday's double beneficiaries were: {previous}.
+  Keep any that still have 2+ live catalysts (status "kept"). Only replace one
+  when its catalysts have genuinely faded or reversed; mark replacements
+  status "new". List every removed previous ticker in "dropped" with a short
+  reason. If there were no previous picks, mark all "new" and leave "dropped" empty.
 - Use real, current facts from your searches. Include concrete figures.
 - Do NOT include citation tags, <cite> markup, or source references inside any
   JSON string — plain prose only.
@@ -451,14 +457,22 @@ def render(data, date_str):
     # Double beneficiaries
     bens = []
     for d in data["doubles"]:
+        new_tag = ('<span class="mono" style="margin-left:8px;font-size:11px;padding:2px 6px;'
+                   'border-radius:4px;background:#f5b70033;color:#f5b700">NEW</span>'
+                   if d.get("status") == "new" else "")
         chips = "".join(f'<span class="chip">{esc(c)}</span>' for c in d["chips"])
         bens.append(f"""      <div class="ben">
-        <div class="ben-top"><span class="ben-tick mono">{esc(d["ticker"])}</span><span class="ben-x mono">2× catalyst</span></div>
+        <div class="ben-top"><span class="ben-tick mono">{esc(d["ticker"])}</span>{new_tag}<span class="ben-x mono">2× catalyst</span></div>
         <h3>{esc(d["company"])}</h3>
         <p>{esc(d["desc"])}</p>
         <div class="chips">{chips}</div>
       </div>""")
 
+    drops = [x for x in data.get("dropped", []) if isinstance(x, dict) and x.get("ticker")]
+    dropped_html = ""
+    if drops:
+        items = "; ".join(f'<b class="mono">{esc(x["ticker"])}</b> — {esc(x.get("reason", ""))}' for x in drops)
+        dropped_html = f'    <p style="margin-top:16px;font-size:13px;opacity:.7">Dropped since yesterday: {items}</p>'
     parts.append(f"""
 <!-- DOUBLE BENEFICIARIES -->
 <section id="double">
@@ -467,6 +481,7 @@ def render(data, date_str):
     <div class="dbl">
 {chr(10).join(bens)}
     </div>
+{dropped_html}
   </div>
 </section>
 """)
@@ -599,6 +614,20 @@ def call_model(client, messages):
     )
 
 
+def previous_doubles(path):
+    """Read yesterday's double-beneficiary tickers/companies from the live page."""
+    try:
+        page = open(path, encoding="utf-8").read()
+    except OSError:
+        return []
+    sec = page.split('<section id="double">', 1)
+    if len(sec) < 2:
+        return []
+    body = sec[1].split("</section>", 1)[0]
+    pairs = re.findall(r'ben-tick mono">([^<]+)</span>.*?<h3>([^<]+)</h3>', body, re.S)
+    return [f"{html.unescape(t).strip()} ({html.unescape(c).strip()})" for t, c in pairs]
+
+
 def main():
     if not os.environ.get("ANTHROPIC_API_KEY"):
         sys.exit("ANTHROPIC_API_KEY is not set")
@@ -609,7 +638,9 @@ def main():
     client = anthropic.Anthropic()
     print(f"Generating brief for {date_str} ...")
 
-    messages = [{"role": "user", "content": PROMPT.format(date=date_str)}]
+    prev = previous_doubles(OUTPUT_FILE)
+    print(f"Previous doubles: {prev or 'none'}")
+    messages = [{"role": "user", "content": PROMPT.format(date=date_str, previous=", ".join(prev) or "none")}]
     data = None
     for attempt in range(1, 4):
         resp = call_model(client, messages)
