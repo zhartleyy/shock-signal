@@ -4,9 +4,9 @@ name: Daily Catalyst brief
 
 on:
   schedule:
-    - cron: "15 8 * * *"   # 8:15 AM Calgary time daily, including daylight saving
+    - cron: "0 9 * * *"   # 9:00 AM Alberta time daily, including daylight saving
       timezone: "America/Edmonton"
-  workflow_dispatch: {}     # lets you trigger a run manually from the Actions tab
+  workflow_dispatch: {}    # lets you trigger a run manually from the Actions tab
 
 permissions:
   contents: write
@@ -37,6 +37,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
-            git commit -m "Daily update: $(date -u '+%B %-d, %Y')"
+            git commit -m "Daily update: $(date -u '+%B %d, %Y')"
             git push
           fi
